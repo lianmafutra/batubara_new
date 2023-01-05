@@ -110,15 +110,16 @@ DROP TABLE IF EXISTS `mobil`;
 CREATE TABLE `mobil` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plat` char(50) DEFAULT NULL,
-  `jenis` int(11) NOT NULL,
+  `mobil_jenis_id` int(11) NOT NULL,
   `pemilik_mobil_id` int(11) NOT NULL,
   `uuid` varchar(500) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_mobil_pemilik_mobil` (`pemilik_mobil_id`) USING BTREE,
+  KEY `FK_mobil_mobil_jenis` (`mobil_jenis_id`) USING BTREE,
   CONSTRAINT `FK_mobil_pemilik_mobil` FOREIGN KEY (`pemilik_mobil_id`) REFERENCES `pemilik_mobil` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +128,7 @@ CREATE TABLE `mobil` (
 
 LOCK TABLES `mobil` WRITE;
 /*!40000 ALTER TABLE `mobil` DISABLE KEYS */;
-INSERT INTO `mobil` VALUES (1,'dwqdd',1,1,'f638a8f8-aee5-4f2e-8190-a13308810ef2','2023-01-03 18:06:46','2023-01-03 18:06:46'),(17,'23231',1,1,'31e43b86-a811-413c-86b7-402a7259de54','2023-01-03 17:02:13','2023-01-03 18:09:24'),(22,'dqwdwqd',1,1,'b789db4a-dbc2-4441-8d62-54d2b4bc75fb','2023-01-03 17:16:50','2023-01-03 17:16:50'),(23,'wqdwqd',17,1,'2f8261f4-39f0-41df-9804-36fe073d2df4','2023-01-03 18:09:09','2023-01-03 18:09:09');
+INSERT INTO `mobil` VALUES (1,'dwqdd',1,1,'f638a8f8-aee5-4f2e-8190-a13308810ef2','2023-01-03 18:06:46','2023-01-04 18:53:48'),(2,'dqwdqwd',1,1,'f638a8f8-aee5-4f2e-8190-a13308810ef2','2023-01-03 18:06:46','2023-01-04 18:53:48'),(27,'dqwdqwd',2,3,'f638a8f8-aee5-4f2e-8190-a13308810ef2','2023-01-03 18:06:46','2023-01-04 18:53:48');
 /*!40000 ALTER TABLE `mobil` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +145,7 @@ CREATE TABLE `mobil_jenis` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +154,7 @@ CREATE TABLE `mobil_jenis` (
 
 LOCK TABLES `mobil_jenis` WRITE;
 /*!40000 ALTER TABLE `mobil_jenis` DISABLE KEYS */;
-INSERT INTO `mobil_jenis` VALUES (1,'BAK','2023-01-03 16:58:25','2023-01-03 16:58:26'),(17,'S','2023-01-03 16:58:25','2023-01-03 16:58:26');
+INSERT INTO `mobil_jenis` VALUES (1,'aaa','2023-01-03 16:58:25','2023-01-03 16:58:26'),(2,'bbb','2023-01-03 16:58:25','2023-01-03 16:58:26');
 /*!40000 ALTER TABLE `mobil_jenis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,7 +251,7 @@ CREATE TABLE `pemilik_mobil` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -259,7 +260,7 @@ CREATE TABLE `pemilik_mobil` (
 
 LOCK TABLES `pemilik_mobil` WRITE;
 /*!40000 ALTER TABLE `pemilik_mobil` DISABLE KEYS */;
-INSERT INTO `pemilik_mobil` VALUES (1,'ade sukron','082244261525',NULL,'qwdqwd','2023-01-03 15:08:51','2023-01-03 15:08:52');
+INSERT INTO `pemilik_mobil` VALUES (1,'ade sukron','082244261525',NULL,'qwdqwd','2023-01-03 15:08:51','2023-01-03 15:08:52'),(3,'ade sukron','082244261525',NULL,'qwdqwd','2023-01-03 15:08:51','2023-01-03 15:08:52');
 /*!40000 ALTER TABLE `pemilik_mobil` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -458,4 +459,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-04  8:15:42
+-- Dump completed on 2023-01-05  8:10:41
