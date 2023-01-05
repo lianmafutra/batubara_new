@@ -8,8 +8,8 @@ use App\Http\Controllers\Tujuan\TujuanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
 Auth::routes();
+
 Route::prefix('admin')->middleware(['auth'])->group(function () {
 
    Route::resource('mobil', MobilController::class)->except(['show','create']);
@@ -17,5 +17,11 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
    Route::resource('transportir', TransportirController::class);
    Route::resource('harga', HargaController::class);
    Route::resource('tujuan', TujuanController::class);
+  
+
+   
 });
+
+
+
 

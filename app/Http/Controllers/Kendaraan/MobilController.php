@@ -9,6 +9,7 @@ use App\Models\MobilJenis;
 use App\Models\Pemilik;
 use App\Utils\ApiResponse;
 use Illuminate\Http\Request;
+use Vinkla\Hashids\Facades\Hashids;
 
 class MobilController extends Controller
 {
@@ -19,7 +20,10 @@ class MobilController extends Controller
       $x['title']    = 'Kelola Mobil';
       $x['pemilik']    = Pemilik::get();
       $x['jenis']    = MobilJenis::get();
-      $data = Mobil::with('pemilik', 'jenis');
+      $data = Mobil::with('pemilik2', 'mobil_jenis2');
+   //   dd($data->get());
+   
+
 
       if (request()->ajax()) {
          return  datatables()->of($data)
@@ -34,16 +38,16 @@ class MobilController extends Controller
    }
 
 
-   public function store(MobilRequest $request, Pemilik $pemilik)
+   public function store(MobilRequest $request)
    {
       try {
-
+          
          Mobil::updateOrCreate(
-            ['id' => $request->mobil_id],
+         [  'id'               => Hashids::decode($request->mobil_id)[0] ],
             [
-               'plat' => $request->plat,
-               'jenis' => $request->jenis,
-               'pemilik_mobil_id' => $pemilik->getId($request->pemilik_mobil_id)
+               'plat'             => $request->plat,
+               'jenis'            => Hashids::decode($request->jenis)[0],
+               'pemilik_mobil_id' => Hashids::decode($request->pemilik_mobil_id)[0]
             ]
          );
          return $this->success('Berhasil Menginput Data');
@@ -55,7 +59,7 @@ class MobilController extends Controller
 
    public function edit(Mobil $mobil)
    {
-      //
+      return $this->success('Data Mobil',     $mobil);
    }
 
 

@@ -23,7 +23,8 @@ class MobilRequest extends FormRequest
     */
    public function rules()
    {
-      if (in_array($this->method(), ['PUT', 'PATCH'])) {
+      
+      if (in_array( $this->request->get('method'), ['PUT', 'PATCH'])) {
          return [
             'plat' => 'required|min:5',
             'jenis'   => 'required',
@@ -31,7 +32,7 @@ class MobilRequest extends FormRequest
          ];
       }
 
-      if (in_array($this->method(), ['POST'])) {
+      if (in_array($this->request->get('method'), ['POST'])) {
          return [
             'plat' => 'required|min:5|unique:mobil',
             'jenis'   => 'required',

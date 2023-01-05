@@ -14,7 +14,7 @@
         }
     }
 </style>
-<div class="modal fade" id="modal_tambah">
+<div class="modal fade" id="modal_add">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
@@ -27,7 +27,7 @@
                 @csrf
                 <div class="modal-body">
                     <x-input id='plat' label='Plat/Nopol Mobil' required=true />
-                    <input  id="mobil_id" name="mobil_id" value="" />
+                    <input hidden  id="mobil_id" name="mobil_id" value="" />
                     <x-select2 id="jenis" label="Jenis Mobil" required="true" placeholder="Pilih Jenis Mobil">
                      @foreach ($jenis as $item)
                          <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -35,7 +35,7 @@
                  </x-select2>
                     <x-select2 id="pemilik_mobil_id" label="Pemilik Mobil" required="true" placeholder="Pilih Pemilik Mobil">
                         @foreach ($pemilik as $item)
-                            <option value="{{ $item->uuid }}">{{ $item->nama }}</option>
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
                         @endforeach
                     </x-select2>
                 </div>

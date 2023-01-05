@@ -64,6 +64,7 @@
     <script src="{{ asset('plugins/sweetalert2/sweetalert2-min.js') }}"></script>
     <script>
         $(document).ready(function() {
+
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
             })
@@ -91,12 +92,12 @@
                         orderable: false,
                     },
                     {
-                        data: 'jenis.nama',
-                        name: 'jenis.nama',
+                        data: 'mobil_jenis2.nama',
+                        name: 'mobil_jenis2.nama',
                     },
                     {
-                        data: 'pemilik.nama',
-                        name: 'pemilik.nama',
+                        data: 'pemilik2.nama',
+                        name: 'pemilik2.nama',
                         orderable: false,
                     },
                     {
@@ -119,7 +120,7 @@
             $("#form_tambah").submit(function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
-
+                formData.append('method', 'PUT');
                 $.ajax({
                     type: 'POST',
                     url: @json(route('mobil.store')),
@@ -134,7 +135,6 @@
                     success: (response) => {
                         if (response) {
                             this.reset()
-
                             $('#modal_tambah').modal('hide')
                             Swal.fire({
                                 icon: 'success',
@@ -156,21 +156,18 @@
                 });
             });
 
-            $('body').on('click', '.btn_edit', function(e) {
-                $('#modal_tambah').modal('show')
-                $('#mobil_id').val(17)
-                $.get("{{ route('products-ajax-crud.index') }}" + '/' + product_id + '/edit', function(
-                data) {
-                    $('#modelHeading').html("Edit Product");
-                    $('#saveBtn').val("edit-user");
-                    $('#ajaxModel').modal('show');
-                    $('#product_id').val(data.id);
-                    $('#name').val(data.name);
-                    $('#detail').val(data.detail);
+            $('#datatable').on('click', '.btn_edit', function(e) {
+                $('#modal_add').modal('show')
+                let url = $(this).attr('data-url');
+                $.get(url, function(response) {
+                  $('#mobil_id').val(response.data.id)
+                  $('#plat').val(response.data.plat)
+                  $('#jenis').val(response.data.jenis).trigger('change');
+                  $('#pemilik_mobil_id').val(response.data.pemilik_mobil_id).trigger('change');
                 })
             });
 
-            $('body').on('click', '.btn_hapus', function(e) {
+            $('#datatable').on('click', '.btn_hapus', function(e) {
                 let data = $(this).attr('data-hapus');
                 Swal.fire({
                     title: 'Apakah anda yakin ingin menghapus data Mobil?',
