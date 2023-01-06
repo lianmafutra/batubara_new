@@ -42,27 +42,6 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/app.php'));
       });
 
-      Route::bind('mobil', function ($value) {
-         return Hashids::decode($value)[0];
-      });
-      Route::bind('supir', function ($value) {
-         return Hashid::decode($value)[0];
-      });
-
-      Route::bind('pemilik', function ($value) {
-         return Hashid::decode($value)[0];
-      });
-
-   
-      Route::bind('transportir', function ($value) {
-         return Hashids::decode($value)[0];
-      });
-      Route::bind('harga', function ($value) {
-         return Hashids::decode($value)[0];
-      });
-      Route::bind('tujuan', function ($value) {
-         return Hashids::decode($value)[0];
-      });
    }
 
    /**

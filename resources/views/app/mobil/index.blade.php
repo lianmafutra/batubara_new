@@ -56,7 +56,7 @@
         </section>
     </div>
 @endsection
-@include('app.mobil.modal-add')
+@include('app.mobil.modal-create')
 @push('js')
     <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -92,12 +92,12 @@
                         orderable: false,
                     },
                     {
-                        data: 'mobil_jenis2.nama',
-                        name: 'mobil_jenis2.nama',
+                        data: 'mobil_jenis.nama',
+                        name: 'mobil_jenis.nama',
                     },
                     {
-                        data: 'pemilik2.nama',
-                        name: 'pemilik2.nama',
+                        data: 'pemilik.nama',
+                        name: 'pemilik.nama',
                         orderable: false,
                     },
                     {
@@ -113,10 +113,10 @@
 
             $("#btn_tambah").click(function() {
                 clearInput()
-                $('#modal_tambah').modal('show')
+                $('#modal_create').modal('show')
             });
 
-
+              
             $("#form_tambah").submit(function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
@@ -135,7 +135,7 @@
                     success: (response) => {
                         if (response) {
                             this.reset()
-                            $('#modal_tambah').modal('hide')
+                            $('#modal_create').modal('hide')
                             Swal.fire({
                                 icon: 'success',
                                 title: response.message,
@@ -157,12 +157,12 @@
             });
 
             $('#datatable').on('click', '.btn_edit', function(e) {
-                $('#modal_add').modal('show')
+                $('#modal_create').modal('show')
                 let url = $(this).attr('data-url');
                 $.get(url, function(response) {
                   $('#mobil_id').val(response.data.id)
                   $('#plat').val(response.data.plat)
-                  $('#jenis').val(response.data.jenis).trigger('change');
+                  $('#mobil_jenis_id').val(response.data.mobil_jenis_id).trigger('change');
                   $('#pemilik_mobil_id').val(response.data.pemilik_mobil_id).trigger('change');
                 })
             });

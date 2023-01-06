@@ -27,7 +27,7 @@ class MobilRequest extends FormRequest
       if (in_array( $this->request->get('method'), ['PUT', 'PATCH'])) {
          return [
             'plat' => 'required|min:5',
-            'jenis'   => 'required',
+            'mobil_jenis_id'   => 'required',
             'pemilik_mobil_id' => 'required',
          ];
       }
@@ -35,7 +35,7 @@ class MobilRequest extends FormRequest
       if (in_array($this->request->get('method'), ['POST'])) {
          return [
             'plat' => 'required|min:5|unique:mobil',
-            'jenis'   => 'required',
+            'mobil_jenis_id'   => 'required',
             'pemilik_mobil_id' => 'required',
          ];
       }

@@ -75,10 +75,11 @@
                         </a>
                     </li>
                 @endcan
+               
                 <li class="nav-header ml-2">Manajemen DO</li>
                 @can('pengajuan verifikasi index')
-                    <li class="nav-item menu-is-opening ">
-                        <a href="" class="nav-link">
+                    <li class="nav-item menu-is-opening {{ request()->is('admin/kendaraan*') ? 'menu-open' : '' }} ">
+                        <a href="" class="nav-link {{ request()->is('admin/kendaraan*') ? 'active' : '' }}">
                            <i class="fas fa-truck nav-icon"></i>
                             <p>Data Kendaraan</p>
                             <i class="right fas fa-angle-left"></i>
@@ -86,14 +87,14 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="{{ route('mobil.index') }}"
-                                    class="nav-link">
+                                    class="nav-link {{ request()->routeIs('mobil*') ? 'active' : '' }}">
                                     <i class="fas fa-car nav-icon"></i>
                                     <p>Mobil</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href=""
-                                    class="nav-link">
+                                    class="nav-link {{ request()->routeIs('supir*') ? 'active' : '' }}">
                                     <i class="fas fa-users nav-icon"></i>
                                     <p>Supir</p>
                                 </a>

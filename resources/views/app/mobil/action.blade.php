@@ -10,8 +10,8 @@
         <ul class="dropdown-menu">
             <li><a data-url='{{ route('mobil.edit', $data->id) }}'  href="#" class="btn_edit dropdown-item" >Ubah Data</a> </li>
             <div class="dropdown-divider"></div>
-             <li><a data-hapus="{{ $data->plat }}"  data-url="{{ route('mobil.destroy', $data->uuid) }}" class="btn_hapus dropdown-item" href="#">Hapus
-               <form hidden id="form-delete" action="{{ route('mobil.destroy', $data->uuid) }}" method="POST"> @csrf
+             <li><a data-hapus="{{ $data->plat }}"  data-url="{{ route('mobil.destroy', $data->id) }}" class="btn_hapus dropdown-item" href="#">Hapus
+               <form hidden id="form-delete" action="{{ route('mobil.destroy', $data->id) }}" method="POST"> @csrf
                   @method('DELETE')
               </form>
             </a> </li>

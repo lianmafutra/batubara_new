@@ -12,8 +12,11 @@ Auth::routes();
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
 
-   Route::resource('mobil', MobilController::class)->except(['show','create']);
-   Route::resource('supir', SupirController::class);
+   Route::prefix('kendaraan')->group(function () {
+      Route::resource('mobil', MobilController::class);
+      Route::resource('supir', SupirController::class);
+   });
+ 
    Route::resource('transportir', TransportirController::class);
    Route::resource('harga', HargaController::class);
    Route::resource('tujuan', TujuanController::class);

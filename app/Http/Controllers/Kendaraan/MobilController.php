@@ -8,9 +8,6 @@ use App\Models\Mobil;
 use App\Models\MobilJenis;
 use App\Models\Pemilik;
 use App\Utils\ApiResponse;
-use Illuminate\Http\Request;
-use Vinkla\Hashids\Facades\Hashids;
-
 class MobilController extends Controller
 {
    use ApiResponse;
@@ -20,10 +17,7 @@ class MobilController extends Controller
       $x['title']    = 'Kelola Mobil';
       $x['pemilik']    = Pemilik::get();
       $x['jenis']    = MobilJenis::get();
-      $data = Mobil::with('pemilik2', 'mobil_jenis2');
-   //   dd($data->get());
-   
-
+      $data = Mobil::with('pemilik', 'mobil_jenis');
 
       if (request()->ajax()) {
          return  datatables()->of($data)
@@ -37,45 +31,38 @@ class MobilController extends Controller
       return view('app.mobil.index', $x, compact(['data']));
    }
 
-
    public function store(MobilRequest $request)
    {
       try {
-          
+
          Mobil::updateOrCreate(
-         [  'id'               => Hashids::decode($request->mobil_id)[0] ],
+            ['id'               => $request->mobil_id],
             [
                'plat'             => $request->plat,
-               'jenis'            => Hashids::decode($request->jenis)[0],
-               'pemilik_mobil_id' => Hashids::decode($request->pemilik_mobil_id)[0]
+               'mobil_jenis_id'   => $request->mobil_jenis_id,
+               'pemilik_mobil_id' => $request->pemilik_mobil_id
             ]
          );
-         return $this->success('Berhasil Menginput Data');
+
+         if ($request->mobil_id)  return $this->success('Berhasil Mengubah Data');
+         else return $this->success('Berhasil Menginput Data');
       } catch (\Throwable $th) {
-         return $this->error('Gagal Menginput Data' . $th, 400);
+         return $this->error('Gagal, Terjadi Kesalahan' . $th, 400);
       }
    }
 
-
    public function edit(Mobil $mobil)
    {
-      return $this->success('Data Mobil',     $mobil);
+      return $this->success('Data Mobil', $mobil);
    }
 
-
-   public function update(Request $request, Mobil $mobil)
-   {
-      //
-   }
-
-
-   public function destroy($uuid)
+   public function destroy(Mobil  $mobil)
    {
       try {
-         Mobil::where('uuid', $uuid)->delete();
-         return redirect()->back()->with('success', 'Berhasil Hapus Data', 200)->send();
+         $mobil->delete();
+         return redirect()->back()->with('success', 'Berhasil Hapus Data', 200);
       } catch (\Throwable $th) {
-         return redirect()->back()->with('error', 'Gagal Hapus Data', 400)->send();
+         return redirect()->back()->with('error', 'Gagal Hapus Data', 400);
       }
    }
 }
