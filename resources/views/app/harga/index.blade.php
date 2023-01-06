@@ -2,11 +2,11 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('template/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }} ">
+    <link rel="stylesheet" href="{{ asset('plugins/flatpicker/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 @endpush
 @section('content')
     <style>
-
     </style>
     <div class="content-wrapper">
         <div class="content-header">
@@ -38,9 +38,9 @@
                                                     <th>No</th>
                                                     <th>Harga</th>
                                                     <th>PG</th>
-                                                    <th>Tujuan</th>  
-                                                    <th>Transportir</th>  
-                                                    <th>Tanggal</th>  
+                                                    <th>Tujuan</th>
+                                                    <th>Transportir</th>
+                                                    <th>Tanggal</th>
                                                     <th>created_at</th>
                                                     <th>updated_at</th>
                                                     <th>#Aksi</th>
@@ -63,15 +63,31 @@
 @push('js')
     <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/flatpicker/flatpickr.min.js') }}"></script>
+    <script src="{{ asset('plugins/flatpicker/id.min.js') }}"></script>
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('plugins/sweetalert2/sweetalert2-min.js') }}"></script>
+    <script src="{{ asset('plugins/autoNumeric.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
             })
-
+            $('#tanggal').flatpickr({
+                allowInput: true,
+                dateFormat: "d-m-Y",
+                locale: "id",
+            });
+            const format = AutoNumeric.multiple('.rupiah', {
+                currencySymbol: 'Rp ',
+                digitGroupSeparator: '.',
+                decimalPlaces: 0,
+                minimumValue: 0,
+                decimalCharacter: ',',
+                formatOnPageLoad: true,
+                allowDecimalPadding: false,
+                alwaysAllowDecimalCharacter: false
+            });
             let datatable = $("#datatable").DataTable({
                 serverSide: true,
                 processing: true,
@@ -84,7 +100,6 @@
                     [2, 'desc']
                 ],
                 ajax: @json(route('harga.index')),
-
                 columns: [{
                         data: "DT_RowIndex",
                         orderable: false,
@@ -92,9 +107,15 @@
                     },
                     {
                         data: 'harga',
+                        render: function(data, type, row, meta) {
+                            return rupiah(data)
+                        }
                     },
                     {
                         data: 'pg',
+                        render: function(data, type, row, meta) {
+                            return rupiah(data)
+                        }
                     },
                     {
                         data: 'tujuan.nama',
@@ -118,13 +139,10 @@
                     },
                 ]
             });
-
             $("#btn_tambah").click(function() {
                 clearInput()
                 $('#modal_create').modal('show')
             });
-
-              
             $("#form_tambah").submit(function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
@@ -163,18 +181,24 @@
                     }
                 });
             });
-
             $('#datatable').on('click', '.btn_edit', function(e) {
                 $('#modal_create').modal('show')
                 $('.error').hide();
                 let url = $(this).attr('data-url');
                 $.get(url, function(response) {
-                  $('#id').val(response.data.id)
-                  $('#nama').val(response.data.nama)
-                  $('#kontak').val(response.data.kontak).trigger('change');
+                    $('#id').val(response.data.id)
+                    AutoNumeric.getAutoNumericElement('#harga').set(response.data.harga)
+                    AutoNumeric.getAutoNumericElement('#pg').set(response.data.pg)
+                    $('#tanggal').flatpickr({
+                        allowInput: true,
+                        dateFormat: "d-m-Y",
+                        locale: "id",
+                        defaultDate: response.data.tanggal
+                    });
+                    $('#tujuan_id').val(response.data.tujuan_id).trigger('change');
+                    $('#transportir_id').val(response.data.tujuan_id).trigger('change');
                 })
             });
-
             $('#datatable').on('click', '.btn_hapus', function(e) {
                 let data = $(this).attr('data-hapus');
                 Swal.fire({
@@ -192,7 +216,6 @@
                     }
                 })
             });
-
         })
     </script>
 @endpush

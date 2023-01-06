@@ -148,7 +148,7 @@
             $('.input').val('');
             $('.select2').val(null).trigger("change");
             $('.error').hide();
-          
+
         }
         window.showError = function(response) {
             $('.error').hide();
@@ -202,6 +202,15 @@
                     Swal.showLoading()
                 }
             });
+        }
+
+        const rupiah = (number) => {
+            return new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                maximumFractionDigits: 0,
+                minimumFractionDigits: 0,
+            }).format(number);
         }
     </script>
 </body>

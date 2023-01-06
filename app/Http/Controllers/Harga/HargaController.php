@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Harga;
 
 use App\Http\Controllers\Controller;
 use App\Models\Harga;
+use App\Models\Transportir;
+use App\Models\Tujuan;
 use App\Utils\ApiResponse;
 use Illuminate\Http\Request;
 
@@ -14,6 +16,8 @@ class HargaController extends Controller
    {
       // abort_if(Gate::denies('kelola mobil'), 403);
       $x['title']    = 'Kelola Harga';
+      $x['tujuan']    = Tujuan::all();
+      $x['transportir']    = Transportir::all();
       $data = Harga::with('tujuan', 'transportir');
 
       if (request()->ajax()) {
@@ -30,12 +34,17 @@ class HargaController extends Controller
 
    public function store(Request $request)
    {
+
       try {
 
          Harga::updateOrCreate(
             ['id'               => $request->id],
             [
-               'nama'             => $request->nama,
+               'harga'          => $request->harga,
+               'pg'             => $request->pg,
+               'tujuan_id'      => $request->tujuan_id,
+               'transportir_id' => $request->transportir_id,
+               'tanggal'        => $request->tanggal,
             ]
          );
 
