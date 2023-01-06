@@ -121,7 +121,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                  <a href="{{ route('harga.index') }}" class="nav-link  {{ request()->routeIs('harga*') ? 'active' : '' }}" >
                         <i class="fas fa-list-ul nav-icon"></i>
                         <p>Master Harga</p>
                     </a>

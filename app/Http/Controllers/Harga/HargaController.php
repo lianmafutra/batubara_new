@@ -4,83 +4,61 @@ namespace App\Http\Controllers\Harga;
 
 use App\Http\Controllers\Controller;
 use App\Models\Harga;
+use App\Utils\ApiResponse;
 use Illuminate\Http\Request;
 
 class HargaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+   use ApiResponse;
+   public function index()
+   {
+      // abort_if(Gate::denies('kelola mobil'), 403);
+      $x['title']    = 'Kelola Harga';
+      $data = Harga::with('tujuan', 'transportir');
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+      if (request()->ajax()) {
+         return  datatables()->of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+               return view('app.harga.action', compact('data'));
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+      }
+      return view('app.harga.index', $x, compact(['data']));
+   }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+   public function store(Request $request)
+   {
+      try {
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Harga  $harga
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Harga $harga)
-    {
-        //
-    }
+         Harga::updateOrCreate(
+            ['id'               => $request->id],
+            [
+               'nama'             => $request->nama,
+            ]
+         );
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Harga  $harga
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Harga $harga)
-    {
-        //
-    }
+         if ($request->id)  return $this->success('Berhasil Mengubah Data');
+         else return $this->success('Berhasil Menginput Data');
+      } catch (\Throwable $th) {
+         return $this->error('Gagal, Terjadi Kesalahan' . $th, 400);
+      }
+   }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Harga  $harga
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Harga $harga)
-    {
-        //
-    }
+   public function edit(Harga $Harga)
+   {
+      return $this->success('Data Harga', $Harga);
+   }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Harga  $harga
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Harga $harga)
-    {
-        //
+   public function destroy(Harga  $Harga)
+   {
+      try {
+         $Harga->delete();
+         return redirect()->back()->with('success', 'Berhasil Hapus Data', 200);
+      } catch (\Throwable $th) {
+         return redirect()->back()->with('error', 'Gagal Hapus Data', 400);
+      }
+   
     }
 }
