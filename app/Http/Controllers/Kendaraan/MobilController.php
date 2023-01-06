@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Kendaraan;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MobilRequest;
+use App\Models\Pemilik;
 use App\Models\Mobil;
 use App\Models\MobilJenis;
-use App\Models\Pemilik;
 use App\Utils\ApiResponse;
+
 class MobilController extends Controller
 {
    use ApiResponse;

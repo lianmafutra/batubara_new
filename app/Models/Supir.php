@@ -12,4 +12,8 @@ class Supir extends Model
     use AutoUUID;
     protected $table = 'supir';
     protected $guarded = [];
+
+    protected $casts = [
+      'created_at'  => 'date:d-m-Y H:m:s',
+   ];
 }

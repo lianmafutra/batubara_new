@@ -3,84 +3,63 @@
 namespace App\Http\Controllers\Kendaraan;
 
 use App\Http\Controllers\Controller;
+use App\Models\Mobil;
 use App\Models\Pemilik;
+use App\Utils\ApiResponse;
 use Illuminate\Http\Request;
 
 class PemilikController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+   use ApiResponse;
+   public function index()
+   {
+      // abort_if(Gate::denies('kelola mobil'), 403);
+      $x['title']    = 'Kelola Pemilik';
+      $data = Pemilik::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+      if (request()->ajax()) {
+         return  datatables()->of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+               return view('app.pemilik.action', compact('data'));
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+      }
+      return view('app.pemilik.index', $x, compact(['data']));
+   }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+   public function store(Request $request)
+   {
+      try {
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Pemilik  $pemilik
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pemilik $pemilik)
-    {
-        //
-    }
+         Pemilik::updateOrCreate(
+            ['id'               => $request->id],
+            [
+               'nama'             => $request->nama,
+               'kontak'   => $request->kontak,
+            ]
+         );
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Pemilik  $pemilik
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Pemilik $pemilik)
-    {
-        //
-    }
+         if ($request->id)  return $this->success('Berhasil Mengubah Data');
+         else return $this->success('Berhasil Menginput Data');
+      } catch (\Throwable $th) {
+         return $this->error('Gagal, Terjadi Kesalahan' . $th, 400);
+      }
+   }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pemilik  $pemilik
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Pemilik $pemilik)
-    {
-        //
-    }
+   public function edit(Pemilik $pemilik)
+   {
+      return $this->success('Data Pemilik', $pemilik);
+   }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Pemilik  $pemilik
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Pemilik $pemilik)
-    {
-        //
-    }
+   public function destroy(Pemilik  $pemilik)
+   {
+      try {
+         $pemilik->delete();
+         return redirect()->back()->with('success', 'Berhasil Hapus Data', 200);
+      } catch (\Throwable $th) {
+         return redirect()->back()->with('error', 'Gagal Hapus Data', 400);
+      }
+   }
 }

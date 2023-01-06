@@ -13,7 +13,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Data Mobil</h1>
+                        <h1 class="m-0">Data tujuan</h1>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <a href="#" class="btn btn-sm btn-primary" id="btn_tambah"><i
-                                            class="fas fa-plus"></i> Tambah Mobil</a>
+                                            class="fas fa-plus"></i> Tambah tujuan</a>
                                 </h3>
                             </div>
                             <div class="card-body">
@@ -36,9 +36,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>Plat</th>
-                                                    <th>Jenis</th>
-                                                    <th>Pemilik</th>
+                                                    <th>Nama</th> 
                                                     <th>Created_at</th>
                                                     <th>#Aksi</th>
                                                 </tr>
@@ -56,7 +54,7 @@
         </section>
     </div>
 @endsection
-@include('app.mobil.modal-create')
+@include('app.tujuan.modal-create')
 @push('js')
     <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -78,9 +76,9 @@
                 info: true,
                 ordering: true,
                 order: [
-                    [4, 'desc']
+                    [2, 'desc']
                 ],
-                ajax: @json(route('mobil.index')),
+                ajax: @json(route('tujuan.index')),
 
                 columns: [{
                         data: "DT_RowIndex",
@@ -88,18 +86,9 @@
                         searchable: false,
                     },
                     {
-                        data: 'plat',
-                        orderable: false,
+                        data: 'nama',
                     },
-                    {
-                        data: 'mobil_jenis.nama',
-                        name: 'mobil_jenis.nama',
-                    },
-                    {
-                        data: 'pemilik.nama',
-                        name: 'pemilik.nama',
-                        orderable: false,
-                    },
+                 
                     {
                         data: 'created_at',
                     },
@@ -123,7 +112,7 @@
                 formData.append('method', 'PUT');
                 $.ajax({
                     type: 'POST',
-                    url: @json(route('mobil.store')),
+                    url: @json(route('tujuan.store')),
                     data: formData,
                     cache: false,
                     contentType: false,
@@ -161,17 +150,16 @@
                 $('.error').hide();
                 let url = $(this).attr('data-url');
                 $.get(url, function(response) {
-                  $('#mobil_id').val(response.data.id)
-                  $('#plat').val(response.data.plat)
-                  $('#mobil_jenis_id').val(response.data.mobil_jenis_id).trigger('change');
-                  $('#pemilik_mobil_id').val(response.data.pemilik_mobil_id).trigger('change');
+                  $('#id').val(response.data.id)
+                  $('#nama').val(response.data.nama)
+                  $('#kontak').val(response.data.kontak).trigger('change');
                 })
             });
 
             $('#datatable').on('click', '.btn_hapus', function(e) {
                 let data = $(this).attr('data-hapus');
                 Swal.fire({
-                    title: 'Apakah anda yakin ingin menghapus data Mobil?',
+                    title: 'Apakah anda yakin ingin menghapus data tujuan?',
                     text: data,
                     icon: 'warning',
                     showCancelButton: true,

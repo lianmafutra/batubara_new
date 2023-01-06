@@ -3,84 +3,62 @@
 namespace App\Http\Controllers\Kendaraan;
 
 use App\Http\Controllers\Controller;
-use App\Models\Supir;
+use App\Models\supir;
+use App\Utils\ApiResponse;
 use Illuminate\Http\Request;
 
 class SupirController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+   use ApiResponse;
+   public function index()
+   {
+      // abort_if(Gate::denies('kelola mobil'), 403);
+      $x['title']    = 'Kelola Supir';
+      $data = Supir::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+      if (request()->ajax()) {
+         return  datatables()->of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+               return view('app.supir.action', compact('data'));
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+      }
+      return view('app.supir.index', $x, compact(['data']));
+   }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+   public function store(Request $request)
+   {
+      try {
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Supir  $supir
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Supir $supir)
-    {
-        //
-    }
+         supir::updateOrCreate(
+            ['id'               => $request->id],
+            [
+               'nama'             => $request->nama,
+               'kontak'   => $request->kontak,
+            ]
+         );
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Supir  $supir
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Supir $supir)
-    {
-        //
-    }
+         if ($request->id)  return $this->success('Berhasil Mengubah Data');
+         else return $this->success('Berhasil Menginput Data');
+      } catch (\Throwable $th) {
+         return $this->error('Gagal, Terjadi Kesalahan' . $th, 400);
+      }
+   }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Supir  $supir
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Supir $supir)
-    {
-        //
-    }
+   public function edit(supir $supir)
+   {
+      return $this->success('Data supir', $supir);
+   }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Supir  $supir
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Supir $supir)
-    {
-        //
-    }
+   public function destroy(supir  $supir)
+   {
+      try {
+         $supir->delete();
+         return redirect()->back()->with('success', 'Berhasil Hapus Data', 200);
+      } catch (\Throwable $th) {
+         return redirect()->back()->with('error', 'Gagal Hapus Data', 400);
+      }
+   }
 }

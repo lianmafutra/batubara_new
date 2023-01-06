@@ -4,9 +4,9 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class Input extends Component
+class input_tel extends Component
 {
-    /**
+   /**
      * Create a new component instance.
      *
      * @return void
@@ -21,7 +21,6 @@ class Input extends Component
       $this->required = $required;
        $this->type = $type;
    }
-
     /**
      * Get the view / contents that represent the component.
      *
@@ -29,6 +28,6 @@ class Input extends Component
      */
     public function render()
     {
-        return view('components.input');
+        return view('components.input-tel');
     }
 }

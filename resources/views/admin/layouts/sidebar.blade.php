@@ -59,8 +59,7 @@
                 @endcan
                 @can('master user')
                     <li class="nav-item">
-                        <a href=""
-                            class="nav-link {{ request()->routeIs('master-user*') ? 'active' : '' }}">
+                        <a href="" class="nav-link {{ request()->routeIs('master-user*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-users"></i>
                             <p> Master User </p>
                         </a>
@@ -75,12 +74,12 @@
                         </a>
                     </li>
                 @endcan
-               
+
                 <li class="nav-header ml-2">Manajemen DO</li>
                 @can('pengajuan verifikasi index')
                     <li class="nav-item menu-is-opening {{ request()->is('admin/kendaraan*') ? 'menu-open' : '' }} ">
                         <a href="" class="nav-link {{ request()->is('admin/kendaraan*') ? 'active' : '' }}">
-                           <i class="fas fa-truck nav-icon"></i>
+                            <i class="fas fa-truck nav-icon"></i>
                             <p>Data Kendaraan</p>
                             <i class="right fas fa-angle-left"></i>
                         </a>
@@ -93,52 +92,59 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href=""
-                                    class="nav-link {{ request()->routeIs('supir*') ? 'active' : '' }}">
-                                    <i class="fas fa-users nav-icon"></i>
-                                    <p>Supir</p>
+                                <a href="{{ route('pemilik.index') }}"
+                                    class="nav-link {{ request()->routeIs('pemilik*') ? 'active' : '' }}">
+                                    <i class="fas fa-user-cog nav-icon"></i>
+                                    <p>Pemilik</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                              <a href="{{ route('supir.index') }}" class="nav-link {{ request()->routeIs('supir*') ? 'active' : '' }}">
+                                  <i class="fas fa-users nav-icon"></i>
+                                  <p>Supir</p>
+                              </a>
+                          </li>
+
                         </ul>
                     </li>
                 @endcan
                 <li class="nav-item">
-                  <a href="" class="nav-link">
-                     <i class="fas fa-warehouse nav-icon"></i>
-                      <p>Master Transportir</p>
-                  </a>
-              </li>
+                    <a href="{{ route('transportir.index') }}" class="nav-link  {{ request()->routeIs('transportir*') ? 'active' : '' }}" >
+                        <i class="fas fa-warehouse nav-icon"></i>
+                        <p>Master Transportir</p>
+                    </a>
+                </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
-                     <i class="fas fa-road nav-icon"></i>
+                  <a href="{{ route('tujuan.index') }}" class="nav-link  {{ request()->routeIs('tujuan*') ? 'active' : '' }}" >
+                        <i class="fas fa-road nav-icon"></i>
                         <p>Master Tujuan</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                  <a href="" class="nav-link">
-                     <i class="fas fa-list-ul nav-icon"></i>
-                      <p>Master Harga</p>
-                  </a>
-              </li>
-              <li class="nav-header ml-2">Transaksi DO</li>
+                    <a href="" class="nav-link">
+                        <i class="fas fa-list-ul nav-icon"></i>
+                        <p>Master Harga</p>
+                    </a>
+                </li>
+                <li class="nav-header ml-2">Transaksi DO</li>
                 <li class="nav-item">
                     <a href="" class="nav-link">
-                     <i class="fas fa-shopping-cart nav-icon"></i>
+                        <i class="fas fa-shopping-cart nav-icon"></i>
                         <p>Pembayaran</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="" class="nav-link">
-                     <i class="fas fa-hand-holding-usd nav-icon"></i>
+                        <i class="fas fa-hand-holding-usd nav-icon"></i>
                         <p>Pencairan</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                  <a href="" class="nav-link">
-                     <i class="fas fa-file-alt nav-icon"></i>
-                      <p>Laporan</p>
-                  </a>
-              </li>
+                    <a href="" class="nav-link">
+                        <i class="fas fa-file-alt nav-icon"></i>
+                        <p>Laporan</p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

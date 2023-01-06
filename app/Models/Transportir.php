@@ -12,4 +12,8 @@ class Transportir extends Model
     use AutoUUID;
     protected $table = 'transportir';
     protected $guarded = [];
+
+    protected $casts = [
+      'created_at'  => 'date:d-m-Y H:m:s',
+   ];
 }

@@ -12,4 +12,8 @@ class Tujuan extends Model
     use AutoUUID;
     protected $table = 'tujuan';
     protected $guarded = [];
+
+    protected $casts = [
+      'created_at'  => 'date:d-m-Y H:m:s',
+   ];
 }
