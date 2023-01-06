@@ -13,7 +13,8 @@ class MobilJenis extends Model
 
     
     protected $casts = [
-      'created_at'       => 'date:d-m-Y H:m:s',
+      'created_at'  => 'date:d-m-Y H:m:s',
+      'updated_at'  => 'date:d-m-Y H:m:s',
    ];
 
  

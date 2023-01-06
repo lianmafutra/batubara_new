@@ -15,5 +15,6 @@ class Transportir extends Model
 
     protected $casts = [
       'created_at'  => 'date:d-m-Y H:m:s',
+      'updated_at'  => 'date:d-m-Y H:m:s',
    ];
 }

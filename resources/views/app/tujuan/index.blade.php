@@ -37,7 +37,8 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Nama</th> 
-                                                    <th>Created_at</th>
+                                                    <th>created_at</th>
+                                                    <th>updated_at</th>
                                                     <th>#Aksi</th>
                                                 </tr>
                                             </thead>
@@ -91,6 +92,9 @@
                  
                     {
                         data: 'created_at',
+                    },
+                    {
+                        data: 'updated_at',
                     },
                     {
                         data: "action",

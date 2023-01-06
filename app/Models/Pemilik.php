@@ -16,7 +16,8 @@ class Pemilik extends Model
     protected $guarded = [];
 
     protected $casts = [
-      'created_at'       => 'date:d-m-Y H:m:s',
+      'created_at'  => 'date:d-m-Y H:m:s',
+      'updated_at'  => 'date:d-m-Y H:m:s',
    ];
 
     public function getRolesOriginAttribute() {
