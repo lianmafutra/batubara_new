@@ -1,12 +1,15 @@
 @extends('admin.layouts.master')
+
 @push('css')
     <link rel="stylesheet" href="{{ asset('template/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }} ">
     <link rel="stylesheet" href="{{ asset('plugins/flatpicker/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatable/dataTables.checkboxes.css') }}">
 @endpush
 @section('content')
     <style>
+
     </style>
     <div class="content-wrapper">
         <div class="content-header">
@@ -27,6 +30,8 @@
                                 <h3 class="card-title">
                                     <a href="#" class="btn btn-sm btn-primary" id="btn_tambah"><i
                                             class="fas fa-plus"></i> Tambah harga</a>
+                                    <a style="display: none" href="#" class="btn btn-sm btn-danger"
+                                        id="btn_hapus_masal"><i class="fas fa-trash"></i> Hapus Masal</a>
                                 </h3>
                             </div>
                             <div class="card-body">
@@ -35,6 +40,7 @@
                                         <table id="datatable" class="table table-bordered" style="width:100%">
                                             <thead>
                                                 <tr>
+                                                    <th></th>
                                                     <th>No</th>
                                                     <th>Harga</th>
                                                     <th>PG</th>
@@ -61,13 +67,17 @@
 @endsection
 @include('app.harga.modal-create')
 @push('js')
-    <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/fh-3.3.1/sl-1.5.0/datatables.min.js">
+    </script>
+
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('plugins/flatpicker/flatpickr.min.js') }}"></script>
     <script src="{{ asset('plugins/flatpicker/id.min.js') }}"></script>
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('plugins/sweetalert2/sweetalert2-min.js') }}"></script>
     <script src="{{ asset('plugins/autoNumeric.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatable/dataTables.checkboxes.min.js') }}"></script>
+
     <script>
         $(document).ready(function() {
             $('.select2bs4').select2({
@@ -79,7 +89,7 @@
                 locale: "id",
             });
             const format = AutoNumeric.multiple('.rupiah', {
-                currencySymbol: 'Rp ',
+                //  currencySymbol: 'Rp ',
                 digitGroupSeparator: '.',
                 decimalPlaces: 0,
                 minimumValue: 0,
@@ -94,14 +104,29 @@
                 searching: true,
                 lengthChange: true,
                 paging: true,
+                select: true,
                 info: true,
                 ordering: true,
-               
+
                 order: [
-                    [2, 'desc']
+                    [7, 'asc']
                 ],
+                columnDefs: [{
+                    targets: 0,
+                    checkboxes: {
+                        selectRow: true,
+                    }
+                }],
+                select: {
+                    style: 'multi',
+                    selector: 'td:not(:last-child)'
+                },
+
                 ajax: @json(route('harga.index')),
                 columns: [{
+                        data: "id",
+                    },
+                    {
                         data: "DT_RowIndex",
                         orderable: false,
                         searchable: false,
@@ -140,12 +165,78 @@
                         searchable: false,
                     },
                 ]
-            });
+            }).on('select', function(e, dt, type, indexes) {
+           
+                var count = datatable.rows({
+                    selected: true
+                }).count();
+                if (count >= 1) {
+                    $('#btn_hapus_masal').show()
+                }
+            }).on('deselect', function(e, dt, type, indexes) {
+                var count = datatable.rows({
+                    selected: true
+                }).count();
+                if (count <= 0) {
+                    $('#btn_hapus_masal').hide()
+                }
+            })
+
+           
             $("#btn_tambah").click(function() {
                 clearInput()
                 $('#modal_create').modal('show')
+                $('.modal-title').text('Tambah Data')
             });
-            $("#form_tambah").submit(function(e) {
+            $("#btn_hapus_masal").click(function() {
+              
+               var token = $("meta[name='csrf-token']").attr("content");
+                Swal.fire({
+                    title: 'Apakah anda yakin ingin menghapus data yang terpilih ?',
+                    text: '',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'POST',
+                            url: @json(route('destroy.multi')),
+                            data: {
+                                "id_array": datatable.rows( { selected: true } ).data().pluck('id').toArray(),
+                            },
+                            beforeSend: function() {
+                                showLoading()
+                            },
+                            success: (response) => {
+                                if (response) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: response.message,
+                                        showCancelButton: true,
+                                        allowEscapeKey: false,
+                                        showCancelButton: false,
+                                        allowOutsideClick: false,
+                                    }).then((result) => {
+                                        swal.hideLoading()
+                                        datatable.ajax.reload()
+                                    })
+                                    swal.hideLoading()
+                                }
+                            },
+                            error: function(response) {
+                                showError(response)
+                            }
+                        });
+                    }
+                })
+            })
+
+
+            $("#form_create").submit(function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
                 formData.append('method', 'PUT');
@@ -185,6 +276,7 @@
             });
             $('#datatable').on('click', '.btn_edit', function(e) {
                 $('#modal_create').modal('show')
+                $('.modal-title').text('Ubah Data')
                 $('.error').hide();
                 let url = $(this).attr('data-url');
                 $.get(url, function(response) {

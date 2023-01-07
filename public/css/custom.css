@@ -252,3 +252,8 @@ span.dropdown-item.dropdown-header {
    padding-top: 20px !important;
    padding-bottom: 20px !important;
 }
+
+.btn-group {
+   height: 25px !important;
+}
+

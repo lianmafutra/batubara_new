@@ -29,6 +29,13 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
    });
  
    Route::resource('transportir', TransportirController::class);
+
+
+   Route::controller(HargaController::class)->group(function () {
+      Route::resource('harga', HargaController::class);
+      Route::post('destroyMulti', 'destroyMulti')->name('destroy.multi');
+   });
+  
    Route::resource('harga', HargaController::class);
    Route::resource('tujuan', TujuanController::class);
   

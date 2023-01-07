@@ -60,7 +60,7 @@ class HargaController extends Controller
       return $this->success('Data Harga', $Harga);
    }
 
-   public function destroy(Harga  $Harga)
+   public function destroy(Harga $Harga)
    {
       try {
          $Harga->delete();
@@ -68,6 +68,15 @@ class HargaController extends Controller
       } catch (\Throwable $th) {
          return redirect()->back()->with('error', 'Gagal Hapus Data', 400);
       }
-   
     }
+
+    public function destroyMulti(Request $request)
+    {
+       try {
+          Harga::whereIn('id',$request->id_array)->delete();
+          return $this->success('Berhasil Hapus Data');
+       } catch (\Throwable $th) {
+         return $this->error('Gagal, Terjadi Kesalahan' . $th, 400);
+       }
+     }
 }

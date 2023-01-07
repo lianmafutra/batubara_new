@@ -15,8 +15,6 @@
                   @method('DELETE')
               </form>
             </a> </li>
-           
-
         </ul>
     </div>
 </div>

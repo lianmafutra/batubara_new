@@ -119,6 +119,7 @@
             $("#btn_tambah").click(function() {
                 clearInput()
                 $('#modal_create').modal('show')
+                $('.modal-title').text('Tambah Data')
             });
 
               
@@ -163,6 +164,7 @@
 
             $('#datatable').on('click', '.btn_edit', function(e) {
                 $('#modal_create').modal('show')
+                $('.modal-title').text('Ubah Data')
                 $('.error').hide();
                 let url = $(this).attr('data-url');
                 $.get(url, function(response) {

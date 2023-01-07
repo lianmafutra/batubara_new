@@ -4,7 +4,12 @@
             <span style="color: red">*</span>
         @endif
     </label>
-    <input id="{{ $id }}" type="text" class="form-control input rupiah" name="{{ $id }}"
-        placeholder="" value="0">
-    <span class="text-danger error error-text {{ $id }}_err"></span>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Rp</span>
+        </div>
+        <input id="{{ $id }}" type="text" class="form-control input rupiah" name="{{ $id }}"
+            placeholder="0" value="0">
+        <span class="text-danger error error-text {{ $id }}_err"></span>
+    </div>
 </div>

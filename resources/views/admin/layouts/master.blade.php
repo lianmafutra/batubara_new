@@ -13,7 +13,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css">
     @stack('style')
     @stack('css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
+<style>
+    table.dataTable tbody tr.selected>* {
+        box-shadow: inset 0 0 0 9999px rgb(13 110 253 / 90%) !important;
+        color: white !important;
+    }
+</style>
 
 <body class="hold-transition sidebar-mini layout-fixed text-sm">
     @php
@@ -146,9 +153,9 @@
         });
         window.clearInput = function() {
             $('.input').val('');
+            $('form').trigger("reset");
             $('.select2').val(null).trigger("change");
             $('.error').hide();
-
         }
         window.showError = function(response) {
             $('.error').hide();
