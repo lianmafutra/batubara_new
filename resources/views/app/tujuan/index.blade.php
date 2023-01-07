@@ -85,6 +85,7 @@
                         data: "DT_RowIndex",
                         orderable: false,
                         searchable: false,
+                        width: '1%'
                     },
                     {
                         data: 'nama',

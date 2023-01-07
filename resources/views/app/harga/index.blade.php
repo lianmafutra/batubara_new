@@ -96,6 +96,7 @@
                 paging: true,
                 info: true,
                 ordering: true,
+               
                 order: [
                     [2, 'desc']
                 ],
@@ -104,6 +105,7 @@
                         data: "DT_RowIndex",
                         orderable: false,
                         searchable: false,
+                        width: '1%'
                     },
                     {
                         data: 'harga',

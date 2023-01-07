@@ -19,7 +19,7 @@
                     </a>
                 </li>@php $i = 1; @endphp
                 @canany(['read user', 'read role', 'read permission'])
-                    <li class="nav-header ml-2">App</li>
+                    <li class="nav-header ml-2">App Settings</li>
                 @endcanany
                 @can('read user')
                     <li class="nav-item">
@@ -120,6 +120,12 @@
                     </a>
                 </li>
                 <li class="nav-header ml-2">Transaksi DO</li>
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                      <i class="fas fa-shopping-cart nav-icon"></i>
+                      <p>Setoran</p>
+                  </a>
+              </li>
                 <li class="nav-item">
                     <a href="" class="nav-link">
                         <i class="fas fa-shopping-cart nav-icon"></i>

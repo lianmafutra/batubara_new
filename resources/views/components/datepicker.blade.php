@@ -1,5 +1,4 @@
-<div>
-    <div class="form-group">
+ <div class="form-group">
         <div class="bd-highlight">
             <label>{{ $label }}
                 @if ($required == 'true')
@@ -17,4 +16,3 @@
         </div>
         <span class="text-danger error-text {{ $id }}_err"></span>
     </div>
-</div>

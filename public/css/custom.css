@@ -7,14 +7,22 @@ li.nav-item {
    margin-left: 10px;
 }
 
+ul.nav.nav-treeview {
+   width: 90px !important;
+}
+
+.sidebar-mini .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-link, .sidebar-mini-md .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-link, .sidebar-mini-xs .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-link {
+   width: 180px;
+}
+
 .sidebar-mini .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-link, .sidebar-mini-md .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-link, .sidebar-mini-xs .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-link {
    padding: 10px;
    width: 214px;
 }
 
-[class*=sidebar-dark]  li.nav-item:hover {
+[class*=sidebar-dark]  li.nav-link:hover {
    border-radius: 10px;
-   background: none !important;
+   background: aliceblue;
    border: none;
    margin-right: 30px;
    width: 214px !important;

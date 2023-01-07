@@ -13,7 +13,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Data transportir</h1>
+                        <h1 class="m-0">Data setoran</h1>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <a href="#" class="btn btn-sm btn-primary" id="btn_tambah"><i
-                                            class="fas fa-plus"></i> Tambah transportir</a>
+                                            class="fas fa-plus"></i> Tambah setoran</a>
                                 </h3>
                             </div>
                             <div class="card-body">
@@ -37,6 +37,7 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Nama</th> 
+                                                    <th>Kontak</th>
                                                     <th>created_at</th>
                                                     <th>updated_at</th>
                                                     <th>#Aksi</th>
@@ -55,7 +56,7 @@
         </section>
     </div>
 @endsection
-@include('app.transportir.modal-create')
+@include('app.setoran.modal-create')
 @push('js')
     <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -77,9 +78,9 @@
                 info: true,
                 ordering: true,
                 order: [
-                    [2, 'desc']
+                    [3, 'desc']
                 ],
-                ajax: @json(route('transportir.index')),
+                ajax: @json(route('setoran.index')),
 
                 columns: [{
                         data: "DT_RowIndex",
@@ -90,7 +91,9 @@
                     {
                         data: 'nama',
                     },
-                 
+                    {
+                        data: 'kontak',
+                    },
                     {
                         data: 'created_at',
                     },
@@ -117,7 +120,7 @@
                 formData.append('method', 'PUT');
                 $.ajax({
                     type: 'POST',
-                    url: @json(route('transportir.store')),
+                    url: @json(route('setoran.store')),
                     data: formData,
                     cache: false,
                     contentType: false,
@@ -164,7 +167,7 @@
             $('#datatable').on('click', '.btn_hapus', function(e) {
                 let data = $(this).attr('data-hapus');
                 Swal.fire({
-                    title: 'Apakah anda yakin ingin menghapus data transportir?',
+                    title: 'Apakah anda yakin ingin menghapus data setoran?',
                     text: data,
                     icon: 'warning',
                     showCancelButton: true,
