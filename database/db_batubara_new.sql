@@ -59,7 +59,6 @@ CREATE TABLE IF NOT EXISTS `harga` (
   `harga` int(11) DEFAULT NULL,
   `pg` int(11) DEFAULT NULL,
   `tanggal` date DEFAULT NULL,
-  `uuid` varchar(500) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -67,17 +66,12 @@ CREATE TABLE IF NOT EXISTS `harga` (
   KEY `FK_harga_transportir` (`transportir_id`),
   CONSTRAINT `FK_harga_transportir` FOREIGN KEY (`transportir_id`) REFERENCES `transportir` (`id`),
   CONSTRAINT `FK_harga_tujuan` FOREIGN KEY (`tujuan_id`) REFERENCES `tujuan` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table db_batubara_new.harga: ~7 rows (approximately)
-INSERT INTO `harga` (`id`, `tujuan_id`, `transportir_id`, `harga`, `pg`, `tanggal`, `uuid`, `created_at`, `updated_at`) VALUES
-	(72, 3, 3, 87, 7878, '2023-01-13', '08a630d1-7328-4c13-bea0-8ea367922be3', '2023-01-07 17:53:28', '2023-01-07 17:53:28'),
-	(73, 3, 3, 87, 7878, '2023-01-13', '08a630d1-7328-4c13-bea0-8ea367922be3', '2023-01-07 17:53:28', '2023-01-07 17:53:28'),
-	(87, 3, 3, 87, 7878, '2023-01-13', '08a630d1-7328-4c13-bea0-8ea367922be3', '2023-01-07 17:53:28', '2023-01-07 17:53:28'),
-	(91, 3, 3, 87, 7878, '2023-01-13', '08a630d1-7328-4c13-bea0-8ea367922be3', '2023-01-07 17:53:28', '2023-01-07 17:53:28'),
-	(94, 3, 3, 87, 7878, '2023-01-13', '08a630d1-7328-4c13-bea0-8ea367922be3', '2023-01-07 17:53:28', '2023-01-07 17:53:28'),
-	(95, 3, 3, 87, 7878, '2023-01-13', '08a630d1-7328-4c13-bea0-8ea367922be3', '2023-01-07 17:53:28', '2023-01-07 17:53:28'),
-	(96, 3, 3, 87, 7878, '2023-01-13', '08a630d1-7328-4c13-bea0-8ea367922be3', '2023-01-07 17:53:28', '2023-01-07 17:53:28');
+-- Dumping data for table db_batubara_new.harga: ~2 rows (approximately)
+INSERT INTO `harga` (`id`, `tujuan_id`, `transportir_id`, `harga`, `pg`, `tanggal`, `created_at`, `updated_at`) VALUES
+	(87, 3, 3, 87, 7878, '2023-01-13', '2023-01-07 17:53:28', '2023-01-07 17:53:28'),
+	(94, 3, 3, 87, 7878, '2023-01-13', '2023-01-07 17:53:28', '2023-01-07 17:53:28');
 
 -- Dumping structure for table db_batubara_new.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
@@ -102,7 +96,6 @@ CREATE TABLE IF NOT EXISTS `mobil` (
   `plat` char(50) DEFAULT NULL,
   `mobil_jenis_id` int(11) NOT NULL,
   `pemilik_mobil_id` int(11) NOT NULL,
-  `uuid` varchar(500) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -112,11 +105,11 @@ CREATE TABLE IF NOT EXISTS `mobil` (
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table db_batubara_new.mobil: ~4 rows (approximately)
-INSERT INTO `mobil` (`id`, `plat`, `mobil_jenis_id`, `pemilik_mobil_id`, `uuid`, `created_at`, `updated_at`) VALUES
-	(1, 'B 981 OPL', 2, 1, 'f638a8f8-aee5-4f2e-8190-a13308810ef2', '2023-01-03 18:06:46', '2023-01-06 06:53:55'),
-	(2, 'B 982 OPL', 1, 1, 'f638a8f8-aee5-4f2e-8190-a13308810ef2', '2023-01-03 18:06:46', '2023-01-04 18:53:48'),
-	(27, 'B 983 OPL', 2, 3, 'f638a8f8-aee5-4f2e-8190-a13308810ef2', '2023-01-03 18:06:46', '2023-01-04 18:53:48'),
-	(35, '9-09-09-0808078070', 2, 3, '633dbc45-d6ac-40e8-85d8-2b92ae58db58', '2023-01-06 08:51:24', '2023-01-06 08:51:24');
+INSERT INTO `mobil` (`id`, `plat`, `mobil_jenis_id`, `pemilik_mobil_id`, `created_at`, `updated_at`) VALUES
+	(1, 'B 981 OPL', 2, 1, '2023-01-03 18:06:46', '2023-01-06 06:53:55'),
+	(2, 'B 982 OPL', 1, 1, '2023-01-03 18:06:46', '2023-01-04 18:53:48'),
+	(27, 'B 983 OPL', 2, 3, '2023-01-03 18:06:46', '2023-01-04 18:53:48'),
+	(35, '9-09-09-0808078070', 2, 3, '2023-01-06 08:51:24', '2023-01-06 08:51:24');
 
 -- Dumping structure for table db_batubara_new.mobil_jenis
 CREATE TABLE IF NOT EXISTS `mobil_jenis` (
@@ -178,17 +171,16 @@ CREATE TABLE IF NOT EXISTS `pemilik_mobil` (
   `nama` char(50) DEFAULT NULL,
   `kontak` char(50) DEFAULT NULL,
   `catatan` text,
-  `uuid` varchar(500) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table db_batubara_new.pemilik_mobil: ~3 rows (approximately)
-INSERT INTO `pemilik_mobil` (`id`, `nama`, `kontak`, `catatan`, `uuid`, `created_at`, `updated_at`) VALUES
-	(1, 'Ade Sukron', '082244261525', NULL, 'C7FF2FE2-5026-47CF-AEA5-2202496AD6A4', '2023-01-03 15:08:51', '2023-01-06 07:29:32'),
-	(3, 'Lian Mafutra', '082244261525', NULL, '9D20E1BF-9396-43C5-8499-0CD1D27EED41', '2023-01-03 15:08:51', '2023-01-03 15:08:52'),
-	(5, 'Joko', '0823782632323', NULL, '79bb7860-bd5b-4c69-a38c-4c6e751fdb08', '2023-01-06 07:28:05', '2023-01-06 08:16:52');
+INSERT INTO `pemilik_mobil` (`id`, `nama`, `kontak`, `catatan`, `created_at`, `updated_at`) VALUES
+	(1, 'Ade Sukron', '082244261525', NULL, '2023-01-03 15:08:51', '2023-01-06 07:29:32'),
+	(3, 'Lian Mafutra', '082244261525', NULL, '2023-01-03 15:08:51', '2023-01-03 15:08:52'),
+	(5, 'Joko', '0823782632323', NULL, '2023-01-06 07:28:05', '2023-01-06 08:16:52');
 
 -- Dumping structure for table db_batubara_new.permissions
 CREATE TABLE IF NOT EXISTS `permissions` (
@@ -372,75 +364,66 @@ CREATE TABLE IF NOT EXISTS `supir` (
   `nama` char(50) DEFAULT NULL,
   `kontak` char(50) DEFAULT NULL,
   `catatan` text,
-  `uuid` varchar(500) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table db_batubara_new.supir: ~3 rows (approximately)
-INSERT INTO `supir` (`id`, `nama`, `kontak`, `catatan`, `uuid`, `created_at`, `updated_at`) VALUES
-	(1, 'Andi', '082244261525', NULL, 'C7FF2FE2-5026-47CF-AEA5-2202496AD6A4', '2023-01-03 15:08:51', '2023-01-06 07:29:32'),
-	(3, 'Udin', '082244261525', NULL, '9D20E1BF-9396-43C5-8499-0CD1D27EED41', '2023-01-03 15:08:51', '2023-01-03 15:08:52'),
-	(5, 'Dedek', '0823782632323', NULL, '79bb7860-bd5b-4c69-a38c-4c6e751fdb08', '2023-01-06 07:28:05', '2023-01-07 10:23:49');
+INSERT INTO `supir` (`id`, `nama`, `kontak`, `catatan`, `created_at`, `updated_at`) VALUES
+	(1, 'Andi', '082244261525', NULL, '2023-01-03 15:08:51', '2023-01-06 07:29:32'),
+	(3, 'Udin', '082244261525', NULL, '2023-01-03 15:08:51', '2023-01-03 15:08:52'),
+	(5, 'Dedek', '0823782632323', NULL, '2023-01-06 07:28:05', '2023-01-07 10:23:49');
 
 -- Dumping structure for table db_batubara_new.transportir
 CREATE TABLE IF NOT EXISTS `transportir` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nama` char(50) DEFAULT NULL,
-  `uuid` varchar(500) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table db_batubara_new.transportir: ~3 rows (approximately)
-INSERT INTO `transportir` (`id`, `nama`, `uuid`, `created_at`, `updated_at`) VALUES
-	(1, 'PT NAN RAING', 'C7FF2FE2-5026-47CF-AEA5-2202496AD6A4', '2023-01-03 15:08:51', '2023-01-06 07:29:32'),
-	(3, 'ADS', '9D20E1BF-9396-43C5-8499-0CD1D27EED41', '2023-01-03 15:08:51', '2023-01-03 15:08:52'),
-	(5, 'DSH', '79bb7860-bd5b-4c69-a38c-4c6e751fdb08', '2023-01-06 07:28:05', '2023-01-06 08:38:07');
+INSERT INTO `transportir` (`id`, `nama`, `created_at`, `updated_at`) VALUES
+	(1, 'PT NAN RAING', '2023-01-03 15:08:51', '2023-01-06 07:29:32'),
+	(3, 'ADS', '2023-01-03 15:08:51', '2023-01-03 15:08:52'),
+	(5, 'DSH', '2023-01-06 07:28:05', '2023-01-06 08:38:07');
 
 -- Dumping structure for table db_batubara_new.tujuan
 CREATE TABLE IF NOT EXISTS `tujuan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nama` char(50) DEFAULT NULL,
-  `uuid` varchar(500) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table db_batubara_new.tujuan: ~3 rows (approximately)
-INSERT INTO `tujuan` (`id`, `nama`, `uuid`, `created_at`, `updated_at`) VALUES
-	(1, 'BHS', 'C7FF2FE2-5026-47CF-AEA5-2202496AD6A4', '2023-01-03 15:08:51', '2023-01-06 07:29:32'),
-	(3, 'TEBAT PATAH', '9D20E1BF-9396-43C5-8499-0CD1D27EED41', '2023-01-03 15:08:51', '2023-01-03 15:08:52'),
-	(5, 'KAI', '79bb7860-bd5b-4c69-a38c-4c6e751fdb08', '2023-01-06 07:28:05', '2023-01-06 08:38:07');
+INSERT INTO `tujuan` (`id`, `nama`, `created_at`, `updated_at`) VALUES
+	(1, 'BHS', '2023-01-03 15:08:51', '2023-01-06 07:29:32'),
+	(3, 'TEBAT PATAH', '2023-01-03 15:08:51', '2023-01-03 15:08:52'),
+	(5, 'KAI', '2023-01-06 07:28:05', '2023-01-06 08:38:07');
 
 -- Dumping structure for table db_batubara_new.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nip` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `opd_id` int(10) unsigned NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `kontak` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `foto` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `foto_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_penanda_tangan` enum('TRUE','FALSE') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `img_ttd` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `uuid` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
-  KEY `uuid` (`uuid`)
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table db_batubara_new.users: ~1 rows (approximately)
-INSERT INTO `users` (`id`, `username`, `nip`, `opd_id`, `name`, `kontak`, `foto`, `foto_path`, `password`, `remember_token`, `is_penanda_tangan`, `img_ttd`, `uuid`, `created_at`, `updated_at`) VALUES
-	(1, 'superadmin', '', 1, 'Lian Mafutra', '082244261525', NULL, NULL, '$2y$10$0TCZyv09VXo58L2.JmjSeen0p126nwBE9LkBK41zy1TQ0.ftCASLG', '60o9kk52jc6fxbxo7lcSKNtWkA3uelisN1SeJSZsNtm2n5JfN3vRh9QZrfqg', NULL, NULL, '4eebbb1b-bb61-480c-b449-9d80111a7645', '2022-11-23 09:04:52', '2023-01-03 14:02:24');
+INSERT INTO `users` (`id`, `username`, `name`, `kontak`, `foto`, `foto_path`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+	(1, 'superadmin', 'Lian Mafutra', '082244261525', NULL, NULL, '$2y$10$0TCZyv09VXo58L2.JmjSeen0p126nwBE9LkBK41zy1TQ0.ftCASLG', 'Tc7kVUAW72LPv0KLVIXOR9hZqbDLESOoG6L7rxeogph0BOeWXwjmCUGikpWc', '2022-11-23 09:04:52', '2023-01-03 14:02:24');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
