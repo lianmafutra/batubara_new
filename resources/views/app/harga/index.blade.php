@@ -76,6 +76,7 @@
     <script src="{{ asset('plugins/sweetalert2/sweetalert2-min.js') }}"></script>
     <script src="{{ asset('plugins/autoNumeric.min.js') }}"></script>
     <script src="{{ asset('plugins/datatable/dataTables.checkboxes.min.js') }}"></script>
+    <script src="{{ asset('plugins/jquery.mask.min.js') }}"></script>
 
     <script>
         $(document).ready(function() {
@@ -88,6 +89,7 @@
                 dateFormat: "d-m-Y",
                 locale: "id",
             });
+            $('.tanggal').mask('00-00-0000');
             const format = AutoNumeric.multiple('.rupiah', {
                 //  currencySymbol: 'Rp ',
                 digitGroupSeparator: '.',

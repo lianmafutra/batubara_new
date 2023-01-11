@@ -59,6 +59,7 @@
     </div>
 @endsection
 @include('app.uang-jalan.modal-create')
+
 @push('js')
     <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -67,17 +68,22 @@
     <script src="{{ asset('plugins/flatpicker/flatpickr.min.js') }}"></script>
     <script src="{{ asset('plugins/flatpicker/id.min.js') }}"></script>
     <script src="{{ asset('plugins/autoNumeric.min.js') }}"></script>
+    <script src="{{ asset('plugins/jquery.mask.min.js') }}"></script>
     <script>
         $(document).ready(function() {
 
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
             })
+
             $('.tanggal').flatpickr({
                 allowInput: true,
                 dateFormat: "d-m-Y",
                 locale: "id",
             })
+
+            $('.tanggal').mask('00-00-0000');
+            
             const format = AutoNumeric.multiple('.rupiah', {
                 //  currencySymbol: 'Rp ',
                 digitGroupSeparator: '.',
@@ -145,7 +151,7 @@
                 $('.modal-title').text('Tambah Data')
             });
 
-              
+
             $("#form_tambah").submit(function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
@@ -185,20 +191,19 @@
             });
 
             $('#datatable').on('click', '.btn_edit', function(e) {
-                $('#modal_create').modal('show')
-                $('.modal-title').text('Ubah Data')
+                $('#modal_edit').modal('show')
                 $('.error').hide();
                 let url = $(this).attr('data-url');
                 $.get(url, function(response) {
-                  $('#id').val(response.data.id)
-                  $('#tgl_ambil_uang_jalan').flatpickr({
+                    $('#id').val(response.data.id)
+                    $('#tgl_ambil_uang_jalan').flatpickr({
                         allowInput: true,
                         dateFormat: "d-m-Y",
                         locale: "id",
                         defaultDate: response.data.tgl_ambil_uang_jalan
                     });
-                  AutoNumeric.getAutoNumericElement('#uang_jalan').set(response.data.uang_jalan)
-                  $('#supir_id').val(response.data.supir_id).trigger('change');
+                    AutoNumeric.getAutoNumericElement('#uang_jalan').set(response.data.uang_jalan)
+                    $('#supir_id').val(response.data.supir_id).trigger('change');
                 })
             });
 

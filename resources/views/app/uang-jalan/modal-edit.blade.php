@@ -13,16 +13,16 @@
         }
     }
 </style>
-<div class="modal fade" id="modal_create">
+<div class="modal fade" id="modal_edit">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="modal-title">Tambah Data</h6>
+                <h6 class="modal-title">Ubah Data</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_tambah">
+            <form id="form_edit">
                 @csrf
                 <div class="modal-body">
                     <input hidden id="id" name="id" value="" />
