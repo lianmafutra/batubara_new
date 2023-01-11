@@ -32,23 +32,15 @@
                             </div>
                             <div class="card-body">
                                 <div class="tab-content">
-                                    <div class="card-body table-responsive">
-                                        <table id="datatable" class="table table-bordered" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Nama Supir</th>
-                                                    <th>Tanggal</th>
-                                                    <th>Uang Jalan</th>
-                                                    <th>Uang Tambahan</th>
-                                                    <th>Uang Kurangan</th>
-                                                    <th>#Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <x-datatable id="datatable" :th="[
+                                        'No',
+                                        'Nama Supir',
+                                        'Tanggal',
+                                        'Uang Jalan',
+                                        'Uang Tambahan',
+                                        'Uang Kurangan',
+                                        '#aksi',
+                                    ]"></x-datatable>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +75,7 @@
             })
 
             $('.tanggal').mask('00-00-0000');
-            
+
             const format = AutoNumeric.multiple('.rupiah', {
                 //  currencySymbol: 'Rp ',
                 digitGroupSeparator: '.',
