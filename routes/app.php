@@ -4,6 +4,7 @@ use App\Http\Controllers\Harga\HargaController;
 use App\Http\Controllers\Kendaraan\MobilController;
 use App\Http\Controllers\Kendaraan\PemilikController;
 use App\Http\Controllers\Kendaraan\SupirController;
+use App\Http\Controllers\Transaksi\UangJalanController;
 use App\Http\Controllers\Transportir\TransportirController;
 use App\Http\Controllers\Tujuan\TujuanController;
 use App\Models\Pembayaran;
@@ -28,8 +29,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
       Route::resource('pembayaran', Pembayaran::class);
    });
  
+   Route::resource('uang-jalan', UangJalanController::class);
    Route::resource('transportir', TransportirController::class);
-
 
    Route::controller(HargaController::class)->group(function () {
       Route::resource('harga', HargaController::class);

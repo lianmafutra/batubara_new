@@ -9,7 +9,7 @@
             <span class="input-group-text">Rp</span>
         </div>
         <input id="{{ $id }}" type="text" class="form-control input rupiah" name="{{ $id }}"
-            placeholder="0" value="0">
+            placeholder="0" value="">
         <span class="text-danger error error-text {{ $id }}_err"></span>
     </div>
 </div>

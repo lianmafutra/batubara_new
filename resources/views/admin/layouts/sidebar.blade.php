@@ -121,6 +121,12 @@
                 </li>
                 <li class="nav-header ml-2">Transaksi DO</li>
                 <li class="nav-item">
+                  <a href="{{ route('uang-jalan.index') }}" class="nav-link  {{ request()->routeIs('uang-jalan*') ? 'active' : '' }}" >
+                     <i class="fas fa-file-invoice-dollar  nav-icon"></i>
+                      <p>Uang Jalan</p>
+                  </a>
+              </li>
+                <li class="nav-item">
                   <a href="" class="nav-link">
                       <i class="fas fa-shopping-cart nav-icon"></i>
                       <p>Setoran</p>
