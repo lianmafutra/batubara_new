@@ -5,5 +5,5 @@
         @endif
     </label>
     <textarea id="{{ $id }}" name="{{ $id }}" class="form-control" rows="3"
-        placeholder="{{ $hint }}"></textarea>
+        placeholder="{{ $hint }}"  @if ($required == 'true') required @endif></textarea>
 </div>

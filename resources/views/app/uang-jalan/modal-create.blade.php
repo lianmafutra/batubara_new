@@ -26,13 +26,13 @@
                 @csrf
                 <div class="modal-body">
                     <input hidden id="id" name="id" value="" />
-                    <x-datepicker id='tgl_ambil_uang_jalan' label='Tanggal Ambil Uang Jalan' required=true />
+                    <x-datepicker id='tgl_ambil_uang_jalan' label='Tanggal Ambil Uang Jalan' required="true" />
                     <x-select2 id="supir_id" label="Supir" required="true" placeholder="Pilih Supir">
                         @foreach ($supir as $item)
                             <option value="{{ $item->id }}">{{ $item->nama }}</option>
                         @endforeach
                     </x-select2>
-                    <x-input-rupiah id='uang_jalan' label='Uang Jalan' required=true />
+                    <x-input-rupiah id='uang_jalan' label='Uang Jalan' required='true' />
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn_submit btn btn-primary">Simpan</button>
