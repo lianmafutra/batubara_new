@@ -151,6 +151,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
         window.clearInput = function() {
             $('.input').val('');
             $('form').trigger("reset");
@@ -174,6 +175,19 @@
                 text: text,
             })
         }
+
+        window.showLoading = function() {
+            Swal.fire({
+                title: 'Mengirim Data...',
+                html: 'Mohon Tunggu...',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                }
+            });
+        }
+
 
         function printErrorMsg(msg) {
             let dataku = [];
@@ -199,17 +213,6 @@
                 return !b.includes(element);
             });
         }
-        window.showLoading = function() {
-            Swal.fire({
-                title: 'Mengirim Data...',
-                html: 'Mohon Tunggu...',
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading()
-                }
-            });
-        }
 
         const rupiah = (number) => {
             return new Intl.NumberFormat("id-ID", {
@@ -220,9 +223,17 @@
             }).format(number);
         }
 
+        //  select2 auto focus search input on open
         $(document).on('select2:open', () => {
             document.querySelector('.select2-search__field').focus();
         });
+      
+        // auto focus first input on open modal 
+        $(document).on('shown.bs.modal', function(e) {
+            $('input:visible:enabled:first', e.target).focus();
+        });
+
+
     </script>
 </body>
 
