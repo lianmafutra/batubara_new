@@ -96,7 +96,7 @@ CREATE TABLE `harga` (
   KEY `FK_harga_transportir` (`transportir_id`),
   CONSTRAINT `FK_harga_transportir` FOREIGN KEY (`transportir_id`) REFERENCES `transportir` (`id`),
   CONSTRAINT `FK_harga_tujuan` FOREIGN KEY (`tujuan_id`) REFERENCES `tujuan` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +105,7 @@ CREATE TABLE `harga` (
 
 LOCK TABLES `harga` WRITE;
 /*!40000 ALTER TABLE `harga` DISABLE KEYS */;
-INSERT INTO `harga` VALUES (87,3,3,87,7878,'2023-01-13','2023-01-07 17:53:28','2023-01-07 17:53:28'),(94,3,3,87,7878,'2023-01-13','2023-01-07 17:53:28','2023-01-07 17:53:28');
+INSERT INTO `harga` VALUES (87,3,3,15000,7878,'2023-01-15','2023-01-07 17:53:28','2023-01-07 17:53:28'),(94,3,3,13000,7878,'2023-01-13','2023-01-07 17:53:28','2023-01-15 15:22:22'),(95,3,1,19000,2323,'2023-01-19','2023-01-15 16:19:36','2023-01-15 16:19:36'),(96,3,3,11000,7878,'2023-01-11','2023-01-07 17:53:28','2023-01-07 17:53:28'),(97,3,3,10000,7878,'2023-01-10','2023-01-07 17:53:28','2023-01-15 15:22:22');
 /*!40000 ALTER TABLE `harga` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -422,8 +422,8 @@ CREATE TABLE `setoran` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pemilik_mobil_id` int(11) DEFAULT NULL,
   `supir_id` int(11) DEFAULT NULL,
+  `supir_nama` varchar(50) DEFAULT NULL,
   `mobil_id` int(11) DEFAULT NULL,
-  `harga` int(11) DEFAULT '0',
   `uang_jalan` int(11) DEFAULT NULL,
   `uang_tambahan` int(11) DEFAULT '0',
   `uang_kurangan` int(11) DEFAULT '0',
@@ -432,15 +432,17 @@ CREATE TABLE `setoran` (
   `tgl_bongkar` date DEFAULT NULL,
   `berat` int(20) DEFAULT '0',
   `tujuan_id` int(11) DEFAULT NULL,
+  `tujuan_nama` varchar(50) DEFAULT NULL,
   `status_pembayaran` varchar(50) DEFAULT 'belum lunas',
   `status_pencairan` varchar(20) DEFAULT '0',
   `transportir_id` int(11) DEFAULT NULL,
+  `transportir_nama` varchar(50) DEFAULT NULL,
   `foto` text,
   `uuid` varchar(100) DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -449,7 +451,7 @@ CREATE TABLE `setoran` (
 
 LOCK TABLES `setoran` WRITE;
 /*!40000 ALTER TABLE `setoran` DISABLE KEYS */;
-INSERT INTO `setoran` VALUES (15,NULL,1,1,260,700000,0,0,'2022-11-03','2022-11-04',NULL,12000,2,'belum lunas','0',2,NULL,'db3c2808-2abd-3816-9660-c4cb0471f9bf','2022-11-04 05:56:52','2022-11-02 07:14:35');
+INSERT INTO `setoran` VALUES (16,NULL,3,'dwdwqd',NULL,67000,0,0,'2023-01-06',NULL,NULL,0,NULL,'','belum lunas','0',NULL,'',NULL,NULL,'2023-01-15 22:18:55','2023-01-15 22:18:55'),(17,NULL,1,'wqd',NULL,788888,0,0,'2023-01-15',NULL,NULL,0,NULL,'','belum lunas','0',NULL,'',NULL,NULL,'2023-01-15 23:19:53','2023-01-15 23:19:53'),(18,NULL,5,'qd',NULL,6000000,0,0,'2023-01-15',NULL,NULL,0,NULL,'','belum lunas','0',NULL,'',NULL,NULL,'2023-01-15 23:20:22','2023-01-15 23:20:22');
 /*!40000 ALTER TABLE `setoran` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -607,4 +609,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-12  8:19:09
+-- Dump completed on 2023-01-16  2:13:56
