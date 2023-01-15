@@ -193,7 +193,7 @@
 
            
             $("#btn_tambah").click(function() {
-               flatpicker.setDate(new Date())
+                flatpicker.setDate('')
                 clearInput()
                 $('#modal_create').modal('show')
                 $('.modal-title').text('Tambah Data')
@@ -293,7 +293,7 @@
                     $('#id').val(response.data.id)
                     AutoNumeric.getAutoNumericElement('#harga').set(response.data.harga)
                     AutoNumeric.getAutoNumericElement('#pg').set(response.data.pg)
-                    flatpicker.setDate(new Date(response.data.tanggal))
+                    flatpicker.setDate(response.data.tanggal)
                 
                     $('#tujuan_id').val(response.data.tujuan_id).trigger('change');
                     $('#transportir_id').val(response.data.tujuan_id).trigger('change');

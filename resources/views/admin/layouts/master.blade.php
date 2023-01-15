@@ -231,7 +231,7 @@
         // auto focus first input on open modal 
         $(document).on('shown.bs.modal', function(e) {
 
-         if(!$(e.target).first().find('input').hasClass('tanggal')){
+         if(!$(e.target).find('input').first().hasClass('tanggal')){
             $('form').find('.input, textarea, select').filter(':visible:first').focus();
          }
         });

@@ -67,12 +67,7 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
             })
-<<<<<<< HEAD
             
-=======
-
-
->>>>>>> 27a8343f0b8d46a83b1e4c2d4cff2be891b7b911
             const flatpicker = flatpickr("#tgl_ambil_uang_jalan", {
                 allowInput: true,
                 dateFormat: "d-m-Y",
@@ -143,7 +138,7 @@
             });
 
             $("#btn_tambah").click(function() {
-                flatpicker.setDate(new Date())
+                flatpicker.setDate()
                 clearInput()
                 $('#modal_create').modal('show')
                 $('.modal-title').text('Tambah Data')
@@ -195,7 +190,7 @@
                 let url = $(this).attr('data-url');
                 $.get(url, function(response) {
                     $('#id').val(response.data.id)
-                    flatpicker.setDate(new Date(response.data.tgl_ambil_uang_jalan))
+                    flatpicker.setDate(response.data.tgl_ambil_uang_jalan)
                     AutoNumeric.getAutoNumericElement('#uang_jalan').set(response.data.uang_jalan)
                     $('#supir_id').val(response.data.supir_id).trigger('change');
                 })
