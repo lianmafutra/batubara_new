@@ -82,15 +82,14 @@
     <script>
         $(document).ready(function() {
 
-         $('#tujuan_id').prop('disabled', true);
-         $('#transportir_id').prop('disabled', true);
-         $('#harga').prop('disabled', true);
-                       
+            $('#tujuan_id').prop('disabled', true);
+            $('#transportir_id').prop('disabled', true);
+            $('#harga').prop('disabled', true);
 
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
             })
-            const flatpicker = flatpickr("#tgl_muat", {
+            const tgl_muat = flatpickr("#tgl_muat", {
                 allowInput: true,
                 dateFormat: "d-m-Y",
                 locale: "id",
@@ -106,8 +105,8 @@
             });
             $('.tanggal').mask('00-00-0000');
 
-          
-          AutoNumeric.multiple('.rupiah', {
+
+            AutoNumeric.multiple('.rupiah', {
                 //  currencySymbol: 'Rp ',
                 digitGroupSeparator: '.',
                 decimalPlaces: 0,
@@ -257,13 +256,15 @@
             });
 
             $('#datatable').on('click', '.btn_edit', function(e) {
+                clearInput()
                 $('#modal_create').modal('show')
                 $('.error').hide();
                 let url = $(this).attr('data-url');
                 $.get(url, function(response) {
-                    $('#id').val(response.data.id)
-                    $('#nama').val(response.data.nama)
-                    $('#kontak').val(response.data.kontak).trigger('change');
+                   $('#berat').val(response.data.berat)
+                    AutoNumeric.getAutoNumericElement('#uang_tambahan').set(response.data.uang_tambahan)
+                    AutoNumeric.getAutoNumericElement('#uang_kurangan').set(response.data.uang_kurangan)
+                    tgl_muat.setDate(response.data.tgl_muat)
                 })
             });
 

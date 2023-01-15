@@ -37,10 +37,17 @@ class SetoranController extends Controller
       return view('app.setoran.index', $x, compact(['data']));
     }
 
+    public function edit(Setoran $setoran)
+    {
+      return $this->success('Data Setoran',  $setoran);
+    }
+
+    
 
     public function getMasterHarga($tgl_muat){
-         return $this->success('Data Master Harga Sesuai tgl muat',  $this->getMasterHargaByTglMuat($tgl_muat));
-    }
+      return $this->success('Data Master Harga Sesuai tgl muat',  $this->getMasterHargaByTglMuat($tgl_muat));
+ }
+
 
     
     public function create()
@@ -61,10 +68,7 @@ class SetoranController extends Controller
     }
 
    
-    public function edit(Setoran $setoran)
-    {
-        //
-    }
+ 
 
    
     public function update(Request $request, Setoran $setoran)
