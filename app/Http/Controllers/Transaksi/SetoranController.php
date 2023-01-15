@@ -1,21 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\Transaksi\Setoran;
+namespace App\Http\Controllers\Transaksi;
 
 use App\Http\Controllers\Controller;
+use App\Models\Harga;
 use App\Models\Setoran;
+use App\Services\SetoranService;
 use App\Utils\ApiResponse;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SetoranController extends Controller
 {
+
+
    
-   use ApiResponse;
+    use ApiResponse, SetoranService;
+
+
+
+    
     public function index()
     {
       $x['title']    = 'Kelola Data Setoran';
       $data = Setoran::all();
-
+   
       if (request()->ajax()) {
          return  datatables()->of($data)
             ->addIndexColumn()
@@ -26,6 +35,11 @@ class SetoranController extends Controller
             ->make(true);
       }
       return view('app.setoran.index', $x, compact(['data']));
+    }
+
+
+    public function getMasterHarga($tgl_muat){
+         return $this->success('Data Master Harga Sesuai tgl muat',  $this->getMasterHargaByTglMuat($tgl_muat));
     }
 
     

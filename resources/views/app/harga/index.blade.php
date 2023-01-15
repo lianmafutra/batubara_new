@@ -90,7 +90,10 @@
                 dateFormat: "d-m-Y",
                 locale: "id",
             });
+            
             $('.tanggal').mask('00-00-0000');
+
+            
             const format = AutoNumeric.multiple('.rupiah', {
                 //  currencySymbol: 'Rp ',
                 digitGroupSeparator: '.',

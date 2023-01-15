@@ -18,7 +18,7 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="modal-title">Tambah setoran Baru</h6>
+                <h6 class="modal-title">Ubah Data</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -26,8 +26,13 @@
             <form id="form_tambah">
                 @csrf
                 <div class="modal-body">
-                    <x-input id='nama' label='Nama setoran Mobil' required=true />
-                    <x-input-tel id='kontak' label='Kontak' required=true />
+                    <x-input-rupiah id='uang_tambahan' label='Uang Tambahan' required=true />
+                    <x-input-rupiah id='uang_kurangan' label='Uang Kurangan' required=true />
+                    <x-datepicker id='tgl_muat' label='Tanggal Muat' required=true />
+                    <x-input id='berat' label='Berat Muatan' required=true />
+                    <x-input id='tujuan_id' label='Tujuan' required=true />
+                    <x-input id='transportir_id' label='Transportir' required=true />
+                    <x-input-rupiah id='harga' label='Harga' required=true />
                     <input hidden  id="id" name="id" value="" />
                 </div>
                 <div class="modal-footer">
