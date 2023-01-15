@@ -227,13 +227,14 @@
         $(document).on('select2:open', () => {
             document.querySelector('.select2-search__field').focus();
         });
-      
+
         // auto focus first input on open modal 
         $(document).on('shown.bs.modal', function(e) {
-            $('input:visible:enabled:first', e.target).focus();
+
+         if(!$(e.target).first().find('input').hasClass('tanggal')){
+            $('form').find('.input, textarea, select').filter(':visible:first').focus();
+         }
         });
-
-
     </script>
 </body>
 

@@ -68,11 +68,12 @@
                 theme: 'bootstrap4',
             })
 
-            $('.tanggal').flatpickr({
+
+            const flatpicker = flatpickr("#tgl_ambil_uang_jalan", {
                 allowInput: true,
                 dateFormat: "d-m-Y",
                 locale: "id",
-            })
+            });
 
             $('.tanggal').mask('00-00-0000');
 
@@ -138,6 +139,7 @@
             });
 
             $("#btn_tambah").click(function() {
+                flatpicker.setDate(new Date())
                 clearInput()
                 $('#modal_create').modal('show')
                 $('.modal-title').text('Tambah Data')
@@ -183,17 +185,13 @@
             });
 
             $('#datatable').on('click', '.btn_edit', function(e) {
-                $('#modal_edit').modal('show')
+                $('#modal_create').modal('show')
+                $('.modal-title').text('Ubah Data')
                 $('.error').hide();
                 let url = $(this).attr('data-url');
                 $.get(url, function(response) {
                     $('#id').val(response.data.id)
-                    $('#tgl_ambil_uang_jalan').flatpickr({
-                        allowInput: true,
-                        dateFormat: "d-m-Y",
-                        locale: "id",
-                        defaultDate: response.data.tgl_ambil_uang_jalan
-                    });
+                    flatpicker.setDate(new Date(response.data.tgl_ambil_uang_jalan))
                     AutoNumeric.getAutoNumericElement('#uang_jalan').set(response.data.uang_jalan)
                     $('#supir_id').val(response.data.supir_id).trigger('change');
                 })

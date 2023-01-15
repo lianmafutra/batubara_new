@@ -32,9 +32,6 @@ class UangJalanController extends Controller
     }
 
 
-   
-
-
     public function store(Request $request)
     {
       try {
