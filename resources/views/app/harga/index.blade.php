@@ -84,7 +84,8 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
             })
-            $('#tanggal').flatpickr({
+             
+            const flatpicker = flatpickr("#tanggal", {
                 allowInput: true,
                 dateFormat: "d-m-Y",
                 locale: "id",
@@ -192,6 +193,7 @@
 
            
             $("#btn_tambah").click(function() {
+               flatpicker.setDate(new Date())
                 clearInput()
                 $('#modal_create').modal('show')
                 $('.modal-title').text('Tambah Data')
@@ -291,12 +293,8 @@
                     $('#id').val(response.data.id)
                     AutoNumeric.getAutoNumericElement('#harga').set(response.data.harga)
                     AutoNumeric.getAutoNumericElement('#pg').set(response.data.pg)
-                    $('#tanggal').flatpickr({
-                        allowInput: true,
-                        dateFormat: "d-m-Y",
-                        locale: "id",
-                        defaultDate: response.data.tanggal
-                    });
+                    flatpicker.setDate(new Date(response.data.tanggal))
+                
                     $('#tujuan_id').val(response.data.tujuan_id).trigger('change');
                     $('#transportir_id').val(response.data.tujuan_id).trigger('change');
                 })
