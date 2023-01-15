@@ -67,7 +67,12 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
             })
+<<<<<<< HEAD
             
+=======
+
+
+>>>>>>> 27a8343f0b8d46a83b1e4c2d4cff2be891b7b911
             const flatpicker = flatpickr("#tgl_ambil_uang_jalan", {
                 allowInput: true,
                 dateFormat: "d-m-Y",
