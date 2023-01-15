@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Mobil extends Model
 {
    use HasFactory;
-   use AutoUUID;
+   // use AutoUUID;
 
    protected $table = 'mobil';
    protected $guarded = [];

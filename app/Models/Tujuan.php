@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tujuan extends Model
 {
     use HasFactory;
-    use AutoUUID;
+   //  use AutoUUID;
     protected $table = 'tujuan';
     protected $guarded = [];
 

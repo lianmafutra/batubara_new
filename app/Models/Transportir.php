@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Transportir extends Model
 {
     use HasFactory;
-    use AutoUUID;
+   //  use AutoUUID;
     protected $table = 'transportir';
     protected $guarded = [];
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Supir extends Model
 {
     use HasFactory;
-    use AutoUUID;
+   //  use AutoUUID;
     protected $table = 'supir';
     protected $guarded = [];
 

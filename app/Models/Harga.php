@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Harga extends Model
 {
     use HasFactory;
-    use AutoUUID;
+   //  use AutoUUID;
     protected $table = 'harga';
     protected $guarded = [];
 

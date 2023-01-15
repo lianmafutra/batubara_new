@@ -11,7 +11,7 @@ use Vinkla\Hashids\Facades\Hashids;
 class Pemilik extends Model
 {
     use HasFactory;
-    use AutoUUID;
+   //  use AutoUUID;
     protected $table = 'pemilik_mobil';
     protected $guarded = [];
 
