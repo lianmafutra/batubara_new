@@ -299,7 +299,7 @@
                     flatpicker.setDate(response.data.tanggal)
                 
                     $('#tujuan_id').val(response.data.tujuan_id).trigger('change');
-                    $('#transportir_id').val(response.data.tujuan_id).trigger('change');
+                    $('#transportir_id').val(response.data.transportir_id).trigger('change');
                 })
             });
             $('#datatable').on('click', '.btn_hapus', function(e) {

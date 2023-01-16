@@ -46,12 +46,16 @@ class Handler extends ExceptionHandler
    }
    public function render($request, Throwable $exception)
    {
-      if ($exception instanceof CustomException) {
-         return response()->json(['error' => $exception->getMessage()], 400);
+      
+      if ($request->ajax()) {
+         if ($exception instanceof TokenMismatchException) {
+            return response()->json(['error' => 'Your form has expired. Please try again'], 419);
+         }
+         if ($exception instanceof CustomException) {
+            return response()->json(['error' => $exception->getMessage()], 400);
+         }
       }
-      if ($exception instanceof TokenMismatchException) {
-         return response()->json(['error' => 'Your form has expired. Please try again'], 419);
-      }
+     
 
       return parent::render($request, $exception);
    }

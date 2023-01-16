@@ -5,26 +5,24 @@ namespace App\Http\Controllers\Transaksi;
 use App\Http\Controllers\Controller;
 use App\Models\Harga;
 use App\Models\Setoran;
+use App\Models\Transportir;
+use App\Models\Tujuan;
 use App\Services\SetoranService;
 use App\Utils\ApiResponse;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SetoranController extends Controller
 {
 
+   use ApiResponse, SetoranService;
 
-   
-    use ApiResponse, SetoranService;
-
-
-
-    
-    public function index()
-    {
+   public function index()
+   {
       $x['title']    = 'Kelola Data Setoran';
+      $x['tujuan']    = Tujuan::all();
+      $x['transportir']    = Transportir::all();
       $data = Setoran::all();
-   
+
       if (request()->ajax()) {
          return  datatables()->of($data)
             ->addIndexColumn()
@@ -35,50 +33,55 @@ class SetoranController extends Controller
             ->make(true);
       }
       return view('app.setoran.index', $x, compact(['data']));
-    }
+   }
 
-    public function edit(Setoran $setoran)
-    {
+   public function edit(Setoran $setoran)
+   {
+   
       return $this->success('Data Setoran',  $setoran);
-    }
+   }
 
-    
-
-    public function getMasterHarga($tgl_muat){
+   public function getMasterHarga($tgl_muat)
+   {
       return $this->success('Data Master Harga Sesuai tgl muat',  $this->getMasterHargaByTglMuat($tgl_muat));
- }
+   }
 
 
+   public function store(Request $request)
+   {
     
-    public function create()
-    {
-        //
-    }
+   }
 
-    
-    public function store(Request $request)
-    {
-        //
-    }
 
-    
-    public function show(Setoran $setoran)
-    {
-        //
-    }
+   public function show(Setoran $setoran)
+   {
+      //
+   }
 
-   
- 
+   public function update(Request $request, Setoran $setoran)
+   {
+  
+      try {
+         $tujuan      = Tujuan::find($request->tujuan_id);
+         $transportir = Transportir::find($request->transportir_id);
+         $input = $request->except(['harga']);
+         $input['tujuan_nama'] =   $tujuan->nama;
+         $input['transportir_nama'] =   $transportir->nama;
+         $setoran->fill($input)->save();
+         return $this->success('Berhasil Merubah Data');
+      } catch (\Throwable $th) {
+         return $this->error('Gagal, Terjadi Kesalahan' . $th, 400);
+      }
+   }
 
-   
-    public function update(Request $request, Setoran $setoran)
-    {
-        //
-    }
 
-   
-    public function destroy(Setoran $setoran)
-    {
-        //
-    }
+   public function destroy(Setoran $setoran)
+   {
+      try {
+         $setoran->delete();
+         return redirect()->back()->with('success', 'Berhasil Hapus Data', 200);
+      } catch (\Throwable $th) {
+         return redirect()->back()->with('error', 'Gagal Hapus Data', 400);
+      }
+   }
 }

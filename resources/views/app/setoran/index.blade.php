@@ -82,9 +82,10 @@
     <script>
         $(document).ready(function() {
 
-            $('#tujuan_id').prop('disabled', true);
-            $('#transportir_id').prop('disabled', true);
-            $('#harga').prop('disabled', true);
+            $('#tujuan_id').prop('readonly', true);
+            $('#transportir_id').prop('readonly', true);
+            $('#harga').prop('readonly', true);
+            $('#harga').val(0);
 
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
@@ -94,11 +95,11 @@
                 dateFormat: "d-m-Y",
                 locale: "id",
                 onChange: function(selectedDates, dateStr, instance) {
-                    var url = '{{ route('master.harga', ':id') }}';
+                    let url = '{{ route('master.harga', ':id') }}';
                     url = url.replace(':id', dateStr);
                     $.get(url, function(response) {
-                        $('#tujuan_id').val(response.tujuan.nama);
-                        $('#transportir_id').val(response.transportir.nama);
+                        $('#tujuan_id').val(response.tujuan.id).trigger('change');
+                        $('#transportir_id').val(response.transportir.id).trigger('change');
                         AutoNumeric.getAutoNumericElement('#harga').set(response.harga)
                     })
                 },
@@ -159,7 +160,6 @@
                     },
                     {
                         data: 'ttu',
-
                     },
                     {
                         data: 'transportir_nama',
@@ -216,13 +216,12 @@
             });
 
 
-            $("#form_tambah").submit(function(e) {
+            $("#form_update").submit(function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
-                formData.append('method', 'PUT');
                 $.ajax({
                     type: 'POST',
-                    url: @json(route('setoran.store')),
+                    url: $('#url_update').val(),
                     data: formData,
                     cache: false,
                     contentType: false,
@@ -234,7 +233,7 @@
                     success: (response) => {
                         if (response) {
                             this.reset()
-                            $('#modal_create').modal('hide')
+                            $('#modal_edit').modal('hide')
                             Swal.fire({
                                 icon: 'success',
                                 title: response.message,
@@ -257,14 +256,21 @@
 
             $('#datatable').on('click', '.btn_edit', function(e) {
                 clearInput()
-                $('#modal_create').modal('show')
+                $('#modal_edit').modal('show')
                 $('.error').hide();
                 let url = $(this).attr('data-url');
+                let url_update = $(this).attr('data-url-update');
                 $.get(url, function(response) {
-                   $('#berat').val(response.data.berat)
-                    AutoNumeric.getAutoNumericElement('#uang_tambahan').set(response.data.uang_tambahan)
-                    AutoNumeric.getAutoNumericElement('#uang_kurangan').set(response.data.uang_kurangan)
+                    $('#berat').val(response.data.berat)
+                    $('#url_update').val(url_update)
+                    AutoNumeric.getAutoNumericElement('#uang_tambahan').set(response.data
+                        .uang_tambahan)
+                    AutoNumeric.getAutoNumericElement('#uang_kurangan').set(response.data
+                        .uang_kurangan)
                     tgl_muat.setDate(response.data.tgl_muat)
+                    $('#tujuan_id').val(response.data.tujuan_id).trigger('change');
+                    $('#transportir_id').val(response.data.transportir_id).trigger('change');
+                      AutoNumeric.getAutoNumericElement('#harga').set(response.data.harga)
                 })
             });
 
