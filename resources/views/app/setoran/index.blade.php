@@ -6,11 +6,10 @@
     <link rel="stylesheet" href="{{ asset('plugins/flatpicker/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatable/fixedColumns.dataTables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatable/datatable-custom-fixed-coloumns.css') }}">
-
 @endpush
 @section('content')
     <style>
-     
+
     </style>
     <div style="" class="content-wrapper">
         <div class="content-header">
@@ -41,8 +40,7 @@
                             <div class="card-body">
                                 <div class="tab-content">
                                     <div class="card-body table-responsive">
-                                        <table style="font-size: 12px !important" id="datatable"
-                                            class="table table-bordered">
+                                        <table id="datatable"  class="table table-bordered table_fixed">
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
@@ -93,6 +91,7 @@
             $('#transportir_id').prop('readonly', true);
             $('#harga').prop('readonly', true);
             $('#harga').val(0);
+
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
                 allowClear: true
@@ -102,13 +101,7 @@
                 dateFormat: "d-m-Y",
                 locale: "id",
                 onChange: function(selectedDates, dateStr, instance) {
-                    let url = '{{ route('master.harga', ':id') }}';
-                    url = url.replace(':id', dateStr);
-                    $.get(url, function(response) {
-                        $('#tujuan_id').val(response.tujuan.id).trigger('change');
-                        $('#transportir_id').val(response.transportir.id).trigger('change');
-                        AutoNumeric.getAutoNumericElement('#harga').set(response.harga)
-                    })
+                    getHarga()
                 },
             });
             $('.tanggal').mask('00-00-0000');
@@ -146,7 +139,7 @@
                         e.supir_id = supir_id
                     }
                 },
-                "initComplete": function(settings, json) {
+                initComplete: function(settings, json) {
                     $('body').find('.dataTables_scrollBody').addClass("scrollbar");
                 },
                 columns: [{
@@ -174,7 +167,7 @@
                     },
                     {
                         data: 'uang_kurangan',
-                       searchable: false,
+                        searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)
                         }
@@ -228,7 +221,7 @@
                         }
                     },
                     {
-                     searchable: false,
+                        searchable: false,
                         data: 'created_at',
                     },
                     {
@@ -243,10 +236,12 @@
                 clearInput()
                 $('#modal_create').modal('show')
             });
-            $('#supir_id').change(function() {
+
+            $('#supir_id').on('select2:select', function(e) {
                 supir_id = $(this).val()
-                datatable.draw()
-            })
+                datatable.ajax.reload()
+            });
+
             $("#form_update").submit(function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
@@ -284,6 +279,7 @@
                     }
                 });
             });
+
             $('body').on('click', '.btn_edit', function(e) {
                 clearInput()
                 $('#modal_edit').modal('show')
@@ -291,6 +287,7 @@
                 let url = $(this).attr('data-url');
                 let url_update = $(this).attr('data-url-update');
                 $.get(url, function(response) {
+
                     $('#berat').val(response.data.berat)
                     $('#url_update').val(url_update)
                     AutoNumeric.getAutoNumericElement('#uang_tambahan').set(response.data
@@ -302,8 +299,31 @@
                     $('#transportir_id').val(response.data.transportir_id).trigger('change');
                     AutoNumeric.getAutoNumericElement('#harga').set(response.data.harga)
                     AutoNumeric.getAutoNumericElement('#pg').set(response.data.pg)
+                    $('#tujuan_id').change(function() {
+                        getHarga()
+                    })
                 })
-            });
+            })
+
+            function getHarga() {
+                $.ajax({
+                    type: 'POST',
+                    url: @json(route('master.harga')),
+                    data: {
+                        tgl_muat: $('#tgl_muat').val(),
+                        tujuan_id: $('#tujuan_id').val(),
+                    },
+                    success: (response) => {
+                        AutoNumeric.getAutoNumericElement('#harga').set(
+                            response.data.harga)
+                    },
+                    error: function(response) {
+                        showError(response)
+                    }
+                });
+            }
+
+
             $('body').on('click', '.btn_hapus', function(e) {
                 let data = $(this).attr('data-hapus');
                 Swal.fire({

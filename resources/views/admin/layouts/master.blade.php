@@ -153,11 +153,12 @@
         });
 
         window.clearInput = function() {
-            $('.input').val('');
-            $('form').trigger("reset");
-            $('.select2').val(null).trigger("change");
-            $('.error').hide();
+               $('.modal').find('.input').val('')
+               $('.modal').find('.error').hide()
+               $('.modal').find('form').trigger("reset")
+               $('.modal').find('.select2').val(null).trigger("change")
         }
+        
         window.showError = function(response) {
             $('.error').hide();
             swal.hideLoading()
@@ -231,22 +232,32 @@
         // auto focus first input on open modal 
         $(document).on('shown.bs.modal', function(e) {
 
-         if(!$(e.target).find('input').first().hasClass('tanggal')){
-            $('form').find('.input, textarea, select').filter(':visible:first').focus();
-         }
+            if (!$(e.target).find('input').first().hasClass('tanggal')) {
+                $('form').find('.input, textarea, select').filter(':visible:first').focus();
+            }
         });
-        
-      // dropdown datatable 
-        $(window).on('show.bs.dropdown', function(e) {    
-                dropdownMenu = $(e.target).find('.dropdown-menu');
-                $('body').append(dropdownMenu.detach());
-                var eOffset = $(e.target).offset();
-                dropdownMenu.css({
-                    'display': 'block',
-                    'top': eOffset.top + $(e.target).outerHeight(),
-                    'left': eOffset.left - 50
-                });
-            })
+
+        $('.modal-ajax').on('show.bs.modal', function() {
+            $('.modal-loading').show();
+
+        })
+
+        $(document).ajaxSuccess(function(event, xhr, settings) {
+            if ($('.modal-ajax').is(':visible')) {
+                $('.modal-loading').hide();
+            }
+        })
+        // dropdown datatable 
+        $('.table_fixed').on('show.bs.dropdown', function(e) {
+            dropdownMenu = $(e.target).find('.dropdown-menu');
+            $('body').append(dropdownMenu.detach());
+            var eOffset = $(e.target).offset();
+            dropdownMenu.css({
+                'display': 'block',
+                'top': eOffset.top + $(e.target).outerHeight(),
+                'left': eOffset.left - 50
+            });
+        })
     </script>
 </body>
 

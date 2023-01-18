@@ -44,13 +44,14 @@ class SetoranController extends Controller
 
    public function edit(Setoran $setoran)
    {
-
+    
       return $this->success('Data Setoran',  $setoran);
    }
 
-   public function getMasterHarga($tgl_muat)
+   public function getMasterHarga()
    {
-      return $this->success('Data Master Harga Sesuai tgl muat',  $this->getMasterHargaByTglMuat($tgl_muat));
+    
+      return $this->success('Data Master Harga Sesuai tgl muat',  $this->getHarga(request()->tgl_muat, request()->tujuan_id));
    }
 
 

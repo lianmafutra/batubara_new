@@ -27,7 +27,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
    
    Route::controller(SetoranController::class)->group(function () {
       Route::resource('setoran', SetoranController::class);
-      Route::get('master-harga/{tgl_muat}', 'getMasterHargaByTglMuat')->name('master.harga');
+      Route::post('master-harga', 'getMasterHarga')->name('master.harga');
    });
 
 

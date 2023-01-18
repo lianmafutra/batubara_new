@@ -257,3 +257,21 @@ span.dropdown-item.dropdown-header {
    min-height: 25px !important;
 }
 
+.modal-dialog .overlay {
+   display: -ms-flexbox;
+   display: flex;
+   position: absolute;
+   left: 0;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   margin: -1px;
+   z-index: 1052;
+   -ms-flex-pack: center;
+   justify-content: center;
+   -ms-flex-align: center;
+   align-items: center;
+   background-color: rgb(195 195 195 / 70%);
+   color: #666f76;
+   border-radius: 0.3000000000000007rem;
+}
