@@ -35,10 +35,15 @@ class UangJalanController extends Controller
     public function store(Request $request)
     {
       try {
+
+         Supir::find($request->supir_id);
+
          Setoran::updateOrCreate(
             ['id'               => $request->id],
             [
                'supir_id'             => $request->supir_id,
+               // 'supir_nama'             => $request->supir_id,
+               // 'mobil_id'             => ,
                'tgl_ambil_uang_jalan' => $request->tgl_ambil_uang_jalan,
                'uang_jalan'           => $request->uang_jalan
             ]

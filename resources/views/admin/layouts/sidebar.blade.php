@@ -151,7 +151,7 @@
                   </a>
               </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                  <a href="{{ route('pembayaran.index') }}" class="nav-link  {{ request()->routeIs('pembayaran*') ? 'active' : '' }}" >
                         <i class="fas fa-shopping-cart nav-icon"></i>
                         <p>Pembayaran</p>
                     </a>
