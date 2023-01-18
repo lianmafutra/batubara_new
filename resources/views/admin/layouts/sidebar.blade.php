@@ -21,42 +21,60 @@
                 @canany(['read user', 'read role', 'read permission'])
                     <li class="nav-header ml-2">App Settings</li>
                 @endcanany
-                @can('read user')
-                    <li class="nav-item">
-                        <a href="{{ route('user.index') }}"
-                            class="nav-link {{ request()->routeIs('user.index') ? 'active' : '' }}">
-                            <i class="fas fa-user nav-icon"></i>
-                            <p>User</p>
-                        </a>
-                    </li>
-                @endcan
-                @can('read role')
-                    <li class="nav-item">
-                        <a href="{{ route('role.index') }}"
-                            class="nav-link {{ request()->routeIs('role.index') ? 'active' : '' }}">
-                            <i class="fas fa-user-cog nav-icon"></i>
-                            <p>Role</p>
-                        </a>
-                    </li>
-                @endcan
-                @can('read permission')
-                    <li class="nav-item">
-                        <a href="{{ route('permission.index') }}"
-                            class="nav-link {{ request()->routeIs('permission.index') ? 'active' : '' }}">
-                            <i class="fas fa-unlock nav-icon"></i>
-                            <p>Permission</p>
-                        </a>
-                    </li>
-                @endcan
-                @can('read setting')
-                    <li class="nav-item">
-                        <a href="{{ route('setting.index') }}"
-                            class="nav-link {{ request()->routeIs('setting.index') ? 'active' : '' }}">
-                            <i class="fas fa-cog nav-icon"></i>
-                            <p>Setting</p>
-                        </a>
-                    </li>
-                @endcan
+
+                @role('superadmin')
+                <li class="nav-item menu-is-opening {{ request()->is(['admin/user','admin/role','admin/permission','admin/setting']) ? 'menu-open' : '' }} ">
+                    <a href="" class="nav-link {{ request()->is(['admin/user','admin/role','admin/permission','admin/setting']) ? 'active' : '' }}">
+                     <i class="fas fa-cog nav-icon"></i>
+                        <p>Role Permission</p>
+                        <i class="right fas fa-angle-left"></i>
+                    </a>
+                    <ul class="nav nav-treeview">
+                     @can('read user')
+                     <li class="nav-item">
+                         <a href="{{ route('user.index') }}"
+                             class="nav-link {{ request()->routeIs('user.index') ? 'active' : '' }}">
+                             <i class="fas fa-user nav-icon"></i>
+                             <p>User</p>
+                         </a>
+                     </li>
+                 @endcan
+                 @can('read role')
+                 <li class="nav-item">
+                     <a href="{{ route('role.index') }}"
+                         class="nav-link {{ request()->routeIs('role.index') ? 'active' : '' }}">
+                         <i class="fas fa-user-cog nav-icon"></i>
+                         <p>Role</p>
+                     </a>
+                 </li>
+             @endcan
+             @can('read permission')
+                 <li class="nav-item">
+                     <a href="{{ route('permission.index') }}"
+                         class="nav-link {{ request()->routeIs('permission.index') ? 'active' : '' }}">
+                         <i class="fas fa-unlock nav-icon"></i>
+                         <p>Permission</p>
+                     </a>
+                 </li>
+             @endcan
+             @can('read setting')
+                 <li class="nav-item">
+                     <a href="{{ route('setting.index') }}"
+                         class="nav-link {{ request()->routeIs('setting.index') ? 'active' : '' }}">
+                         <i class="fas fa-cog nav-icon"></i>
+                         <p>Setting</p>
+                     </a>
+                 </li>
+             @endcan
+                       
+                    </ul>
+                </li>
+            @endcan
+
+
+
+               
+              
                
                 {{-- @can('profile menu')
                     <li class="nav-item">
