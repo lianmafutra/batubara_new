@@ -32,7 +32,7 @@ class Setoran extends Model
    // global setter format uang input kedatabase
    public function setAttribute($key, $value)
    {
-      if (in_array($key, ['uang_jalan', 'uang_tambahan', 'uang_kurangan'])) {
+      if (in_array($key, ['uang_jalan', 'uang_tambahan', 'uang_kurangan', 'pg'])) {
          $this->attributes[$key] = Rupiah::clean($value);
          return $this;
       }
@@ -46,7 +46,7 @@ class Setoran extends Model
 
    public function getTotalKotorAttribute()
    {
-      return $this->hitungTotalKotor($this->attributes['berat'], $this->getHargaAttribute());
+      return $this->hitungTotalKotor($this->attributes['berat'], $this->getHargaAttribute(), $this->attributes['pg'] );
    }
 
    public function getTotalBersihAttribute()

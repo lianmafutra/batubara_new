@@ -41,7 +41,6 @@ class HargaController extends Controller
             ['id'               => $request->id],
             [
                'harga'          => $request->harga,
-               'pg'             => $request->pg,
                'tujuan_id'      => $request->tujuan_id,
                'transportir_id' => $request->transportir_id,
                'tanggal'        => $request->tanggal,

@@ -58,7 +58,7 @@
                     </li>
                 @endcan
                
-                @can('profile menu')
+                {{-- @can('profile menu')
                     <li class="nav-item">
                         <a href="{{ route('profile.index') }}"
                             class="nav-link {{ request()->routeIs('profil*') ? 'active' : '' }}">
@@ -66,7 +66,7 @@
                             <p>Profil</p>
                         </a>
                     </li>
-                @endcan
+                @endcan --}}
 
                 <li class="nav-header ml-2">Manajemen DO</li>
                 @can('pengajuan verifikasi index')

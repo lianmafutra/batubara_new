@@ -4,10 +4,38 @@
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }} ">
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/flatpicker/flatpickr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatable/fixedColumns.dataTables.min.css') }}">
 @endpush
 @section('content')
     <style>
+        th,
+        td {
+            white-space: nowrap;
+        }
 
+        div.dataTables_wrapper {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        table.table-bordered.dataTable th:last-child,
+        table.table-bordered.dataTable th:last-child,
+        table.table-bordered.dataTable td:last-child,
+        table.table-bordered.dataTable td:last-child {
+            border-right-width: 1px;
+            /* border-left-width: 1px; */
+            box-shadow: -6px 6px 10px 1px #7c7c7c36;
+        }
+
+        table.dataTable thead tr>.dtfc-fixed-left,
+        table.dataTable thead tr>.dtfc-fixed-right,
+        table.dataTable tfoot tr>.dtfc-fixed-left,
+        table.dataTable tfoot tr>.dtfc-fixed-right {
+            top: 0;
+            bottom: 0;
+            z-index: 3;
+            background-color: whitesmoke;
+        }
     </style>
     <div style="" class="content-wrapper">
         <div class="content-header">
@@ -38,8 +66,8 @@
                             <div class="card-body">
                                 <div class="tab-content">
                                     <div class="card-body table-responsive">
-                                        <table style="font-size: 12px !important" id="datatable"
-                                            class="table table-bordered" style="width:100%">
+                                        <table style="font-size: 11px !important" id="datatable"
+                                            class="table table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
@@ -47,6 +75,7 @@
                                                     <th>Uang Jalan</th>
                                                     <th>Uang Tambahan</th>
                                                     <th>Uang Kurangan</th>
+                                                    <th>PG</th>
                                                     <th>TTU</th>
                                                     <th>Transportir</th>
                                                     <th>Tgl Muat</th>
@@ -82,19 +111,16 @@
     <script src="{{ asset('plugins/flatpicker/id.min.js') }}"></script>
     <script src="{{ asset('plugins/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('plugins/autoNumeric.min.js') }}"></script>
-
-
+    <script src="{{ asset('plugins/datatable/dataTables.fixedColumns.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-
             $('#tujuan_id').prop('readonly', true);
             $('#transportir_id').prop('readonly', true);
             $('#harga').prop('readonly', true);
             $('#harga').val(0);
-
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
-                allowClear : true
+                allowClear: true
             })
             const tgl_muat = flatpickr("#tgl_muat", {
                 allowInput: true,
@@ -111,8 +137,6 @@
                 },
             });
             $('.tanggal').mask('00-00-0000');
-
-
             AutoNumeric.multiple('.rupiah', {
                 //  currencySymbol: 'Rp ',
                 digitGroupSeparator: '.',
@@ -123,7 +147,6 @@
                 allowDecimalPadding: false,
                 alwaysAllowDecimalCharacter: false
             });
-
             let supir_id = '';
             let datatable = $("#datatable").DataTable({
                 serverSide: true,
@@ -133,6 +156,15 @@
                 paging: true,
                 info: true,
                 ordering: true,
+                sScrollX: "100%",
+                scrollY: "300px",
+                scrollX: true,
+                scrollCollapse: true,
+                fixedColumns: {
+                    leftColumns: 1,
+                    rightColumns: 1
+                },
+                scrollCollapse: true,
                 order: [
                     [3, 'desc']
                 ],
@@ -170,6 +202,12 @@
                         }
                     },
                     {
+                        data: 'pg',
+                        render: function(data, type, row, meta) {
+                            return rupiah(data)
+                        }
+                    },
+                    {
                         data: 'ttu',
                         defaultContent: "belum ada"
                     },
@@ -178,41 +216,34 @@
                     },
                     {
                         data: 'tgl_muat',
-
                     },
                     {
                         data: 'berat',
-
                     },
                     {
                         data: 'tujuan_nama',
-
                     },
                     {
                         data: 'harga',
                         render: function(data, type, row, meta) {
                             return rupiah(data)
                         }
-
                     },
                     {
                         data: 'total_kotor',
                         render: function(data, type, row, meta) {
                             return rupiah(data)
                         }
-
                     },
                     {
                         data: 'total_bersih',
                         render: function(data, type, row, meta) {
                             return rupiah(data)
                         }
-
                     },
                     {
                         data: 'created_at',
                     },
-
                     {
                         data: "action",
                         orderable: false,
@@ -220,57 +251,52 @@
                     },
                 ]
             });
-
             $("#btn_tambah").click(function() {
                 clearInput()
                 $('#modal_create').modal('show')
             });
-
             $('#supir_id').change(function() {
-                     supir_id = $(this).val()
-                     datatable.draw()
-                })
-
-
-                $("#form_update").submit(function(e) {
-                    e.preventDefault();
-                    const formData = new FormData(this);
-                    $.ajax({
-                        type: 'POST',
-                        url: $('#url_update').val(),
-                        data: formData,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        dataType: 'json',
-                        beforeSend: function() {
-                            showLoading()
-                        },
-                        success: (response) => {
-                            if (response) {
-                                this.reset()
-                                $('#modal_edit').modal('hide')
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: response.message,
-                                    showCancelButton: true,
-                                    allowEscapeKey: false,
-                                    showCancelButton: false,
-                                    allowOutsideClick: false,
-                                }).then((result) => {
-                                    swal.hideLoading()
-                                    datatable.ajax.reload()
-                                })
+                supir_id = $(this).val()
+                datatable.draw()
+            })
+            $("#form_update").submit(function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                $.ajax({
+                    type: 'POST',
+                    url: $('#url_update').val(),
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+                    beforeSend: function() {
+                        showLoading()
+                    },
+                    success: (response) => {
+                        if (response) {
+                            this.reset()
+                            $('#modal_edit').modal('hide')
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                showCancelButton: true,
+                                allowEscapeKey: false,
+                                showCancelButton: false,
+                                allowOutsideClick: false,
+                            }).then((result) => {
                                 swal.hideLoading()
-                            }
-                        },
-                        error: function(response) {
-                            showError(response)
+                                datatable.ajax.reload()
+                            })
+                            swal.hideLoading()
                         }
-                    });
+                    },
+                    error: function(response) {
+                        showError(response)
+                    }
                 });
-
-            $('#datatable').on('click', '.btn_edit', function(e) {
+            });
+            $('body').on('click', '.btn_edit', function(e) {
                 clearInput()
                 $('#modal_edit').modal('show')
                 $('.error').hide();
@@ -287,10 +313,10 @@
                     $('#tujuan_id').val(response.data.tujuan_id).trigger('change');
                     $('#transportir_id').val(response.data.transportir_id).trigger('change');
                     AutoNumeric.getAutoNumericElement('#harga').set(response.data.harga)
+                    AutoNumeric.getAutoNumericElement('#pg').set(response.data.pg)
                 })
             });
-
-            $('#datatable').on('click', '.btn_hapus', function(e) {
+            $('body').on('click', '.btn_hapus', function(e) {
                 let data = $(this).attr('data-hapus');
                 Swal.fire({
                     title: 'Apakah anda yakin ingin menghapus data setoran?',
@@ -307,7 +333,6 @@
                     }
                 })
             });
-
         })
     </script>
 @endpush

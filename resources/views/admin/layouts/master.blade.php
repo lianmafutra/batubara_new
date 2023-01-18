@@ -235,6 +235,18 @@
             $('form').find('.input, textarea, select').filter(':visible:first').focus();
          }
         });
+        
+      // dropdown datatable 
+        $(window).on('show.bs.dropdown', function(e) {    
+                dropdownMenu = $(e.target).find('.dropdown-menu');
+                $('body').append(dropdownMenu.detach());
+                var eOffset = $(e.target).offset();
+                dropdownMenu.css({
+                    'display': 'block',
+                    'top': eOffset.top + $(e.target).outerHeight(),
+                    'left': eOffset.left - 50
+                });
+            })
     </script>
 </body>
 

@@ -43,7 +43,6 @@
                                                     <th></th>
                                                     <th>No</th>
                                                     <th>Harga</th>
-                                                    <th>PG</th>
                                                     <th>Tujuan</th>
                                                     <th>Transportir</th>
                                                     <th>Tanggal</th>
@@ -147,12 +146,7 @@
                             return rupiah(data)
                         }
                     },
-                    {
-                        data: 'pg',
-                        render: function(data, type, row, meta) {
-                            return rupiah(data)
-                        }
-                    },
+                  
                     {
                         data: 'tujuan.nama',
                     },

@@ -1,7 +1,7 @@
 <x-modal id="create" title="Tambah Harga" size="md">
     <input hidden id="id" name="id" />
     <x-input-rupiah id='harga' label='Harga' required=true />
-    <x-input-rupiah id='pg' label='PG' required=true />
+  
     <x-datepicker id='tanggal' label='Tanggal' required=true />
     <x-select2 id="tujuan_id" label="Tujuan" required="true" placeholder="Pilih Tujuan">
         @foreach ($tujuan as $item)
