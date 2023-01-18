@@ -25,15 +25,20 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">
-                                    {{-- <a href="#" class="btn btn-sm btn-primary" id="btn_tambah"><i
-                                            class="fas fa-plus"></i> Tambah setoran</a> --}}
-                                </h3>
+                                <div class="col-md-3">
+                                    <x-select2 id="supir_id" label="Filter Supir" required="false"
+                                        placeholder="Pilih Supir">
+                                        <option value="all">Semua Supir</option>
+                                        @foreach ($supir as $item)
+                                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                        @endforeach
+                                    </x-select2>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div class="tab-content">
                                     <div class="card-body table-responsive">
-                                        <table style="font-size: 14px !important" id="datatable"
+                                        <table style="font-size: 12px !important" id="datatable"
                                             class="table table-bordered" style="width:100%">
                                             <thead>
                                                 <tr>
@@ -89,6 +94,7 @@
 
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
+                allowClear : true
             })
             const tgl_muat = flatpickr("#tgl_muat", {
                 allowInput: true,
@@ -118,6 +124,7 @@
                 alwaysAllowDecimalCharacter: false
             });
 
+            let supir_id = '';
             let datatable = $("#datatable").DataTable({
                 serverSide: true,
                 processing: true,
@@ -129,8 +136,12 @@
                 order: [
                     [3, 'desc']
                 ],
-                ajax: @json(route('setoran.index')),
-
+                ajax: {
+                    url: @json(route('setoran.index')),
+                    data: function(e) {
+                        e.supir_id = supir_id
+                    }
+                },
                 columns: [{
                         data: "DT_RowIndex",
                         orderable: false,
@@ -160,10 +171,10 @@
                     },
                     {
                         data: 'ttu',
+                        defaultContent: "belum ada"
                     },
                     {
                         data: 'transportir_nama',
-
                     },
                     {
                         data: 'tgl_muat',
@@ -215,44 +226,49 @@
                 $('#modal_create').modal('show')
             });
 
+            $('#supir_id').change(function() {
+                     supir_id = $(this).val()
+                     datatable.draw()
+                })
 
-            $("#form_update").submit(function(e) {
-                e.preventDefault();
-                const formData = new FormData(this);
-                $.ajax({
-                    type: 'POST',
-                    url: $('#url_update').val(),
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    dataType: 'json',
-                    beforeSend: function() {
-                        showLoading()
-                    },
-                    success: (response) => {
-                        if (response) {
-                            this.reset()
-                            $('#modal_edit').modal('hide')
-                            Swal.fire({
-                                icon: 'success',
-                                title: response.message,
-                                showCancelButton: true,
-                                allowEscapeKey: false,
-                                showCancelButton: false,
-                                allowOutsideClick: false,
-                            }).then((result) => {
+
+                $("#form_update").submit(function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(this);
+                    $.ajax({
+                        type: 'POST',
+                        url: $('#url_update').val(),
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        dataType: 'json',
+                        beforeSend: function() {
+                            showLoading()
+                        },
+                        success: (response) => {
+                            if (response) {
+                                this.reset()
+                                $('#modal_edit').modal('hide')
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: response.message,
+                                    showCancelButton: true,
+                                    allowEscapeKey: false,
+                                    showCancelButton: false,
+                                    allowOutsideClick: false,
+                                }).then((result) => {
+                                    swal.hideLoading()
+                                    datatable.ajax.reload()
+                                })
                                 swal.hideLoading()
-                                datatable.ajax.reload()
-                            })
-                            swal.hideLoading()
+                            }
+                        },
+                        error: function(response) {
+                            showError(response)
                         }
-                    },
-                    error: function(response) {
-                        showError(response)
-                    }
+                    });
                 });
-            });
 
             $('#datatable').on('click', '.btn_edit', function(e) {
                 clearInput()
@@ -270,7 +286,7 @@
                     tgl_muat.setDate(response.data.tgl_muat)
                     $('#tujuan_id').val(response.data.tujuan_id).trigger('change');
                     $('#transportir_id').val(response.data.transportir_id).trigger('change');
-                      AutoNumeric.getAutoNumericElement('#harga').set(response.data.harga)
+                    AutoNumeric.getAutoNumericElement('#harga').set(response.data.harga)
                 })
             });
 

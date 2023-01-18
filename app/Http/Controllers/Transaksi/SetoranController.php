@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Transaksi;
 use App\Http\Controllers\Controller;
 use App\Models\Harga;
 use App\Models\Setoran;
+use App\Models\Supir;
 use App\Models\Transportir;
 use App\Models\Tujuan;
 use App\Services\SetoranService;
@@ -18,10 +19,16 @@ class SetoranController extends Controller
 
    public function index()
    {
-      $x['title']    = 'Kelola Data Setoran';
-      $x['tujuan']    = Tujuan::all();
-      $x['transportir']    = Transportir::all();
-      $data = Setoran::all();
+
+      $x['title']       = 'Kelola Data Setoran';
+      $x['tujuan']      = Tujuan::all();
+      $x['transportir'] = Transportir::all();
+      $x['supir']       = Supir::all();
+         $data          = Setoran::with('supir');
+
+      if (request()->supir_id && request()->supir_id != 'all') {
+         $data->where('supir_id', request()->supir_id);
+      }
 
       if (request()->ajax()) {
          return  datatables()->of($data)
@@ -37,7 +44,7 @@ class SetoranController extends Controller
 
    public function edit(Setoran $setoran)
    {
-   
+
       return $this->success('Data Setoran',  $setoran);
    }
 
@@ -49,9 +56,7 @@ class SetoranController extends Controller
 
    public function store(Request $request)
    {
-    
    }
-
 
    public function show(Setoran $setoran)
    {
@@ -60,7 +65,6 @@ class SetoranController extends Controller
 
    public function update(Request $request, Setoran $setoran)
    {
-  
       try {
          $tujuan      = Tujuan::find($request->tujuan_id);
          $transportir = Transportir::find($request->transportir_id);
