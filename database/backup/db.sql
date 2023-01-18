@@ -87,7 +87,6 @@ CREATE TABLE `harga` (
   `tujuan_id` int(11) DEFAULT NULL,
   `transportir_id` int(11) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
-  `pg` int(11) DEFAULT NULL,
   `tanggal` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -105,7 +104,7 @@ CREATE TABLE `harga` (
 
 LOCK TABLES `harga` WRITE;
 /*!40000 ALTER TABLE `harga` DISABLE KEYS */;
-INSERT INTO `harga` VALUES (87,3,3,15000,7878,'2023-01-15','2023-01-07 17:53:28','2023-01-07 17:53:28'),(94,3,3,13000,7878,'2023-01-13','2023-01-07 17:53:28','2023-01-15 15:22:22'),(95,3,1,19000,2323,'2023-01-19','2023-01-15 16:19:36','2023-01-15 16:19:36'),(96,3,3,11000,7878,'2023-01-11','2023-01-07 17:53:28','2023-01-07 17:53:28'),(97,3,3,10000,7878,'2023-01-10','2023-01-07 17:53:28','2023-01-15 15:22:22');
+INSERT INTO `harga` VALUES (87,3,3,15000,'2023-01-15','2023-01-07 17:53:28','2023-01-07 17:53:28'),(94,3,3,13000,'2023-01-13','2023-01-07 17:53:28','2023-01-15 15:22:22'),(95,3,1,19000,'2023-01-19','2023-01-15 16:19:36','2023-01-15 16:19:36'),(96,3,3,11000,'2023-01-11','2023-01-07 17:53:28','2023-01-07 17:53:28'),(97,3,3,10000,'2023-01-10','2023-01-07 17:53:28','2023-01-15 15:22:22');
 /*!40000 ALTER TABLE `harga` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,7 +239,7 @@ CREATE TABLE `model_has_roles` (
 
 LOCK TABLES `model_has_roles` WRITE;
 /*!40000 ALTER TABLE `model_has_roles` DISABLE KEYS */;
-INSERT INTO `model_has_roles` VALUES (1,'App\\Models\\User',1),(3,'App\\Models\\User',2),(2,'App\\Models\\User',3),(5,'App\\Models\\User',4),(4,'App\\Models\\User',5);
+INSERT INTO `model_has_roles` VALUES (1,'App\\Models\\User',1);
 /*!40000 ALTER TABLE `model_has_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -320,7 +319,7 @@ CREATE TABLE `permissions` (
 
 LOCK TABLES `permissions` WRITE;
 /*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
-INSERT INTO `permissions` VALUES (1,'filemanager','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(2,'read module','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(3,'delete setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(4,'update setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(5,'read setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(6,'create setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(7,'delete user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(8,'update user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(9,'read user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(10,'create user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(11,'delete role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(12,'update role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(13,'read role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(14,'create role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(15,'delete permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(16,'update permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(17,'read permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(18,'create permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(19,'view_data_pegawai','web','2022-11-18 04:16:07','2022-11-18 04:16:07'),(20,'pengajuan menu','web','2022-11-18 04:41:26','2022-11-29 01:42:51'),(21,'pengajuan create','web','2022-11-22 02:08:40','2022-11-22 02:08:40'),(22,'pengajuan store','web','2022-11-22 07:59:32','2022-11-22 07:59:32'),(23,'pengajuan destroy','web','2022-11-22 07:59:43','2022-11-22 07:59:43'),(24,'pengajuan update','web','2022-11-22 07:59:50','2022-11-22 07:59:50'),(25,'profile menu','web','2022-11-29 01:43:03','2022-11-29 01:43:03'),(26,'pengajuan index','web','2022-11-29 01:43:44','2022-11-29 01:43:44'),(27,'pengajuan show','web','2022-12-03 09:27:42','2022-12-03 09:27:42'),(28,'pengajuan verifikasi kirim','web','2022-12-05 02:25:00','2022-12-05 02:38:16'),(29,'pengajuan verifikasi index','web','2022-12-05 02:38:59','2022-12-05 02:38:59'),(30,'pengajuan verifikasi tolak','web','2022-12-05 03:02:17','2022-12-05 03:02:17'),(31,'pengajuan selesai','web','2022-12-06 03:06:08','2022-12-06 03:06:08'),(32,'pengajuan filter','web','2022-12-06 18:14:56','2022-12-06 18:14:56'),(33,'master rekom pegawai','web','2022-12-07 04:02:14','2022-12-07 04:02:31'),(34,'pengajuan edit','web','2022-12-13 02:46:20','2022-12-13 02:46:20'),(35,'pengajuan revisi','web','2022-12-13 03:06:15','2022-12-13 03:06:15'),(36,'rekom cetak','web','2022-12-24 16:44:37','2022-12-24 16:44:37'),(37,'master user','web','2022-12-25 03:42:50','2022-12-25 03:42:50');
+INSERT INTO `permissions` VALUES (1,'filemanager','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(2,'read module','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(3,'delete setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(4,'update setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(5,'read setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(6,'create setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(7,'delete user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(8,'update user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(9,'read user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(10,'create user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(11,'delete role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(12,'update role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(13,'read role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(14,'create role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(15,'delete permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(16,'update permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(17,'read permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(18,'create permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(19,'view_data_pegawai','web','2022-11-18 04:16:07','2022-11-18 04:16:07'),(20,'pengajuan menu','web','2022-11-18 04:41:26','2022-11-29 01:42:51'),(21,'pengajuan create','web','2022-11-22 02:08:40','2022-11-22 02:08:40'),(22,'pengajuan store','web','2022-11-22 07:59:32','2022-11-22 07:59:32'),(23,'pengajuan destroy','web','2022-11-22 07:59:43','2022-11-22 07:59:43'),(24,'pengajuan update','web','2022-11-22 07:59:50','2022-11-22 07:59:50'),(25,'profile menu','web','2022-11-29 01:43:03','2022-11-29 01:43:03'),(26,'pengajuan index','web','2022-11-29 01:43:44','2022-11-29 01:43:44'),(27,'pengajuan show','web','2022-12-03 09:27:42','2022-12-03 09:27:42'),(28,'pengajuan verifikasi kirim','web','2022-12-05 02:25:00','2022-12-05 02:38:16'),(29,'pengajuan verifikasi index','web','2022-12-05 02:38:59','2022-12-05 02:38:59'),(31,'pengajuan selesai','web','2022-12-06 03:06:08','2022-12-06 03:06:08'),(32,'pengajuan filter','web','2022-12-06 18:14:56','2022-12-06 18:14:56'),(33,'master rekom pegawai','web','2022-12-07 04:02:14','2022-12-07 04:02:31');
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -379,7 +378,6 @@ CREATE TABLE `role_has_permissions` (
 
 LOCK TABLES `role_has_permissions` WRITE;
 /*!40000 ALTER TABLE `role_has_permissions` DISABLE KEYS */;
-INSERT INTO `role_has_permissions` VALUES (20,2),(22,2),(23,2),(24,2),(25,2),(27,2),(28,2),(29,2),(30,2),(31,2),(32,2),(33,2),(37,2),(20,3),(21,3),(22,3),(23,3),(24,3),(25,3),(26,3),(34,3),(35,3),(20,4),(21,4),(23,4),(24,4),(25,4),(27,4),(28,4),(29,4),(30,4),(20,5),(23,5),(24,5),(25,5),(27,5),(28,5),(29,5),(30,5),(36,5);
 /*!40000 ALTER TABLE `role_has_permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -407,7 +405,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (1,'superadmin','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(2,'admin_inspektorat','web','2022-11-18 04:33:06','2022-11-18 04:33:06'),(3,'admin_opd','web','2022-11-18 04:33:28','2022-11-18 04:33:28'),(4,'admin_kasubag','web','2022-12-06 02:53:46','2022-12-06 02:53:46'),(5,'inspektur','web','2022-12-06 02:57:57','2022-12-06 02:57:57');
+INSERT INTO `roles` VALUES (1,'superadmin','web','2022-11-18 03:50:20','2022-11-18 03:50:20');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -425,6 +423,7 @@ CREATE TABLE `setoran` (
   `supir_nama` varchar(50) DEFAULT NULL,
   `mobil_id` int(11) DEFAULT NULL,
   `uang_jalan` int(11) DEFAULT NULL,
+  `pg` int(11) DEFAULT NULL,
   `uang_tambahan` int(11) DEFAULT '0',
   `uang_kurangan` int(11) DEFAULT '0',
   `tgl_ambil_uang_jalan` date DEFAULT NULL,
@@ -437,7 +436,6 @@ CREATE TABLE `setoran` (
   `status_pencairan` varchar(20) DEFAULT '0',
   `transportir_id` int(11) DEFAULT NULL,
   `transportir_nama` varchar(50) DEFAULT NULL,
-  `pg` varchar(50) DEFAULT NULL,
   `foto` text,
   `uuid` varchar(100) DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
@@ -452,7 +450,7 @@ CREATE TABLE `setoran` (
 
 LOCK TABLES `setoran` WRITE;
 /*!40000 ALTER TABLE `setoran` DISABLE KEYS */;
-INSERT INTO `setoran` VALUES (16,NULL,3,'Udin',NULL,67000,60000,79999,'2023-01-06','2023-01-18',NULL,6,3,'TEBAT PATAH','belum lunas','0',3,'ADS',NULL,NULL,NULL,'2023-01-18 10:09:52','2023-01-15 22:18:55'),(17,NULL,1,'Andi',NULL,788888,690000,89999,'2023-01-15','2023-01-19',NULL,56,3,'TEBAT PATAH','belum lunas','0',1,'PT NAN RAING',NULL,NULL,NULL,'2023-01-18 10:10:05','2023-01-15 23:19:53');
+INSERT INTO `setoran` VALUES (16,NULL,3,'Udin',NULL,67000,10000,60000,79999,'2023-01-06','2023-01-18',NULL,6,3,'TEBAT PATAH','belum lunas','0',3,'ADS',NULL,NULL,'2023-01-18 11:31:25','2023-01-15 22:18:55'),(17,NULL,1,'Andi',NULL,788888,80000,690000,89999,'2023-01-15','2023-01-19',NULL,56,3,'TEBAT PATAH','belum lunas','0',1,'PT NAN RAING',NULL,NULL,'2023-01-18 11:08:28','2023-01-15 23:19:53');
 /*!40000 ALTER TABLE `setoran` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -484,7 +482,7 @@ CREATE TABLE `settings` (
 
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,'app_name','RekomPeg','Application Short Name','text',NULL,'information','2022-11-18 03:50:20','2022-11-21 03:59:58'),(2,'app_short_name','RekomPeg','Application Name','text',NULL,'information','2022-11-18 03:50:20','2022-11-21 03:59:58'),(3,'app_logo','storage/logo_kota.png','Application Logo','file','png','information','2022-11-18 03:50:20','2022-11-21 03:59:58'),(4,'app_favicon','storage/logo_kota.png','Application Favicon','file','png','information','2022-11-18 03:50:20','2022-11-21 03:59:58'),(5,'app_loading_gif','storage/logo_kota.png','Application Loading Image','file','gif','information','2022-11-18 03:50:20','2022-11-21 03:59:58'),(6,'app_map_loaction','none','Application Map Location','textarea',NULL,'contact','2022-11-18 03:50:20','2022-11-18 04:32:23');
+INSERT INTO `settings` VALUES (1,'app_name','Do Batu Bara','Application Short Name','text',NULL,'information','2022-11-18 03:50:20','2023-01-18 03:51:11'),(2,'app_short_name','Do Batu Bara','Application Name','text',NULL,'information','2022-11-18 03:50:20','2023-01-18 03:51:11'),(3,'app_logo','storage/logo_kota.png','Application Logo','file','png','information','2022-11-18 03:50:20','2023-01-18 03:51:11'),(4,'app_favicon','storage/logo_kota.png','Application Favicon','file','png','information','2022-11-18 03:50:20','2023-01-18 03:51:11'),(5,'app_loading_gif','storage/logo_kota.png','Application Loading Image','file','gif','information','2022-11-18 03:50:20','2023-01-18 03:51:11'),(6,'app_map_loaction','none','Application Map Location','textarea',NULL,'contact','2022-11-18 03:50:20','2023-01-18 03:51:15');
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -610,4 +608,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-18 10:49:48
+-- Dump completed on 2023-01-18 16:18:06
