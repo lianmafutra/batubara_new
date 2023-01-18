@@ -38,12 +38,12 @@ trait SetoranService
    }
 
    public function hitungTotalKotor($berat, $harga){
-      // rumus = (berat * harga)+ ?
+      // rumus = (berat * harga) + PG (Pijak Gas)
       return $berat*$harga;
    }
 
    public function hitungTotalBersih($total_kotor, $uang_jalan){
-        // rumus = (total kotor - uang jalan)+ 
+        // rumus = (total kotor - uang jalan)
         return $total_kotor-$uang_jalan;
    }
 }
