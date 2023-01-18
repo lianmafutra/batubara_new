@@ -5,37 +5,12 @@
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/flatpicker/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatable/fixedColumns.dataTables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatable/datatable-custom-fixed-coloumns.css') }}">
+
 @endpush
 @section('content')
     <style>
-        th,
-        td {
-            white-space: nowrap;
-        }
-
-        div.dataTables_wrapper {
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        table.table-bordered.dataTable th:last-child,
-        table.table-bordered.dataTable th:last-child,
-        table.table-bordered.dataTable td:last-child,
-        table.table-bordered.dataTable td:last-child {
-            border-right-width: 1px;
-            /* border-left-width: 1px; */
-            box-shadow: -6px 6px 10px 1px #7c7c7c36;
-        }
-
-        table.dataTable thead tr>.dtfc-fixed-left,
-        table.dataTable thead tr>.dtfc-fixed-right,
-        table.dataTable tfoot tr>.dtfc-fixed-left,
-        table.dataTable tfoot tr>.dtfc-fixed-right {
-            top: 0;
-            bottom: 0;
-            z-index: 3;
-            background-color: whitesmoke;
-        }
+     
     </style>
     <div style="" class="content-wrapper">
         <div class="content-header">
@@ -66,7 +41,7 @@
                             <div class="card-body">
                                 <div class="tab-content">
                                     <div class="card-body table-responsive">
-                                        <table style="font-size: 11px !important" id="datatable"
+                                        <table style="font-size: 12px !important" id="datatable"
                                             class="table table-bordered">
                                             <thead>
                                                 <tr>
@@ -147,6 +122,7 @@
                 allowDecimalPadding: false,
                 alwaysAllowDecimalCharacter: false
             });
+
             let supir_id = '';
             let datatable = $("#datatable").DataTable({
                 serverSide: true,
@@ -156,15 +132,11 @@
                 paging: true,
                 info: true,
                 ordering: true,
-                sScrollX: "100%",
-                scrollY: "300px",
                 scrollX: true,
-                scrollCollapse: true,
                 fixedColumns: {
                     leftColumns: 1,
                     rightColumns: 1
                 },
-                scrollCollapse: true,
                 order: [
                     [3, 'desc']
                 ],
@@ -173,6 +145,9 @@
                     data: function(e) {
                         e.supir_id = supir_id
                     }
+                },
+                "initComplete": function(settings, json) {
+                    $('body').find('.dataTables_scrollBody').addClass("scrollbar");
                 },
                 columns: [{
                         data: "DT_RowIndex",
@@ -185,30 +160,36 @@
                     },
                     {
                         data: 'uang_jalan',
+                        searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)
                         }
                     },
                     {
                         data: 'uang_tambahan',
+                        searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)
                         }
                     },
                     {
                         data: 'uang_kurangan',
+                       searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)
                         }
                     },
                     {
                         data: 'pg',
+                        searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)
                         }
                     },
                     {
                         data: 'ttu',
+                        orderable: false,
+                        searchable: false,
                         defaultContent: "belum ada"
                     },
                     {
@@ -216,32 +197,38 @@
                     },
                     {
                         data: 'tgl_muat',
+                        searchable: false,
                     },
                     {
                         data: 'berat',
+                        searchable: false,
                     },
                     {
                         data: 'tujuan_nama',
                     },
                     {
                         data: 'harga',
+                        searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)
                         }
                     },
                     {
                         data: 'total_kotor',
+                        searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)
                         }
                     },
                     {
                         data: 'total_bersih',
+                        searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)
                         }
                     },
                     {
+                     searchable: false,
                         data: 'created_at',
                     },
                     {
@@ -249,6 +236,7 @@
                         orderable: false,
                         searchable: false,
                     },
+
                 ]
             });
             $("#btn_tambah").click(function() {

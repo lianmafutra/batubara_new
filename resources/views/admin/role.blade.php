@@ -178,7 +178,7 @@
                 <div class="modal-body">
                     <form action="{{ route('role.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="input-group">
+                        <div class="form-group">
                             <label>Name</label>
                             <div class="input-group">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Name" name="name" value="{{ old('name') }}">
@@ -187,7 +187,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="input-group">
+                        <div class="form-group">
                             <label>Guard</label>
                             <div class="input-group">
                                 <select class="form-control" name="guard_name">
@@ -202,13 +202,13 @@
                         <div class="input-group mt-2">
                             <label>Permission</label>
                         </div>
-                        <div class="input-group">
+                        <div style="margin-left: 10px"  class="input-group">
                             <div class="icheck-primary col-md-3">
                                 <input class="form-check-input" type="checkbox" id="checkAll">
                                 <label class="form-check-label" for="checkAll">Check All</label>
                             </div>
                         </div>
-                        <div class="input-group">
+                        <div style="margin-left: 10px" class="input-group">
                             @foreach ($permission as $p)
                                 <div class="icheck-primary col-md-3">
                                     <input class="form-check-input permission" type="checkbox" name="permissions[]" id="{{ $p->id }}" value="{{ $p->name }}">

@@ -16,6 +16,7 @@ class UserResource extends JsonResource
     {
         return [
             'id'            => $this->id,
+            'username'       => $this->username,
             'name'          => $this->name,
             'role'          => implode(",", $this->getRoleNames()->toArray()),
             'created_at'    => date('d-m-Y H:i:s', strtotime($this->created_at)),

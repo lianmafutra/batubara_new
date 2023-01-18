@@ -254,6 +254,6 @@ span.dropdown-item.dropdown-header {
 }
 
 .btn-group {
-   height: 25px !important;
+   min-height: 25px !important;
 }
 

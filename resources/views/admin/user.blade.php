@@ -102,7 +102,7 @@
                     },
                     success: function(data) {
                         var data = data.data;
-                        $("#name").val(data.name);
+                        $("#username").val(data.username);
                         $("#role").val(data.role);
                         $("#id").val(data.id);
                         $('#modal-loading').modal('hide');
@@ -136,7 +136,7 @@
                 <div class="modal-body">
                     <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="input-group">
+                        <div class="form-group">
                             <label>Username</label>
                             <div class="input-group">
                                 <input type="text" class="form-control @error('username') is-invalid @enderror" placeholder="Username" name="username" value="{{ old('username') }}">
@@ -146,7 +146,7 @@
                             </div>
                         </div>
                       
-                        <div class="input-group">
+                        <div class="form-group">
                             <label>Password</label>
                             <div class="input-group">
                                 <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" name="password" value="{{ old('password') }}">
@@ -155,7 +155,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="input-group">
+                        <div class="form-group">
                             <label>Role</label>
                             <div class="input-group">
                                 <select class="form-control" name="role">
@@ -193,7 +193,7 @@
                     <form action="{{ route('user.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method("PUT")
-                        <div class="input-group">
+                        <div class="form-group">
                             <label>Username</label>
                             <div class="input-group">
                                 <input type="text" class="form-control @error('username') is-invalid @enderror" placeholder="Name" name="username" id="username" value="{{ old('username') }}">
@@ -203,7 +203,7 @@
                             </div>
                         </div>
                      
-                        <div class="input-group">
+                        <div class="form-group">
                             <label>Password</label>
                             <div class="input-group">
                                 <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" name="password" value="{{ old('password') }}">
@@ -212,7 +212,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="input-group">
+                        <div class="form-group">
                             <label>Role</label>
                             <div class="input-group">
                                 <select class="form-control" name="role" id="role">

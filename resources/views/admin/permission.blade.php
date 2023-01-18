@@ -138,7 +138,7 @@
                 <div class="modal-body">
                     <form action="{{ route('permission.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="input-group">
+                        <div class="form-group">
                             <label>Name</label>
                             <div class="input-group">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Name" name="name" value="{{ old('name') }}">
@@ -147,7 +147,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="input-group">
+                        <div class="form-group">
                             <label>Guard</label>
                             <div class="input-group">
                                 <select class="form-control" name="guard_name">
@@ -184,7 +184,7 @@
                     <form action="{{ route('permission.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method("PUT")
-                        <div class="input-group">
+                        <div class="form-group">
                             <label>Name</label>
                             <div class="input-group">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Name" name="name" id="name" value="{{ old('name') }}">
@@ -193,7 +193,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="input-group">
+                        <div class="form-group">
                             <label>Guard</label>
                             <div class="input-group">
                                 <select class="form-control" name="guard_name" id="guard_name">
