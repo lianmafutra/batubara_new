@@ -296,6 +296,32 @@ INSERT INTO `pemilik_mobil` VALUES (1,'Ade Sukron','082244261525',NULL,'2023-01-
 UNLOCK TABLES;
 
 --
+-- Table structure for table `permission_group`
+--
+
+DROP TABLE IF EXISTS `permission_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `permission_group` (
+  `id` int(11) DEFAULT NULL,
+  `permission_id` int(11) DEFAULT NULL,
+  `name` varchar(500) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `permission_group`
+--
+
+LOCK TABLES `permission_group` WRITE;
+/*!40000 ALTER TABLE `permission_group` DISABLE KEYS */;
+INSERT INTO `permission_group` VALUES (1,2,'pengajuan','2023-01-18 09:28:58','2023-01-18 09:28:58');
+/*!40000 ALTER TABLE `permission_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `permissions`
 --
 
@@ -608,4 +634,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-18 16:18:06
+-- Dump completed on 2023-01-18 16:29:05
