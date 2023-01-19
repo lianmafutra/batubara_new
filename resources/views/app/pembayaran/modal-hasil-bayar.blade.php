@@ -48,7 +48,7 @@
                 @method('PUT')
                 <div class="modal-body">
                     <div class="card-body table-responsive">
-                        <table id="" class="">
+                        <table id="datatable2" class="">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -66,7 +66,6 @@
                                     <th>Harga</th>
                                     <th>Total Kotor</th>
                                     <th>Total Bersih</th>
-                                    
                                 </tr>
                             </thead>
                             <tbody>
