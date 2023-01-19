@@ -51,6 +51,11 @@ class PembayaranController extends Controller
 
    public function bayar(Request $request)
    {
+
+      if ($request->setoran_id_array == null || $request->setoran_id_array == []) {
+         return $this->error('Data setoran Belum di pilih !', 400);
+      }
+
       return $this->success(
          'Data Pembayaran',
          [
@@ -58,7 +63,7 @@ class PembayaranController extends Controller
             "total_uang_jalan_tambahan" => $this->pembayaranService->hitungTotalUangJalanTambahan($request->setoran_id_array),
             "total_pihak_gas"           => $this->pembayaranService->hitungTotalPijakGas($request->setoran_id_array),
             "total_uang_kotor"          => $this->pembayaranService->hitungTotalKotor($request->setoran_id_array),
-            "total_uang_bersih"         => $this->pembayaranService->hitungTotalBersih($request->setoran_id_array),
+            "total_uang_bersih"         => $this->pembayaranService->hitungTotalBersih($request->setoran_id_array)
          ]
       );
    }

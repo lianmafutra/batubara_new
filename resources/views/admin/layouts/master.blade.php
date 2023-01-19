@@ -168,7 +168,7 @@
                 text = "Periksa kembali inputan anda"
             }
             if (response.status == 400) {
-                text = response.responseJSON.error
+                text = response.responseJSON.message
             }
             Swal.fire({
                 icon: 'error',
@@ -177,10 +177,10 @@
             })
         }
 
-        window.showLoading = function() {
+        window.showLoading = function(title = 'Mengirim Data...', message = 'Mohon Tunggu...') {
             Swal.fire({
-                title: 'Mengirim Data...',
-                html: 'Mohon Tunggu...',
+                title: title,
+                html: message,
                 allowEscapeKey: false,
                 allowOutsideClick: false,
                 didOpen: () => {
@@ -188,7 +188,11 @@
                 }
             });
         }
-
+        
+        window.hideLoading = function(title = 'Mengirim Data...', message = 'Mohon Tunggu...') {
+           
+            Swal.close()
+        }
 
         function printErrorMsg(msg) {
             let dataku = [];
