@@ -31,9 +31,13 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
    });
 
 
+   Route::prefix('pembayaran')->name('pembayaran.')->controller(PembayaranController::class)->group(function () {
+      Route::get('/', 'index')->name('index');
+      Route::post('bayar', 'bayar')->name('bayar');
+   });
+
 
    Route::resource('pencairan', PencairanController::class);
-   Route::resource('pembayaran', PembayaranController::class);
    Route::resource('uang-jalan', UangJalanController::class);
    Route::resource('transportir', TransportirController::class);
 

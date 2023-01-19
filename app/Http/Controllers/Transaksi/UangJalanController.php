@@ -56,14 +56,11 @@ class UangJalanController extends Controller
       }
     }
 
-
-    
     public function edit(Setoran $uang_jalan)
     {
       return $this->success('Data Mobil', $uang_jalan);
     }
 
-  
     public function destroy(Setoran $uang_jalan)
     {
       try {

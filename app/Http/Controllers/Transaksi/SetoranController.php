@@ -69,9 +69,9 @@ class SetoranController extends Controller
       try {
          $tujuan      = Tujuan::find($request->tujuan_id);
          $transportir = Transportir::find($request->transportir_id);
-         $input = $request->except(['harga']);
-         $input['tujuan_nama'] =   $tujuan->nama;
-         $input['transportir_nama'] =   $transportir->nama;
+         $input       = $request->except(['harga']);
+         $input['tujuan_nama']      = $tujuan->nama;
+         $input['transportir_nama'] = $transportir->nama;
          $setoran->fill($input)->save();
          return $this->success('Berhasil Merubah Data');
       } catch (\Throwable $th) {

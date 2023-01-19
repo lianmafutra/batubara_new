@@ -38,7 +38,7 @@
                                         @endforeach
                                     </x-select2>
                                  </div>
-                                 <div style="margin-top:32px" class="p-2"><button type="button" class="btn_bayar btn btn-primary">   <i class="fas fa-file-invoice-dollar  nav-icon"></i>  Pembayaran</button></div>
+                                 <div style="margin-top:32px" class="p-2"><button id="btn_bayar" type="button" class="btn btn-primary"><i class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i>  Bayar</button></div>
                                </div>
                             </div>
                             <div class="card-body">
@@ -250,10 +250,28 @@
                     },
                 ]
             });
-            $("#btn_tambah").click(function() {
-                clearInput()
-                $('#modal_create').modal('show')
+           
+
+            $("#btn_bayar").click(function() {
+               $.ajax({
+                    type: 'POST',
+                    url: @json(route('pembayaran.bayar')),
+                    data: {
+                        setoran_id_array : [16,17]
+                    },
+                    beforeSend: function() {
+                        showLoading()
+                    },
+                    success: (response) => {
+                        console.log(response)
+                    },
+                    error: function(response) {
+                        showError(response)
+                    }
+                });
             });
+
+
             $('#mobil_id').on('select2:select', function(e) {
                 supir_id = $(this).val()
                 datatable.ajax.reload()
@@ -304,10 +322,8 @@
                 $.get(url, function(response) {
                     $('#berat').val(response.data.berat)
                     $('#url_update').val(url_update)
-                    AutoNumeric.getAutoNumericElement('#uang_tambahan').set(response.data
-                        .uang_tambahan)
-                    AutoNumeric.getAutoNumericElement('#uang_kurangan').set(response.data
-                        .uang_kurangan)
+                    AutoNumeric.getAutoNumericElement('#uang_tambahan').set(response.data.uang_tambahan)
+                    AutoNumeric.getAutoNumericElement('#uang_kurangan').set(response.data.uang_kurangan)
                     tgl_muat.setDate(response.data.tgl_muat)
                     $('#tujuan_id').val(response.data.tujuan_id).trigger('change');
                     $('#transportir_id').val(response.data.transportir_id).trigger('change');

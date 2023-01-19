@@ -9,20 +9,29 @@ use App\Models\Setoran;
 use App\Models\Supir;
 use App\Models\Transportir;
 use App\Models\Tujuan;
+use App\Services\PembayaranService;
+use App\Utils\ApiResponse;
 use Illuminate\Http\Request;
 
 class PembayaranController extends Controller
 {
-   
-    public function index()
-    {
+   protected $pembayaranService;
+   use ApiResponse;
+
+   public function __construct(PembayaranService $pembayaranService)
+   {
+      $this->pembayaranService = $pembayaranService;
+   }
+
+   public function index()
+   {
       $x['title']       = 'Kelola Data Pembayaran';
       $x['tujuan']      = Tujuan::all();
       $x['transportir'] = Transportir::all();
       $x['supir']       = Supir::all();
       $x['mobil']       = Mobil::all();
-         $data          = Setoran::with('supir')
-         ->where('status_pembayaran','BELUM');
+      $data          = Setoran::with('supir')
+         ->where('status_pembayaran', 'BELUM');
 
       if (request()->supir_id && request()->supir_id != 'all') {
          $data->where('supir_id', request()->supir_id);
@@ -38,40 +47,19 @@ class PembayaranController extends Controller
             ->make(true);
       }
       return view('app.pembayaran.index', $x, compact(['data']));
-    }
+   }
 
-    
-    public function create()
-    {
-        //
-    }
-
-  
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show(Pembayaran $pembayaran)
-    {
-        //
-    }
-
-   
-    public function edit(Pembayaran $pembayaran)
-    {
-        //
-    }
-
-   
-    public function update(Request $request, Pembayaran $pembayaran)
-    {
-        //
-    }
-
-   
-    public function destroy(Pembayaran $pembayaran)
-    {
-        //
-    }
+   public function bayar(Request $request)
+   {
+      return $this->success(
+         'Data Pembayaran',
+         [
+            "total_uang_jalan"          => $this->pembayaranService->hitungTotalUangJalan($request->setoran_id_array),
+            "total_uang_jalan_tambahan" => $this->pembayaranService->hitungTotalUangJalanTambahan($request->setoran_id_array),
+            "total_pihak_gas"           => $this->pembayaranService->hitungTotalPijakGas($request->setoran_id_array),
+            "total_uang_kotor"          => $this->pembayaranService->hitungTotalKotor($request->setoran_id_array),
+            "total_uang_bersih"         => $this->pembayaranService->hitungTotalBersih($request->setoran_id_array),
+         ]
+      );
+   }
 }

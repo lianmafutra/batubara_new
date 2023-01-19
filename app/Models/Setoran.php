@@ -46,12 +46,12 @@ class Setoran extends Model
 
    public function getTotalKotorAttribute()
    {
-      return $this->hitungTotalKotor($this->attributes['berat'], $this->getHargaAttribute(), $this->attributes['pg'] );
+      return $this->hitungKotor($this->attributes['berat'], $this->getHargaAttribute(), $this->attributes['pg'] );
    }
 
    public function getTotalBersihAttribute()
    {
-      return $this->hitungTotalBersih($this->getTotalKotorAttribute(), $this->attributes['uang_jalan']);
+      return $this->hitungBersih($this->getTotalKotorAttribute(), $this->attributes['uang_jalan']);
    }
 
 
