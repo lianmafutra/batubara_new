@@ -279,15 +279,14 @@
                     url: @json(route('pembayaran.bayar')),
                     data: {
                         "setoran_id_array": setoran_id_array,
-
                     },
                     beforeSend: function() {
-                        showLoading('')
+                        showLoading()
+                       
                     },
                     success: (response) => {
-                        console.log(response)
+                     $('#modal_hasil_bayar').modal('show')
                         hideLoading()
-                        $('#modal_hasil_bayar').modal('show')
                     },
                     error: function(response) {
                         showError(response)

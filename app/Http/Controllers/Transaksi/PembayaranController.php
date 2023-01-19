@@ -52,6 +52,7 @@ class PembayaranController extends Controller
    public function bayar(Request $request)
    {
 
+     
       if ($request->setoran_id_array == null || $request->setoran_id_array == []) {
          return $this->error('Data setoran Belum di pilih !', 400);
       }

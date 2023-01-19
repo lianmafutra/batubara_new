@@ -153,12 +153,12 @@
         });
 
         window.clearInput = function() {
-               $('.modal').find('.input').val('')
-               $('.modal').find('.error').hide()
-               $('.modal').find('form').trigger("reset")
-               $('.modal').find('.select2').val(null).trigger("change")
+            $('.modal').find('.input').val('')
+            $('.modal').find('.error').hide()
+            $('.modal').find('form').trigger("reset")
+            $('.modal').find('.select2').val(null).trigger("change")
         }
-        
+
         window.showError = function(response) {
             $('.error').hide();
             swal.hideLoading()
@@ -188,9 +188,9 @@
                 }
             });
         }
-        
+
         window.hideLoading = function(title = 'Mengirim Data...', message = 'Mohon Tunggu...') {
-           
+
             Swal.close()
         }
 
@@ -247,9 +247,14 @@
         })
 
         $(document).ajaxSuccess(function(event, xhr, settings) {
-            if ($('.modal-ajax').is(':visible')) {
-                $('.modal-loading').hide();
-            }
+
+            setTimeout(() => {
+                if ($('.modal-ajax').is(':visible')) {
+                    $('.modal-loading').hide();
+                }
+            }, 1000);
+           
+
         })
         // dropdown datatable 
         $('.table_fixed').on('show.bs.dropdown', function(e) {
