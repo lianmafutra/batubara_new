@@ -1,15 +1,16 @@
 @extends('admin.layouts.master')
 @push('css')
-    <link rel="stylesheet" href="{{ asset('template/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('template/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }} ">
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/flatpicker/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatable/fixedColumns.dataTables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatable/datatable-custom-fixed-coloumns.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatable/dataTables.checkboxes.css') }}">
+    <script src="{{ asset('plugins/datatable/dataTables.checkboxes.min.js') }}"></script>
 @endpush
 @section('content')
     <style>
-
     </style>
     <div style="" class="content-wrapper">
         <div class="content-header">
@@ -27,7 +28,8 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <div class="col-md-3">
+                              <div class="d-flex ">
+                                 <div class="mr-auto col-3  ">
                                     <x-select2 id="mobil_id" label="Filter Mobil" required="false"
                                         placeholder="Pilih Mobil">
                                         <option value="all">Semua Mobil</option>
@@ -35,7 +37,9 @@
                                             <option value="{{ $item->id }}">{{ $item->plat }}</option>
                                         @endforeach
                                     </x-select2>
-                                </div>
+                                 </div>
+                                 <div style="margin-top:32px" class="p-2"><button type="button" class="btn_bayar btn btn-primary">   <i class="fas fa-file-invoice-dollar  nav-icon"></i>  Pembayaran</button></div>
+                               </div>
                             </div>
                             <div class="card-body">
                                 <div class="tab-content">
@@ -43,6 +47,7 @@
                                         <table id="datatable"  class="table table-bordered table_fixed">
                                             <thead>
                                                 <tr>
+                                                   <th>#</th>
                                                     <th>No</th>
                                                     <th>Supir</th>
                                                     <th>Uang Jalan</th>
@@ -76,8 +81,9 @@
 @endsection
 @include('app.setoran.modal-edit')
 @push('js')
-    <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/fh-3.3.1/sl-1.5.0/datatables.min.js">
+</script>
+<script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>>
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('plugins/sweetalert2/sweetalert2-min.js') }}"></script>
     <script src="{{ asset('plugins/flatpicker/flatpickr.min.js') }}"></script>
@@ -85,13 +91,13 @@
     <script src="{{ asset('plugins/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('plugins/autoNumeric.min.js') }}"></script>
     <script src="{{ asset('plugins/datatable/dataTables.fixedColumns.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatable/dataTables.checkboxes.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#tujuan_id').prop('readonly', true);
             $('#transportir_id').prop('readonly', true);
             $('#harga').prop('readonly', true);
             $('#harga').val(0);
-
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
                 allowClear: true
@@ -115,7 +121,6 @@
                 allowDecimalPadding: false,
                 alwaysAllowDecimalCharacter: false
             });
-
             let supir_id = '';
             let datatable = $("#datatable").DataTable({
                 serverSide: true,
@@ -133,8 +138,18 @@
                 order: [
                     [3, 'desc']
                 ],
+                columnDefs: [{
+                    targets: 0,
+                    checkboxes: {
+                        selectRow: true,
+                    }
+                }],
+                select: {
+                    style: 'multi',
+                    selector: 'td:not(:last-child)'
+                },
                 ajax: {
-                    url: @json(route('setoran.index')),
+                    url: @json(route('pembayaran.index')),
                     data: function(e) {
                         e.supir_id = supir_id
                     }
@@ -142,7 +157,11 @@
                 initComplete: function(settings, json) {
                     $('body').find('.dataTables_scrollBody').addClass("scrollbar");
                 },
-                columns: [{
+                columns: [
+                  {
+                        data: "id",
+                    },  
+                {
                         data: "DT_RowIndex",
                         orderable: false,
                         searchable: false,
@@ -229,19 +248,16 @@
                         orderable: false,
                         searchable: false,
                     },
-
                 ]
             });
             $("#btn_tambah").click(function() {
                 clearInput()
                 $('#modal_create').modal('show')
             });
-
             $('#mobil_id').on('select2:select', function(e) {
                 supir_id = $(this).val()
                 datatable.ajax.reload()
             });
-
             $("#form_update").submit(function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
@@ -279,7 +295,6 @@
                     }
                 });
             });
-
             $('body').on('click', '.btn_edit', function(e) {
                 clearInput()
                 $('#modal_edit').modal('show')
@@ -287,7 +302,6 @@
                 let url = $(this).attr('data-url');
                 let url_update = $(this).attr('data-url-update');
                 $.get(url, function(response) {
-
                     $('#berat').val(response.data.berat)
                     $('#url_update').val(url_update)
                     AutoNumeric.getAutoNumericElement('#uang_tambahan').set(response.data
@@ -304,7 +318,6 @@
                     })
                 })
             })
-
             function getHarga() {
                 $.ajax({
                     type: 'POST',
@@ -322,8 +335,6 @@
                     }
                 });
             }
-
-
             $('body').on('click', '.btn_hapus', function(e) {
                 let data = $(this).attr('data-hapus');
                 Swal.fire({

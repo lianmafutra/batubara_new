@@ -21,7 +21,8 @@ class PembayaranController extends Controller
       $x['transportir'] = Transportir::all();
       $x['supir']       = Supir::all();
       $x['mobil']       = Mobil::all();
-         $data          = Setoran::with('supir');
+         $data          = Setoran::with('supir')
+         ->where('status_pembayaran','BELUM');
 
       if (request()->supir_id && request()->supir_id != 'all') {
          $data->where('supir_id', request()->supir_id);
