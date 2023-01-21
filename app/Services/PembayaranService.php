@@ -16,7 +16,7 @@ class PembayaranService
 
    public function hitungTotalUangJalanTambahan($setoran_id_array)
    {
-      return intval(Setoran::whereIn('id', $setoran_id_array)->sum('uang_tambahan'));
+      return intval(Setoran::whereIn('id', $setoran_id_array)->sum('uang_lainnya'));
    }
 
    public function hitungTotalPijakGas($setoran_id_array)

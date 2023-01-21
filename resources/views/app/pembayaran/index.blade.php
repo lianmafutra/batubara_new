@@ -48,22 +48,23 @@
                                         <table id="datatable" class="table table-bordered ">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
-                                                    <th>No</th>
-                                                    <th>Supir</th>
-                                                    <th>Uang Jalan</th>
-                                                    <th>Uang Lainnya</th>
-                                                    <th>PG</th>
-                                                    <th>TTU</th>
-                                                    <th>Transportir</th>
-                                                    <th>Tgl Muat</th>
-                                                    <th>Berat</th>
-                                                    <th>Tujuan</th>
-                                                    <th>Harga</th>
-                                                    <th>Total Kotor</th>
-                                                    <th>Total Bersih</th>
-                                                    <th>Created_at</th>
-                                                    {{-- <th>#Aksi</th> --}}
+                                                   <th>#</th>
+
+                                                   <th>No</th>
+                                                   <th>Supir</th>
+                                                   <th>Berat</th>
+                                                   <th>Tujuan</th>
+                                                   <th>Transportir</th>
+                                                   <th>Tgl Muat</th>
+                                                   <th>Harga</th>
+                                                   <th>Uang Jalan</th>
+                                                   <th>Uang Lainnya</th>
+                                                   <th>Total</th>
+                                                   <th>PG (Pijak Gas)</th>
+                                                   <th>Total Kotor</th>
+                                                   <th>Total Bersih</th>
+                                                   <th>Created_at</th>
+                                                   {{-- <th>#Aksi</th> --}}
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -163,10 +164,11 @@
                 initComplete: function(settings, json) {
                     $('body').find('.dataTables_scrollBody').addClass("scrollbar");
                 },
-                columns: [{
-                        data: "id",
+                columns: [
+                  {
+                        data: 'id',
                     },
-                    {
+                  {
                         data: "DT_RowIndex",
                         orderable: false,
                         searchable: false,
@@ -174,6 +176,30 @@
                     },
                     {
                         data: 'supir_nama',
+                    },
+                    {
+                        data: 'berat',
+                        searchable: false,
+                        render: function(data, type, row, meta) {
+                            return rupiahOnlyFormat(data)
+                        }
+                    },
+                    {
+                        data: 'tujuan_nama',
+                    },
+                    {
+                        data: 'transportir_nama',
+                    },
+                    {
+                        data: 'tgl_muat',
+                        searchable: false,
+                    },
+                    {
+                        data: 'harga',
+                        searchable: false,
+                        render: function(data, type, row, meta) {
+                            return rupiah(data)
+                        }
                     },
                     {
                         data: 'uang_jalan',
@@ -186,39 +212,20 @@
                         data: 'uang_lainnya',
                         searchable: false,
                         render: function(data, type, row, meta) {
-                            return rupiah(data)
+                            if (data < 0) return `<span style='color:red'>${rupiah(data)}</span>`
+                            else if (data == 0) return rupiah(data)
+                            else return `<span style='color:green'>+ ${rupiah(data)}</span>`
                         }
                     },
-                    
                     {
-                        data: 'pg',
+                        data: 'total_uang_lainnya',
                         searchable: false,
                         render: function(data, type, row, meta) {
-                            return rupiah(data)
+                            return rupiahStyle(data)
                         }
                     },
                     {
-                        data: 'ttu',
-                        orderable: false,
-                        searchable: false,
-                        defaultContent: "belum ada"
-                    },
-                    {
-                        data: 'transportir_nama',
-                    },
-                    {
-                        data: 'tgl_muat',
-                        searchable: false,
-                    },
-                    {
-                        data: 'berat',
-                        searchable: false,
-                    },
-                    {
-                        data: 'tujuan_nama',
-                    },
-                    {
-                        data: 'harga',
+                        data: 'pg',
                         searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)
@@ -242,15 +249,11 @@
                         searchable: false,
                         data: 'created_at',
                     },
-                    //   {
-                    //       data: "action",
-                    //       orderable: false,
-                    //       searchable: false,
-                    //   },
+                    
                 ]
             }).on('select', function(e, dt, type, indexes) {
-              
-                if (indexes == '0,1') {
+      
+                if (dt[0].length > 1) {
                     datatable.rows().every(function(rowIdx, tableLoop, rowLoop) {
                         let data = datatable.row(rowIdx).data().id
                         setoran_id_array.push(data)
@@ -260,7 +263,7 @@
                   setoran_id_array.push(datatable.rows(indexes).data()[0].id);
                 }
             }).on('deselect', function(e, dt, type, indexes) {
-               if (indexes == '0,1') {
+               if (dt[0].length > 1) {
                   setoran_id_array=[]
                 }else{
                   setoran_id_array.splice($.inArray(datatable.rows(indexes).data()[0].id, setoran_id_array), 1);
@@ -269,6 +272,7 @@
             })
 
             $("#btn_bayar").click(function() {
+             
                 $.ajax({
                     type: 'POST',
                     url: @json(route('pembayaran.bayar')),
@@ -296,7 +300,7 @@
                               <td>${data.tgl_muat}</td>
 
                               <td class="rupiah">${data.uang_jalan}</td>
-                              <td class="rupiah">${data.uang_tambahan}</td>
+                              <td class="rupiah">${data.uang_lainnya}</td>
                               <td class="rupiah">${data.pg}</td>
                               <td class="rupiah">${data.total_kotor}</td>
                               <td class="rupiah">${data.total_bersih}</td>
@@ -318,7 +322,6 @@
                             currencySymbol: 'Rp ',
                             digitGroupSeparator: '.',
                             decimalPlaces: 0,
-                            minimumValue: 0,
                             decimalCharacter: ',',
                             formatOnPageLoad: true,
                             allowDecimalPadding: false,

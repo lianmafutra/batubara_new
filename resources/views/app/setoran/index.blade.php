@@ -234,6 +234,11 @@
                 supir_id = $(this).val()
                 datatable.ajax.reload()
             });
+            $('#supir_id').on('select2:clear', function(e) {
+                supir_id = ''
+                datatable.ajax.reload()
+            });
+
             $("#form_update").submit(function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
