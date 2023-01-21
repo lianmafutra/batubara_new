@@ -336,7 +336,7 @@ CREATE TABLE `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -422,7 +422,7 @@ CREATE TABLE `roles` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `roles_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -458,7 +458,7 @@ CREATE TABLE `setoran` (
   `berat` int(20) DEFAULT '0',
   `tujuan_id` int(11) DEFAULT NULL,
   `tujuan_nama` varchar(50) DEFAULT NULL,
-  `status_pembayaran` varchar(50) DEFAULT 'belum lunas',
+  `status_pembayaran` enum('LUNAS','BELUM') DEFAULT NULL,
   `status_pencairan` varchar(20) DEFAULT '0',
   `transportir_id` int(11) DEFAULT NULL,
   `transportir_nama` varchar(50) DEFAULT NULL,
@@ -467,7 +467,7 @@ CREATE TABLE `setoran` (
   `updated_at` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -476,7 +476,7 @@ CREATE TABLE `setoran` (
 
 LOCK TABLES `setoran` WRITE;
 /*!40000 ALTER TABLE `setoran` DISABLE KEYS */;
-INSERT INTO `setoran` VALUES (16,NULL,3,'Udin',NULL,67000,10000,60000,79999,'2023-01-06','2023-01-18',NULL,6,3,'TEBAT PATAH','belum lunas','0',3,'ADS',NULL,NULL,'2023-01-18 11:31:25','2023-01-15 22:18:55'),(17,NULL,1,'Andi',NULL,788888,80000,690000,89999,'2023-01-15','2023-01-19',NULL,56,3,'TEBAT PATAH','belum lunas','0',1,'PT NAN RAING',NULL,NULL,'2023-01-18 11:08:28','2023-01-15 23:19:53');
+INSERT INTO `setoran` VALUES (16,NULL,3,'Udin',NULL,67000,10000,60000,79999,'2023-01-06','2023-01-18',NULL,6,3,'TEBAT PATAH','BELUM','0',3,'ADS',NULL,NULL,'2023-01-18 11:31:25','2023-01-15 22:18:55'),(17,NULL,1,'Andi',NULL,788888,80000,690000,89999,'2023-01-15','2023-01-19',NULL,56,3,'TEBAT PATAH','BELUM','0',1,'PT NAN RAING',NULL,NULL,'2023-01-18 11:08:28','2023-01-15 23:19:53');
 /*!40000 ALTER TABLE `setoran` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -634,4 +634,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-18 16:29:05
+-- Dump completed on 2023-01-21 16:01:40
