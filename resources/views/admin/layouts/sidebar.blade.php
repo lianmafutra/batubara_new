@@ -157,13 +157,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="" class="nav-link disabled">
                         <i class="fas fa-hand-holding-usd nav-icon"></i>
                         <p>Pencairan</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="" class="nav-link disabled">
                         <i class="fas fa-file-alt nav-icon"></i>
                         <p>Laporan</p>
                     </a>

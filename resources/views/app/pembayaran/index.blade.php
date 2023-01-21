@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{{ asset('plugins/datatable/fixedColumns.dataTables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatable/datatable-custom-fixed-coloumns.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatable/dataTables.checkboxes.css') }}">
-    <script src="{{ asset('plugins/datatable/dataTables.checkboxes.min.js') }}"></script>
 @endpush
 @section('content')
     <style>
@@ -95,6 +94,7 @@
     <script src="{{ asset('plugins/autoNumeric.min.js') }}"></script>
     <script src="{{ asset('plugins/datatable/dataTables.fixedColumns.min.js') }}"></script>
     <script src="{{ asset('plugins/datatable/dataTables.checkboxes.min.js') }}"></script>
+
     <script>
         $(document).ready(function() {
             $('#tujuan_id').prop('readonly', true);
@@ -135,12 +135,13 @@
                 lengthChange: true,
                 paging: false,
                 info: true,
+                select: true,
                 ordering: true,
                 scrollX: true,
-               //  fixedColumns: {
-               //      leftColumns: 1,
-               //      rightColumns: 1
-               //  },
+                //  fixedColumns: {
+                //      leftColumns: 1,
+                //      rightColumns: 1
+                //  },
                 order: [
                     [3, 'desc']
                 ],
@@ -248,22 +249,30 @@
                         searchable: false,
                         data: 'created_at',
                     },
-                  //   {
-                  //       data: "action",
-                  //       orderable: false,
-                  //       searchable: false,
-                  //   },
+                    //   {
+                    //       data: "action",
+                    //       orderable: false,
+                    //       searchable: false,
+                    //   },
                 ]
             }).on('select', function(e, dt, type, indexes) {
-
-               
-                setoran_id_array.push(datatable.rows(indexes).data()[0].id);
-                
               
+                if (indexes == '0,1') {
+                    datatable.rows().every(function(rowIdx, tableLoop, rowLoop) {
+                        let data = datatable.row(rowIdx).data().id
+                        setoran_id_array.push(data)
+                    });
+                    setoran_id_array = [...new Set(setoran_id_array)];
+                }else{
+                  setoran_id_array.push(datatable.rows(indexes).data()[0].id);
+                }
             }).on('deselect', function(e, dt, type, indexes) {
-
-                setoran_id_array.splice($.inArray(datatable.rows(indexes).data()[0].id, setoran_id_array), 1);
-              
+               if (indexes == '0,1') {
+                  setoran_id_array=[]
+                }else{
+                  setoran_id_array.splice($.inArray(datatable.rows(indexes).data()[0].id, setoran_id_array), 1);
+                }
+             
             })
 
             $("#btn_bayar").click(function() {
@@ -338,9 +347,11 @@
             });
 
             $('#mobil_id').on('select2:clear', function(e) {
-               supir_id = ''
-               datatable.ajax.reload()
+                supir_id = ''
+                datatable.ajax.reload()
             });
+
+
 
 
             function getHarga() {
