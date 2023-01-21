@@ -345,6 +345,11 @@
                 datatable.ajax.reload()
             });
 
+            $('#mobil_id').on('select2:clear', function(e) {
+               supir_id = ''
+               datatable.ajax.reload()
+            });
+
 
             function getHarga() {
                 $.ajax({
