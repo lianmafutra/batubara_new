@@ -32,7 +32,7 @@
                 @method('PUT')
                 <div class="modal-body">
                     <div class="card-body table-responsive">
-                        <table id="datatable2" class="table table-bordered " style="font-size: 11px; width: 100%">
+                        <table id="datatable2" class="table table-bordered " style="font-size: 12px; width: 100%">
                             <thead>
                                 <tr>
                                    
@@ -51,7 +51,7 @@
                                     <th>Total Bersih</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody style="text-align: center;">
                             </tbody>
                             <tfoot >
                                              

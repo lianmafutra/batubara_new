@@ -46,7 +46,7 @@
                             <div class="card-body">
                                 <div class="tab-content">
                                     <div class="card-body table-responsive">
-                                        <table id="datatable" class="table table-bordered table_fixed">
+                                        <table id="datatable" class="table table-bordered ">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
@@ -65,7 +65,7 @@
                                                     <th>Total Kotor</th>
                                                     <th>Total Bersih</th>
                                                     <th>Created_at</th>
-                                                    <th>#Aksi</th>
+                                                    {{-- <th>#Aksi</th> --}}
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -133,14 +133,14 @@
                 processing: true,
                 searching: true,
                 lengthChange: true,
-                paging: true,
+                paging: false,
                 info: true,
                 ordering: true,
                 scrollX: true,
-                fixedColumns: {
-                    leftColumns: 1,
-                    rightColumns: 1
-                },
+               //  fixedColumns: {
+               //      leftColumns: 1,
+               //      rightColumns: 1
+               //  },
                 order: [
                     [3, 'desc']
                 ],
@@ -248,30 +248,22 @@
                         searchable: false,
                         data: 'created_at',
                     },
-                    {
-                        data: "action",
-                        orderable: false,
-                        searchable: false,
-                    },
+                  //   {
+                  //       data: "action",
+                  //       orderable: false,
+                  //       searchable: false,
+                  //   },
                 ]
             }).on('select', function(e, dt, type, indexes) {
 
-                let count = datatable.rows({
-                    selected: true
-                });
+               
                 setoran_id_array.push(datatable.rows(indexes).data()[0].id);
-
-                if (count.count() >= 1) {
-                    $('#btn_hapus_masal').show()
-                }
+                
+              
             }).on('deselect', function(e, dt, type, indexes) {
-                let count = datatable.rows({
-                    selected: true
-                })
-                setoran_id_array.splice($.inArray(datatable.rows(indexes).data()[0].id, id_array), 1);
-                if (count.count() <= 0) {
-                    $('#btn_hapus_masal').hide()
-                }
+
+                setoran_id_array.splice($.inArray(datatable.rows(indexes).data()[0].id, setoran_id_array), 1);
+              
             })
 
             $("#btn_bayar").click(function() {
