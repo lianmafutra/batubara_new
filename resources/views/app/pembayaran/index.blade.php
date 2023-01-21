@@ -70,6 +70,7 @@
                                             </thead>
                                             <tbody>
                                             </tbody>
+
                                         </table>
                                     </div>
                                 </div>
@@ -282,17 +283,61 @@
                     },
                     beforeSend: function() {
                         showLoading()
-                       
+
                     },
                     success: (response) => {
-                     $('#modal_hasil_bayar').modal('show')
+                        $('#modal_hasil_bayar').modal('show')
                         hideLoading()
+                        $("#datatable2 tbody").empty();
+                        $("#datatable2 tfoot").empty();
+                        let row, footer;
+                        response.data.data_setoran.forEach(function(data, i) {
+                            row += `<tr>
+                              <td>${i+1}</td>
+                              <td>${data.supir_nama}</td>
+                              <td>${data.berat}</td>
+                              <td>${data.tujuan_nama}</td>
+                              <td class="rupiah">${data.harga}</td>
+                              <td>${data.transportir_nama}</td>
+                              <td>${data.tgl_muat}</td>
+
+                              <td class="rupiah">${data.uang_jalan}</td>
+                              <td class="rupiah">${data.uang_tambahan}</td>
+                              <td class="rupiah">${data.pg}</td>
+                              <td class="rupiah">${data.total_kotor}</td>
+                              <td class="rupiah">${data.total_bersih}</td>
+                              </tr>`;
+                        });
+
+                        footer = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
+                             <td colspan="7">Jumlah Total</td>
+                              <td class="rupiah">${response.data.total_uang_jalan}</td>
+                              <td class="rupiah">${response.data.total_uang_jalan_tambahan}</td>
+                              <td class="rupiah">${response.data.total_pihak_gas}</td>
+                              <td class="rupiah">${response.data.total_uang_kotor}</td>
+                              <td class="rupiah">${response.data.total_uang_bersih}</td> </tr>`;
+
+                        $("#datatable2 tbody").append(row);
+                        $("#datatable2 tfoot").append(footer);
+
+                        new AutoNumeric.multiple('.rupiah', {
+                            currencySymbol: 'Rp ',
+                            digitGroupSeparator: '.',
+                            decimalPlaces: 0,
+                            minimumValue: 0,
+                            decimalCharacter: ',',
+                            formatOnPageLoad: true,
+                            allowDecimalPadding: false,
+                            alwaysAllowDecimalCharacter: false
+                        });
+
                     },
                     error: function(response) {
                         showError(response)
                     }
                 });
             });
+
 
 
             $('#mobil_id').on('select2:select', function(e) {

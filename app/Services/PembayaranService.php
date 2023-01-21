@@ -38,16 +38,14 @@ class PembayaranService
    public function hitungTotalBersih($setoran_id_array)
    {
       $total_bersih=0;
-
-      
       $setoran = Setoran::whereIn('id', $setoran_id_array)->get();
      
       foreach ($setoran as $value) {
         $total_bersih +=  (($value->berat * $value->harga) + $value->pg) - $value->uang_jalan ;
 
-      return $total_bersih;
+      
    }
-
+   return $total_bersih;
   
    }
 }

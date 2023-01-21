@@ -13,26 +13,10 @@
         }
     }
 
-    .modal table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    .modal td,
-    th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-
-    .modal tr:nth-child(even) {
-        background-color: #dddddd;
-    }
 </style>
 
 <div class="modal fade modal-ajax" id="modal_hasil_bayar">
-    <div class="modal-dialog modal-xl" style="max-width: 1611px !important;">
+    <div class="modal-dialog modal-xl" style="max-width: 85% !important;">
         <div class="modal-content">
             <div class="overlay modal-loading">
                 <i class="fas fa-2x fa-sync-alt fa-spin"></i>
@@ -48,28 +32,30 @@
                 @method('PUT')
                 <div class="modal-body">
                     <div class="card-body table-responsive">
-                        <table id="datatable2" class="">
+                        <table id="datatable2" class="table table-bordered " style="font-size: 11px; width: 100%">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                   
                                     <th>No</th>
                                     <th>Supir</th>
-                                    <th>Uang Jalan</th>
-                                    <th>Uang Tambahan</th>
-                                    <th>Uang Kurangan</th>
-                                    <th>PG</th>
-                                    <th>TTU</th>
-                                    <th>Transportir</th>
-                                    <th>Tgl Muat</th>
                                     <th>Berat</th>
                                     <th>Tujuan</th>
                                     <th>Harga</th>
+                                    <th>Transportir</th>
+                                    <th>Tgl Muat</th>
+
+                                    <th>Uang Jalan</th>
+                                    <th>Uang Tambahan</th>
+                                    <th>PG (Pijak Gas)</th>
                                     <th>Total Kotor</th>
                                     <th>Total Bersih</th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
+                            <tfoot >
+                                             
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -78,8 +64,5 @@
                 </div>
             </form>
         </div>
-
-
     </div>
-
 </div>
