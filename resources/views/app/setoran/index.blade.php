@@ -9,7 +9,6 @@
 @endpush
 @section('content')
     <style>
-
     </style>
     <div style="" class="content-wrapper">
         <div class="content-header">
@@ -40,21 +39,20 @@
                             <div class="card-body">
                                 <div class="tab-content">
                                     <div class="card-body table-responsive">
-                                        <table id="datatable"  class="table table-bordered table_fixed">
+                                        <table id="datatable" class="table table-bordered table_fixed">
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Supir</th>
-                                                    <th>Uang Jalan</th>
-                                                    <th>Uang Tambahan</th>
-                                                    <th>Uang Kurangan</th>
-                                                    <th>PG</th>
-                                                    <th>TTU</th>
-                                                    <th>Transportir</th>
-                                                    <th>Tgl Muat</th>
                                                     <th>Berat</th>
                                                     <th>Tujuan</th>
+                                                    <th>Transportir</th>
+                                                    <th>Tgl Muat</th>
                                                     <th>Harga</th>
+                                                    <th>Uang Jalan</th>
+                                                    <th>Uang Lainnya</th>
+                                                    <th>Total</th>
+                                                    <th>PG (Pijak Gas)</th>
                                                     <th>Total Kotor</th>
                                                     <th>Total Bersih</th>
                                                     <th>Created_at</th>
@@ -91,7 +89,6 @@
             $('#transportir_id').prop('readonly', true);
             $('#harga').prop('readonly', true);
             $('#harga').val(0);
-
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
                 allowClear: true
@@ -115,7 +112,6 @@
                 allowDecimalPadding: false,
                 alwaysAllowDecimalCharacter: false
             });
-
             let supir_id = '';
             let datatable = $("#datatable").DataTable({
                 serverSide: true,
@@ -152,38 +148,14 @@
                         data: 'supir_nama',
                     },
                     {
-                        data: 'uang_jalan',
+                        data: 'berat',
                         searchable: false,
                         render: function(data, type, row, meta) {
-                            return rupiah(data)
+                            return rupiahOnlyFormat(data)
                         }
                     },
                     {
-                        data: 'uang_tambahan',
-                        searchable: false,
-                        render: function(data, type, row, meta) {
-                            return rupiah(data)
-                        }
-                    },
-                    {
-                        data: 'uang_kurangan',
-                        searchable: false,
-                        render: function(data, type, row, meta) {
-                            return rupiah(data)
-                        }
-                    },
-                    {
-                        data: 'pg',
-                        searchable: false,
-                        render: function(data, type, row, meta) {
-                            return rupiah(data)
-                        }
-                    },
-                    {
-                        data: 'ttu',
-                        orderable: false,
-                        searchable: false,
-                        defaultContent: "belum ada"
+                        data: 'tujuan_nama',
                     },
                     {
                         data: 'transportir_nama',
@@ -193,14 +165,37 @@
                         searchable: false,
                     },
                     {
-                        data: 'berat',
-                        searchable: false,
-                    },
-                    {
-                        data: 'tujuan_nama',
-                    },
-                    {
                         data: 'harga',
+                        searchable: false,
+                        render: function(data, type, row, meta) {
+                            return rupiah(data)
+                        }
+                    },
+                    {
+                        data: 'uang_jalan',
+                        searchable: false,
+                        render: function(data, type, row, meta) {
+                            return rupiah(data)
+                        }
+                    },
+                    {
+                        data: 'uang_lainnya',
+                        searchable: false,
+                        render: function(data, type, row, meta) {
+                            if (data < 0) return `<span style='color:red'>${rupiah(data)}</span>`
+                            else if (data == 0) return rupiah(data)
+                            else return `<span style='color:green'>+ ${rupiah(data)}</span>`
+                        }
+                    },
+                    {
+                        data: 'total_uang_lainnya',
+                        searchable: false,
+                        render: function(data, type, row, meta) {
+                            return rupiahStyle(data)
+                        }
+                    },
+                    {
+                        data: 'pg',
                         searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)
@@ -229,19 +224,16 @@
                         orderable: false,
                         searchable: false,
                     },
-
                 ]
             });
             $("#btn_tambah").click(function() {
                 clearInput()
                 $('#modal_create').modal('show')
             });
-
             $('#supir_id').on('select2:select', function(e) {
                 supir_id = $(this).val()
                 datatable.ajax.reload()
             });
-
             $("#form_update").submit(function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
@@ -279,7 +271,6 @@
                     }
                 });
             });
-
             $('body').on('click', '.btn_edit', function(e) {
                 clearInput()
                 $('#modal_edit').modal('show')
@@ -287,7 +278,6 @@
                 let url = $(this).attr('data-url');
                 let url_update = $(this).attr('data-url-update');
                 $.get(url, function(response) {
-
                     $('#berat').val(response.data.berat)
                     $('#url_update').val(url_update)
                     AutoNumeric.getAutoNumericElement('#uang_tambahan').set(response.data
@@ -322,8 +312,6 @@
                     }
                 });
             }
-
-
             $('body').on('click', '.btn_hapus', function(e) {
                 let data = $(this).attr('data-hapus');
                 Swal.fire({

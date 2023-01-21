@@ -51,7 +51,7 @@ trait SetoranService
    }
 
    public function hitungBersih($total_kotor, $uang_jalan){
-        // rumus = (total kotor - uang jalan)
+        // rumus = total kotor - (total uang jalan + uang lainnya)
         return $total_kotor-$uang_jalan;
    }
 }

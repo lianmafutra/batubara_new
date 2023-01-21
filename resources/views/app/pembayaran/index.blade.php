@@ -52,8 +52,7 @@
                                                     <th>No</th>
                                                     <th>Supir</th>
                                                     <th>Uang Jalan</th>
-                                                    <th>Uang Tambahan</th>
-                                                    <th>Uang Kurangan</th>
+                                                    <th>Uang Lainnya</th>
                                                     <th>PG</th>
                                                     <th>TTU</th>
                                                     <th>Transportir</th>
@@ -184,19 +183,13 @@
                         }
                     },
                     {
-                        data: 'uang_tambahan',
+                        data: 'uang_lainnya',
                         searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)
                         }
                     },
-                    {
-                        data: 'uang_kurangan',
-                        searchable: false,
-                        render: function(data, type, row, meta) {
-                            return rupiah(data)
-                        }
-                    },
+                    
                     {
                         data: 'pg',
                         searchable: false,

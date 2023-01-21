@@ -151,14 +151,12 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
         window.clearInput = function() {
             $('.modal').find('.input').val('')
             $('.modal').find('.error').hide()
             $('.modal').find('form').trigger("reset")
             $('.modal').find('.select2').val(null).trigger("change")
         }
-
         window.showError = function(response) {
             $('.error').hide();
             swal.hideLoading()
@@ -176,7 +174,6 @@
                 text: text,
             })
         }
-
         window.showLoading = function(title = 'Mengirim Data...', message = 'Mohon Tunggu...') {
             Swal.fire({
                 title: title,
@@ -188,9 +185,7 @@
                 }
             });
         }
-
         window.hideLoading = function(title = 'Mengirim Data...', message = 'Mohon Tunggu...') {
-
             Swal.close()
         }
 
@@ -218,9 +213,8 @@
                 return !b.includes(element);
             });
         }
-
         const rupiah = (number) => {
-            return new Intl.NumberFormat("id-ID", {
+        return  new Intl.NumberFormat("id-ID", {
                 style: "currency",
                 currency: "IDR",
                 maximumFractionDigits: 0,
@@ -228,33 +222,47 @@
             }).format(number);
         }
 
+        const rupiahOnlyFormat = (number) => {
+        return  new Intl.NumberFormat("id-ID", {
+              
+                maximumFractionDigits: 0,
+                minimumFractionDigits: 0,
+            }).format(number);
+        }
+       
+        const rupiahStyle = (number) => {
+           data = new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                maximumFractionDigits: 0,
+                minimumFractionDigits: 0,
+            }).format(number);
+
+            if (number < 0) return `<span style='color:red'>${data}</span>`
+            else if (number == 0) return data
+            else return data
+            
+        }
+
         //  select2 auto focus search input on open
         $(document).on('select2:open', () => {
             document.querySelector('.select2-search__field').focus();
         });
-
         // auto focus first input on open modal 
         $(document).on('shown.bs.modal', function(e) {
-
             if (!$(e.target).find('input').first().hasClass('tanggal')) {
                 $('form').find('.input, textarea, select').filter(':visible:first').focus();
             }
         });
-
         $('.modal-ajax').on('show.bs.modal', function() {
             $('.modal-loading').show();
-
         })
-
         $(document).ajaxSuccess(function(event, xhr, settings) {
-
             setTimeout(() => {
                 if ($('.modal-ajax').is(':visible')) {
                     $('.modal-loading').hide();
                 }
             }, 1000);
-           
-
         })
         // dropdown datatable 
         $('.table_fixed').on('show.bs.dropdown', function(e) {
