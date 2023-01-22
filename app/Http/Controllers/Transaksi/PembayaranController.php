@@ -30,11 +30,10 @@ class PembayaranController extends Controller
       $x['transportir'] = Transportir::all();
       $x['supir']       = Supir::all();
       $x['mobil']       = Mobil::all();
-      $data          = Setoran::with('supir')
-         ->where('status_pembayaran', 'BELUM');
+      $data          = Setoran::with('supir')->where('status_pembayaran', 'BELUM');
 
-      if (request()->supir_id && request()->supir_id != 'all') {
-         $data->where('supir_id', request()->supir_id);
+      if (request()->mobil_id && request()->mobil_id != 'all') {
+         $data->where('mobil_id', request()->mobil_id);
       }
 
       if (request()->ajax()) {
@@ -57,9 +56,15 @@ class PembayaranController extends Controller
          return $this->error('Data setoran Belum di pilih !', 400);
       }
 
+     $setoran = Setoran::where('id', $request->setoran_id_array[0])->first();
+     
+
       return $this->success(
          'Data Pembayaran',
          [
+            'pemilik_mobil'      =>  $setoran->pemilik_nama,
+            'supir_mobil'        =>  $setoran->supir_nama,
+            'plat_mobil'         =>  $setoran->mobil_plat,
             'data_setoran'       => Setoran::whereIn('id',$request->setoran_id_array)->get(),
             "total_uang_jalan"   => $this->pembayaranService->hitungTotalUangJalan($request->setoran_id_array),
             "total_uang_lainnya" => $this->pembayaranService->hitungTotalUangLainnya($request->setoran_id_array),

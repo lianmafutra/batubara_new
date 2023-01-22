@@ -173,7 +173,7 @@
                 allowDecimalPadding: false,
                 alwaysAllowDecimalCharacter: false
             });
-            let supir_id = '';
+            let mobil_id = '';
             let datatable = $("#datatable").DataTable({
                 serverSide: true,
                 processing: true,
@@ -204,7 +204,7 @@
                 ajax: {
                     url: @json(route('pembayaran.index')),
                     data: function(e) {
-                        e.supir_id = supir_id
+                        e.mobil_id = mobil_id
                     }
                 },
                 initComplete: function(settings, json) {
@@ -318,7 +318,7 @@
             })
 
             $("#btn_bayar").click(function() {
-         
+
                 if ($('#mobil_id').val() == 'all' || $('#mobil_id').val() == '') {
                     Swal.fire({
                         icon: 'error',
@@ -327,24 +327,29 @@
                     return;
                 }
 
-                  $.ajax({
-                     type: 'POST',
-                     url: @json(route('pembayaran.bayar')),
-                     data: {
-                           "setoran_id_array": setoran_id_array,
-                     },
-                     beforeSend: function() {
-                           showLoading()
+                $.ajax({
+                    type: 'POST',
+                    url: @json(route('pembayaran.bayar')),
+                    data: {
+                        "setoran_id_array": setoran_id_array,
+                        "mobil_id": $('#mobil_id').val(),
+                    },
+                    beforeSend: function() {
+                        showLoading()
 
-                     },
-                     success: (response) => {
-                           $('#modal_hasil_bayar').modal('show')
-                           hideLoading()
-                           $("#datatable2 tbody").empty();
-                           $("#datatable2 tfoot").empty();
-                           let row, footer;
-                           response.data.data_setoran.forEach(function(data, i) {
-                              row += `<tr>
+                    },
+                    success: (response) => {
+                        $('#modal_hasil_bayar').modal('show')
+
+                        $('#bayar_pemilik').text(response.data.pemilik_mobil)
+                        $('#bayar_supir').text(response.data.supir_mobil)
+                        $('#bayar_mobil').text(response.data.plat_mobil)
+                        hideLoading()
+                        $("#datatable2 tbody").empty();
+                        $("#datatable2 tfoot").empty();
+                        let row, footer;
+                        response.data.data_setoran.forEach(function(data, i) {
+                            row += `<tr>
                                  <td>${i+1}</td>
                                  <td>${data.supir_nama}</td>
                                  <td>${data.berat}</td>
@@ -358,9 +363,9 @@
                                  <td class="rupiah">${data.total_kotor}</td>
                                  <td class="rupiah">${data.total_bersih}</td>
                                  </tr>`;
-                           });
+                        });
 
-                           footer = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
+                        footer = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
                               <td colspan="5">Jumlah Total</td>
                                  <td class="rupiah">${response.data.total_uang_jalan}</td>
                                  <td class="rupiah">${response.data.total_uang_lainnya}</td>
@@ -369,35 +374,38 @@
                                  <td class="rupiah">${response.data.total_uang_kotor}</td>
                                  <td class="rupiah">${response.data.total_uang_bersih}</td> </tr>`;
 
-                           $("#datatable2 tbody").append(row);
-                           $("#datatable2 tfoot").append(footer);
+                        $("#datatable2 tbody").append(row);
+                        $("#datatable2 tfoot").append(footer);
 
-                           new AutoNumeric.multiple('.rupiah', {
-                              currencySymbol: 'Rp ',
-                              digitGroupSeparator: '.',
-                              decimalPlaces: 0,
-                              decimalCharacter: ',',
-                              formatOnPageLoad: true,
-                              allowDecimalPadding: false,
-                              alwaysAllowDecimalCharacter: false
-                           });
+                        new AutoNumeric.multiple('.rupiah', {
+                            currencySymbol: 'Rp ',
+                            digitGroupSeparator: '.',
+                            decimalPlaces: 0,
+                            decimalCharacter: ',',
+                            formatOnPageLoad: true,
+                            allowDecimalPadding: false,
+                            alwaysAllowDecimalCharacter: false
+                        });
 
-                     },
-                     error: function(response) {
-                           showError(response)
-                     }
-                  });
+                    },
+                    error: function(response) {
+                        showError(response)
+                    }
+                });
             });
 
 
 
             $('#mobil_id').on('select2:select', function(e) {
-                supir_id = $(this).val()
+                mobil_id = $(this).val()
+                datatable.columns().checkboxes.deselect(true);
                 datatable.ajax.reload()
             });
 
+
             $('#mobil_id').on('select2:clear', function(e) {
-                supir_id = ''
+                mobil_id = ''
+                datatable.columns().checkboxes.deselect(true);
                 datatable.ajax.reload()
             });
 

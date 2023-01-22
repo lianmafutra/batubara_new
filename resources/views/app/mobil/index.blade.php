@@ -37,6 +37,7 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Plat</th>
+                                                    <th>Supir</th>
                                                     <th>Jenis</th>
                                                     <th>Pemilik</th>
                                                     <th>created_at</th>
@@ -91,6 +92,10 @@
                     },
                     {
                         data: 'plat',
+                        orderable: false,
+                    },
+                    {
+                        data: 'supir.nama',
                         orderable: false,
                     },
                     {

@@ -28,6 +28,11 @@
                 <div class="modal-body">
                     <x-input id='plat' label='Plat/Nopol Mobil' required=true />
                     <input hidden  id="mobil_id" name="mobil_id" value="" />
+                    <x-select2 id="supir_id" label="Supir" required="true" placeholder="Pilih Supir Mobil">
+                     @foreach ($supir as $item)
+                         <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                     @endforeach
+                 </x-select2>
                     <x-select2 id="mobil_jenis_id" label="Jenis Mobil" required="true" placeholder="Pilih Jenis Mobil">
                      @foreach ($jenis as $item)
                          <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -38,6 +43,7 @@
                             <option value="{{ $item->id }}">{{ $item->nama }}</option>
                         @endforeach
                     </x-select2>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn_submit btn btn-primary">Simpan</button>

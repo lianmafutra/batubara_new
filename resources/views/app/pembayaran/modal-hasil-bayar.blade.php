@@ -38,17 +38,17 @@
                     <tr>
                       <th>Pemilik Mobil</th>
                       <th style="padding: 0 10px 0 10px">:</th>
-                      <td>Bill Gates</td>
+                      <td id="bayar_pemilik"></td>
                     </tr>
                     <tr>
                       <th>Supir</th>
                       <th style="padding: 0 10px 0 10px">:</th>
-                      <td>555 77 854</td>
+                      <td id="bayar_supir"></td>
                     </tr>
                     <tr>
-                      <th>Mobil</th>
+                      <th>Plat Mobil</th>
                       <th style="padding: 0 10px 0 10px">:</th>
-                      <td>555 77 855</td>
+                      <td id="bayar_mobil"></td>
                     </tr>
                   </table>
                     <div class="card-body table-responsive">

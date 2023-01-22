@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Transaksi;
 
 use App\Http\Controllers\Controller;
+use App\Models\Mobil;
 use App\Models\Setoran;
 use App\Models\Supir;
 use App\Utils\ApiResponse;
@@ -36,14 +37,18 @@ class UangJalanController extends Controller
     {
       try {
 
-        $supir = Supir::find($request->supir_id);
+        $mobil = Mobil::with('supir','pemilik')->where('supir_id', $request->supir_id);
+    
 
          Setoran::updateOrCreate(
             ['id'               => $request->id],
             [
-               'supir_id'   => $request->supir_id,
-               'supir_nama' => $supir->nama,
-               // 'mobil_id'             => ,
+               'supir_id'             => $request->supir_id,
+               'pemilik_mobil_id'     => $mobil->first()->pemilik_mobil_id,
+               'supir_nama'           => $mobil->first()->supir->nama,
+               'mobil_plat'           => $mobil->first()->plat,
+               'pemilik_nama'         => $mobil->first()->pemilik->nama,
+               'mobil_id'             => $mobil->first()->id,
                'tgl_ambil_uang_jalan' => $request->tgl_ambil_uang_jalan,
                'uang_jalan'           => $request->uang_jalan
             ]

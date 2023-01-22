@@ -24,6 +24,11 @@ class Mobil extends Model
       return $this->hasOne(Pemilik::class, 'id', 'pemilik_mobil_id');
    }
 
+   public function supir()
+   {
+      return $this->hasOne(Supir::class, 'id', 'supir_id');
+   }
+
    public function mobil_jenis()
    {
       return $this->hasOne(MobilJenis::class, 'id', 'mobil_jenis_id');

@@ -7,6 +7,7 @@ use App\Http\Requests\MobilRequest;
 use App\Models\Pemilik;
 use App\Models\Mobil;
 use App\Models\MobilJenis;
+use App\Models\Supir;
 use App\Utils\ApiResponse;
 
 class MobilController extends Controller
@@ -15,10 +16,11 @@ class MobilController extends Controller
    public function index()
    {
       // abort_if(Gate::denies('kelola mobil'), 403);
-      $x['title']    = 'Kelola Mobil';
-      $x['pemilik']    = Pemilik::get();
-      $x['jenis']    = MobilJenis::get();
-      $data = Mobil::with('pemilik', 'mobil_jenis');
+      $x['title']   = 'Kelola Mobil';
+      $x['pemilik'] = Pemilik::get();
+      $x['supir']   = Supir::get();
+      $x['jenis']   = MobilJenis::get();
+      $data = Mobil::with('pemilik', 'mobil_jenis','supir');
 
       if (request()->ajax()) {
          return  datatables()->of($data)
@@ -41,6 +43,7 @@ class MobilController extends Controller
             [
                'plat'             => $request->plat,
                'mobil_jenis_id'   => $request->mobil_jenis_id,
+               'supir_id'         => $request->supir_id,
                'pemilik_mobil_id' => $request->pemilik_mobil_id
             ]
          );
