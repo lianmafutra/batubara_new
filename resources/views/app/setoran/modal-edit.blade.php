@@ -33,8 +33,8 @@
                 @method('PUT')
                 <div class="modal-body">
                  
-                    <x-input-rupiah id='uang_tambahan' label='Uang Tambahan' required=true />
-                    <x-input-rupiah id='uang_kurangan' label='Uang Kurangan' required=true />
+                    <x-input-rupiah id='uang_lainnya' label='Uang Tambahan/Kurangan' required=true />
+                    {{-- <x-input-rupiah id='uang_kurangan' label='Uang Kurangan' required=true /> --}}
                     <x-input-rupiah id='pg' label='PG ( Pijak Gas )' required=true />
                     <x-input id='berat' label='Berat Muatan' required=true />
                     <x-select2 id="tujuan_id" label="Tujuan" required="true" placeholder="Pilih Tujuan">

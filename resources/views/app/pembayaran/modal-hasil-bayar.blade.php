@@ -41,11 +41,11 @@
                                     <th>Berat</th>
                                     <th>Tujuan</th>
                                     <th>Harga</th>
-                                    
+
                                     <th>Uang Jalan</th>
                                     <th>Uang Lainnya</th>
                                     <th>Total</th>
-                                    <th>PG (Pijak Gas)</th>
+                                    <th>Pijak Gas</th>
                                     <th>Total Kotor</th>
                                     <th>Total Bersih</th>
                                 </tr>

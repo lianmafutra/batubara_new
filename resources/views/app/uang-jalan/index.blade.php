@@ -37,8 +37,7 @@
                                         'Nama Supir',
                                         'Tanggal',
                                         'Uang Jalan',
-                                        'Uang Tambahan',
-                                        'Uang Kurangan',
+                                        'created_at',
                                         '#aksi',
                                     ]"></x-datatable>
                                 </div>
@@ -96,7 +95,7 @@
                 info: true,
                 ordering: true,
                 order: [
-                    [6, 'desc']
+                    [4, 'desc']
                 ],
                 ajax: @json(route('uang-jalan.index')),
                 columns: [{
@@ -118,16 +117,7 @@
                         }
                     },
                     {
-                        data: 'uang_tambahan',
-                        render: function(data, type, row, meta) {
-                            return rupiah(data)
-                        }
-                    },
-                    {
-                        data: 'uang_kurangan',
-                        render: function(data, type, row, meta) {
-                            return rupiah(data)
-                        }
+                        data: 'created_at',
                     },
                     {
                         data: "action",

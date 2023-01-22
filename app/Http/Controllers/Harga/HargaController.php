@@ -43,6 +43,9 @@ class HargaController extends Controller
                'harga'          => $request->harga,
                'tujuan_id'      => $request->tujuan_id,
                'transportir_id' => $request->transportir_id,
+               'harga_pembayaran' => $request->harga_pembayaran,
+               'harga_pencairan' => $request->harga_pencairan,
+               'transportir_id' => $request->transportir_id,
                'tanggal'        => $request->tanggal,
             ]
          );

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Harga\HargaController;
+use App\Http\Controllers\Harga\HargaPengaturanController;
 use App\Http\Controllers\Kendaraan\MobilController;
 use App\Http\Controllers\Kendaraan\PemilikController;
 use App\Http\Controllers\Kendaraan\SupirController;
@@ -10,7 +11,7 @@ use App\Http\Controllers\Transaksi\SetoranController;
 use App\Http\Controllers\Transaksi\UangJalanController;
 use App\Http\Controllers\Transportir\TransportirController;
 use App\Http\Controllers\Tujuan\TujuanController;
-
+use App\Models\HargaPengaturan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -43,10 +44,11 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
    Route::controller(HargaController::class)->group(function () {
       Route::resource('harga', HargaController::class);
+      Route::resource('pengaturan_harga', HargaPengaturanController::class);
       Route::post('destroyMulti', 'destroyMulti')->name('destroy.multi');
    });
   
-   Route::resource('harga', HargaController::class);
+
    Route::resource('tujuan', TujuanController::class);
   
 

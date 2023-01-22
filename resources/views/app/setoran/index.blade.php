@@ -106,7 +106,7 @@
                 //  currencySymbol: 'Rp ',
                 digitGroupSeparator: '.',
                 decimalPlaces: 0,
-                minimumValue: 0,
+             
                 decimalCharacter: ',',
                 formatOnPageLoad: true,
                 allowDecimalPadding: false,
@@ -285,10 +285,9 @@
                 $.get(url, function(response) {
                     $('#berat').val(response.data.berat)
                     $('#url_update').val(url_update)
-                    AutoNumeric.getAutoNumericElement('#uang_tambahan').set(response.data
-                        .uang_tambahan)
-                    AutoNumeric.getAutoNumericElement('#uang_kurangan').set(response.data
-                        .uang_kurangan)
+                    AutoNumeric.getAutoNumericElement('#uang_lainnya').set(response.data
+                        .uang_lainnya)
+                  
                     tgl_muat.setDate(response.data.tgl_muat)
                     $('#tujuan_id').val(response.data.tujuan_id).trigger('change');
                     $('#transportir_id').val(response.data.transportir_id).trigger('change');

@@ -30,6 +30,8 @@
                                 <h3 class="card-title">
                                     <a href="#" class="btn btn-sm btn-primary" id="btn_tambah"><i
                                             class="fas fa-plus"></i> Tambah harga</a>
+                                    <a href="#" class="btn btn-sm btn-warning" id="btn_pengaturan_harga"><i
+                                            class="fas fa-tools"></i> Pengaturan Harga</a>
                                     <a style="display: none" href="#" class="btn btn-sm btn-danger"
                                         id="btn_hapus_masal"><i class="fas fa-trash"></i> Hapus Masal</a>
                                 </h3>
@@ -43,6 +45,8 @@
                                                     <th></th>
                                                     <th>No</th>
                                                     <th>Harga</th>
+                                                    <th>Harga Pembayaran</th>
+                                                    <th>Harga Pencairan</th>
                                                     <th>Tujuan</th>
                                                     <th>Transportir</th>
                                                     <th>Tanggal</th>
@@ -65,6 +69,7 @@
     </div>
 @endsection
 @include('app.harga.modal-create')
+@include('app.harga.modal-pengaturan-harga')
 @push('js')
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/fh-3.3.1/sl-1.5.0/datatables.min.js">
     </script>
@@ -83,21 +88,20 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
             })
-             
+
             const flatpicker = flatpickr("#tanggal", {
                 allowInput: true,
                 dateFormat: "d-m-Y",
                 locale: "id",
             });
-            
+
             $('.tanggal').mask('00-00-0000');
 
-            
-            const format = AutoNumeric.multiple('.rupiah', {
+            AutoNumeric.multiple('.rupiah', {
                 //  currencySymbol: 'Rp ',
                 digitGroupSeparator: '.',
                 decimalPlaces: 0,
-                minimumValue: 0,
+
                 decimalCharacter: ',',
                 formatOnPageLoad: true,
                 allowDecimalPadding: false,
@@ -128,7 +132,7 @@
                 }],
                 select: {
                     style: 'multi',
-                    selector: 'td:first-child'
+                    selector: 'td:not(:last-child)'
                 },
                 ajax: @json(route('harga.index')),
                 columns: [{
@@ -146,7 +150,17 @@
                             return rupiah(data)
                         }
                     },
-                  
+                    {
+                        data: 'harga_pembayaran',
+                        render: function(data, type, row, meta) {
+                            return rupiah(data)
+                        }
+                    }, {
+                        data: 'harga_pencairan',
+                        render: function(data, type, row, meta) {
+                            return rupiah(data)
+                        }
+                    },
                     {
                         data: 'tujuan.nama',
                     },
@@ -188,12 +202,96 @@
                 }
             })
 
-           
+
             $("#btn_tambah").click(function() {
                 flatpicker.setDate('')
                 clearInput()
                 $('#modal_create').modal('show')
                 $('.modal-title').text('Tambah Data')
+                $.get(@json(route('pengaturan_harga.edit', 1)), function(response) {
+                    AutoNumeric.getAutoNumericElement('#harga_pembayaran').set(0)
+                    AutoNumeric.getAutoNumericElement('#harga_pencairan').set(0)
+                    $('#harga').keyup(function() {
+                        harga_pembayaran = parseInt($('input[id$=harga]').val().replace(/[^\d,-]/g, ''))
+                        harga_pencairan = parseInt($('input[id$=harga]').val().replace(/[^\d,-]/g, ''))
+                        AutoNumeric.getAutoNumericElement('#harga_pembayaran').set(harga_pembayaran+response.data.hrg_pembayaran)
+                        AutoNumeric.getAutoNumericElement('#harga_pencairan').set(harga_pencairan+response.data.hrg_pencairan)
+                    });
+                    if (response.data.hrg_pembayaran > 0) {
+                        $('#harga_pembayaran-info').html(
+                            "<span style='color:green; font-size:11px'> ( Harga +" + response
+                            .data
+                            .hrg_pembayaran + " )</span>")
+                    } else {
+                        $('#harga_pembayaran-info').html(
+                            "<span style='color:red; font-size:11px'> ( Harga " + response.data
+                            .hrg_pembayaran + " )</span>")
+                    }
+                    if (response.data.hrg_pencairan > 0) {
+                        $('#harga_pencairan-info').html(
+                            "<span style='color:green; font-size:11px'> ( Harga +" + response
+                            .data
+                            .hrg_pencairan + " )</span>")
+                    } else {
+                        $('#harga_pencairan-info').html(
+                            "<span style='color:red; font-size:11px'> ( Harga " + response.data
+                            .hrg_pencairan + " )</span>")
+                    }
+                });
+
+            });
+
+            $("#btn_pengaturan_harga").click(function() {
+                $('#modal_pengaturan_harga').modal('show')
+                $('.modal-title').text('Pengaturan Harga')
+                $.get(@json(route('pengaturan_harga.edit', 1)), function(response) {
+
+                    AutoNumeric.getAutoNumericElement('#hrg_pembayaran').set(response.data
+                        .hrg_pembayaran)
+                    AutoNumeric.getAutoNumericElement('#hrg_pencairan').set(response.data
+                        .hrg_pencairan)
+
+                })
+
+            });
+
+
+            $("#form_pengaturan_harga").submit(function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+
+                $.ajax({
+                    type: 'POST',
+                    url: @json(route('pengaturan_harga.update', 1)),
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+                    beforeSend: function() {
+                        showLoading()
+                    },
+                    success: (response) => {
+                        if (response) {
+                            this.reset()
+                            $('#modal_pengaturan_harga').modal('hide')
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                showCancelButton: true,
+                                allowEscapeKey: false,
+                                showCancelButton: false,
+                                allowOutsideClick: false,
+                            }).then((result) => {
+                                swal.hideLoading()
+                            })
+                            swal.hideLoading()
+                        }
+                    },
+                    error: function(response) {
+                        showError(response)
+                    }
+                });
             });
 
             $("#btn_hapus_masal").click(function() {
@@ -282,6 +380,7 @@
                 });
             });
             $('#datatable').on('click', '.btn_edit', function(e) {
+               clearInput()
                 $('#modal_create').modal('show')
                 $('.modal-title').text('Ubah Data')
                 $('.error').hide();
@@ -289,9 +388,40 @@
                 $.get(url, function(response) {
                     $('#id').val(response.data.id)
                     AutoNumeric.getAutoNumericElement('#harga').set(response.data.harga)
-                    AutoNumeric.getAutoNumericElement('#pg').set(response.data.pg)
+                    AutoNumeric.getAutoNumericElement('#harga_pembayaran').set(response.data.harga_pembayaran)
+                    AutoNumeric.getAutoNumericElement('#harga_pencairan').set(response.data.harga_pencairan)
+
+                    $.get(@json(route('pengaturan_harga.edit', 1)), function(response) {
+                   
+                    $('#harga').keyup(function() {
+                        harga_pembayaran = parseInt($('input[id$=harga]').val().replace(/[^\d,-]/g, ''))
+                        harga_pencairan = parseInt($('input[id$=harga]').val().replace(/[^\d,-]/g, ''))
+                        AutoNumeric.getAutoNumericElement('#harga_pembayaran').set(harga_pembayaran+response.data.hrg_pembayaran)
+                        AutoNumeric.getAutoNumericElement('#harga_pencairan').set(harga_pencairan+response.data.hrg_pencairan)
+                    });
+                    if (response.data.hrg_pembayaran > 0) {
+                        $('#harga_pembayaran-info').html(
+                            "<span style='color:green; font-size:11px'> ( Harga +" + response
+                            .data
+                            .hrg_pembayaran + " )</span>")
+                    } else {
+                        $('#harga_pembayaran-info').html(
+                            "<span style='color:red; font-size:11px'> ( Harga " + response.data
+                            .hrg_pembayaran + " )</span>")
+                    }
+                    if (response.data.hrg_pencairan > 0) {
+                        $('#harga_pencairan-info').html(
+                            "<span style='color:green; font-size:11px'> ( Harga +" + response
+                            .data
+                            .hrg_pencairan + " )</span>")
+                    } else {
+                        $('#harga_pencairan-info').html(
+                            "<span style='color:red; font-size:11px'> ( Harga " + response.data
+                            .hrg_pencairan + " )</span>")
+                    }
+                });
                     flatpicker.setDate(response.data.tanggal)
-                
+
                     $('#tujuan_id').val(response.data.tujuan_id).trigger('change');
                     $('#transportir_id').val(response.data.transportir_id).trigger('change');
                 })
