@@ -87,6 +87,8 @@ CREATE TABLE `harga` (
   `tujuan_id` int(11) DEFAULT NULL,
   `transportir_id` int(11) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
+  `harga_pembayaran` int(11) DEFAULT NULL,
+  `harga_pencairan` int(11) DEFAULT NULL,
   `tanggal` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -95,7 +97,7 @@ CREATE TABLE `harga` (
   KEY `FK_harga_transportir` (`transportir_id`),
   CONSTRAINT `FK_harga_transportir` FOREIGN KEY (`transportir_id`) REFERENCES `transportir` (`id`),
   CONSTRAINT `FK_harga_tujuan` FOREIGN KEY (`tujuan_id`) REFERENCES `tujuan` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,8 +106,71 @@ CREATE TABLE `harga` (
 
 LOCK TABLES `harga` WRITE;
 /*!40000 ALTER TABLE `harga` DISABLE KEYS */;
-INSERT INTO `harga` VALUES (87,3,3,15000,'2023-01-15','2023-01-07 17:53:28','2023-01-07 17:53:28'),(94,3,3,13000,'2023-01-13','2023-01-07 17:53:28','2023-01-15 15:22:22'),(95,3,1,19000,'2023-01-19','2023-01-15 16:19:36','2023-01-15 16:19:36'),(96,3,3,11000,'2023-01-11','2023-01-07 17:53:28','2023-01-07 17:53:28'),(97,3,3,10000,'2023-01-10','2023-01-07 17:53:28','2023-01-15 15:22:22');
+INSERT INTO `harga` VALUES (94,3,3,238,236,243,'2023-01-13','2023-01-07 17:53:28','2023-01-22 02:35:09'),(96,3,3,238,236,243,'2023-01-11','2023-01-07 17:53:28','2023-01-22 02:35:01'),(97,3,3,289,287,294,'2023-01-10','2023-01-07 17:53:28','2023-01-22 02:34:48'),(99,3,3,245,243,250,'2023-01-14','2023-01-22 02:27:51','2023-01-22 02:27:51'),(100,3,5,189,187,194,'2023-01-04','2023-01-22 02:36:00','2023-01-22 02:36:00'),(101,3,3,180,178,185,'2023-01-13','2023-01-22 14:20:04','2023-01-22 14:20:04');
 /*!40000 ALTER TABLE `harga` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `harga_pengaturan`
+--
+
+DROP TABLE IF EXISTS `harga_pengaturan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `harga_pengaturan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hrg_pembayaran` int(11) DEFAULT NULL,
+  `hrg_pencairan` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `harga_pengaturan`
+--
+
+LOCK TABLES `harga_pengaturan` WRITE;
+/*!40000 ALTER TABLE `harga_pengaturan` DISABLE KEYS */;
+INSERT INTO `harga_pengaturan` VALUES (1,-2,5,'2023-01-07 17:53:28','2023-01-22 01:59:21');
+/*!40000 ALTER TABLE `harga_pengaturan` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `histori_pembayaran`
+--
+
+DROP TABLE IF EXISTS `histori_pembayaran`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `histori_pembayaran` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `kode` char(20) NOT NULL,
+  `tgl_bayar` date NOT NULL,
+  `status` char(20) NOT NULL,
+  `setoran_id` varchar(100) NOT NULL,
+  `mobil_id` int(11) NOT NULL,
+  `mobil_plat` varchar(50) NOT NULL DEFAULT '',
+  `supir_id` int(11) NOT NULL,
+  `supir_nama` varchar(50) NOT NULL DEFAULT '',
+  `pemilik_mobil_id` int(11) NOT NULL,
+  `pemilik_nama` varchar(50) NOT NULL DEFAULT '',
+  `kasbon_id` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `histori_pembayaran`
+--
+
+LOCK TABLES `histori_pembayaran` WRITE;
+/*!40000 ALTER TABLE `histori_pembayaran` DISABLE KEYS */;
+INSERT INTO `histori_pembayaran` VALUES (17,'1/BYR/22-01-23','2023-01-22','lunas','[\"22\"]',2,'B 982 OPL',5,'Dedek',1,'Ade Sukron','','2023-01-22 16:08:25','2023-01-22 16:08:25'),(18,'18/BYR/23-01-23','2023-01-23','lunas','[\"17\",\"18\"]',1,'B 981 OPL',1,'Andi',1,'Ade Sukron','','2023-01-22 17:43:29','2023-01-22 17:43:29');
+/*!40000 ALTER TABLE `histori_pembayaran` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -145,13 +210,17 @@ CREATE TABLE `mobil` (
   `plat` char(50) DEFAULT NULL,
   `mobil_jenis_id` int(11) NOT NULL,
   `pemilik_mobil_id` int(11) NOT NULL,
+  `supir_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `plat` (`plat`),
   KEY `FK_mobil_pemilik_mobil` (`pemilik_mobil_id`) USING BTREE,
   KEY `FK_mobil_mobil_jenis` (`mobil_jenis_id`) USING BTREE,
-  CONSTRAINT `FK_mobil_pemilik_mobil` FOREIGN KEY (`pemilik_mobil_id`) REFERENCES `pemilik_mobil` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+  KEY `FK_mobil_supir` (`supir_id`),
+  CONSTRAINT `FK_mobil_pemilik_mobil` FOREIGN KEY (`pemilik_mobil_id`) REFERENCES `pemilik_mobil` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_mobil_supir` FOREIGN KEY (`supir_id`) REFERENCES `supir` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,7 +229,7 @@ CREATE TABLE `mobil` (
 
 LOCK TABLES `mobil` WRITE;
 /*!40000 ALTER TABLE `mobil` DISABLE KEYS */;
-INSERT INTO `mobil` VALUES (1,'B 981 OPL',2,1,'2023-01-03 18:06:46','2023-01-06 06:53:55'),(2,'B 982 OPL',1,1,'2023-01-03 18:06:46','2023-01-04 18:53:48'),(27,'B 983 OPL',2,3,'2023-01-03 18:06:46','2023-01-04 18:53:48'),(35,'9-09-09-0808078070',2,3,'2023-01-06 08:51:24','2023-01-18 03:31:00');
+INSERT INTO `mobil` VALUES (1,'B 981 OPL',2,1,1,'2023-01-03 18:06:46','2023-01-06 06:53:55'),(2,'B 982 OPL',1,1,5,'2023-01-03 18:06:46','2023-01-04 18:53:48'),(27,'B 983 OPL',2,3,3,'2023-01-03 18:06:46','2023-01-04 18:53:48');
 /*!40000 ALTER TABLE `mobil` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -336,7 +405,7 @@ CREATE TABLE `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -345,7 +414,7 @@ CREATE TABLE `permissions` (
 
 LOCK TABLES `permissions` WRITE;
 /*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
-INSERT INTO `permissions` VALUES (1,'filemanager','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(2,'read module','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(3,'delete setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(4,'update setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(5,'read setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(6,'create setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(7,'delete user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(8,'update user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(9,'read user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(10,'create user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(11,'delete role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(12,'update role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(13,'read role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(14,'create role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(15,'delete permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(16,'update permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(17,'read permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(18,'create permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(19,'view_data_pegawai','web','2022-11-18 04:16:07','2022-11-18 04:16:07'),(20,'pengajuan menu','web','2022-11-18 04:41:26','2022-11-29 01:42:51'),(21,'pengajuan create','web','2022-11-22 02:08:40','2022-11-22 02:08:40'),(22,'pengajuan store','web','2022-11-22 07:59:32','2022-11-22 07:59:32'),(23,'pengajuan destroy','web','2022-11-22 07:59:43','2022-11-22 07:59:43'),(24,'pengajuan update','web','2022-11-22 07:59:50','2022-11-22 07:59:50'),(25,'profile menu','web','2022-11-29 01:43:03','2022-11-29 01:43:03'),(26,'pengajuan index','web','2022-11-29 01:43:44','2022-11-29 01:43:44'),(27,'pengajuan show','web','2022-12-03 09:27:42','2022-12-03 09:27:42'),(28,'pengajuan verifikasi kirim','web','2022-12-05 02:25:00','2022-12-05 02:38:16'),(29,'pengajuan verifikasi index','web','2022-12-05 02:38:59','2022-12-05 02:38:59'),(31,'pengajuan selesai','web','2022-12-06 03:06:08','2022-12-06 03:06:08'),(32,'pengajuan filter','web','2022-12-06 18:14:56','2022-12-06 18:14:56'),(33,'master rekom pegawai','web','2022-12-07 04:02:14','2022-12-07 04:02:31');
+INSERT INTO `permissions` VALUES (1,'filemanager','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(2,'read module','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(3,'delete setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(4,'update setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(5,'read setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(6,'create setting','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(7,'delete user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(8,'update user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(9,'read user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(10,'create user','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(11,'delete role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(12,'update role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(13,'read role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(14,'create role','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(15,'delete permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(16,'update permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(17,'read permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(18,'create permission','web','2022-11-18 03:50:20','2022-11-18 03:50:20'),(19,'view_data_pegawai','web','2022-11-18 04:16:07','2022-11-18 04:16:07'),(20,'pengajuan menu','web','2022-11-18 04:41:26','2022-11-29 01:42:51'),(21,'pengajuan create','web','2022-11-22 02:08:40','2022-11-22 02:08:40'),(22,'pengajuan store','web','2022-11-22 07:59:32','2022-11-22 07:59:32'),(23,'pengajuan destroy','web','2022-11-22 07:59:43','2022-11-22 07:59:43'),(24,'pengajuan update','web','2022-11-22 07:59:50','2022-11-22 07:59:50'),(25,'profile menu','web','2022-11-29 01:43:03','2022-11-29 01:43:03'),(26,'pengajuan index','web','2022-11-29 01:43:44','2022-11-29 01:43:44'),(27,'pengajuan show','web','2022-12-03 09:27:42','2022-12-03 09:27:42');
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -444,21 +513,24 @@ DROP TABLE IF EXISTS `setoran`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `setoran` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `pemilik_mobil_id` int(11) DEFAULT NULL,
-  `supir_id` int(11) DEFAULT NULL,
-  `supir_nama` varchar(50) DEFAULT NULL,
-  `mobil_id` int(11) DEFAULT NULL,
-  `uang_jalan` int(11) DEFAULT NULL,
+  `pemilik_mobil_id` int(11) NOT NULL,
+  `supir_id` int(11) NOT NULL,
+  `supir_nama` varchar(50) NOT NULL,
+  `pemilik_nama` varchar(50) NOT NULL,
+  `mobil_plat` varchar(50) NOT NULL,
+  `mobil_id` int(11) NOT NULL,
   `pg` int(11) DEFAULT NULL,
-  `uang_tambahan` int(11) DEFAULT '0',
-  `uang_kurangan` int(11) DEFAULT '0',
+  `uang_jalan` int(11) DEFAULT NULL,
+  `uang_lainnya` int(11) DEFAULT '0',
   `tgl_ambil_uang_jalan` date DEFAULT NULL,
   `tgl_muat` date DEFAULT NULL,
   `tgl_bongkar` date DEFAULT NULL,
   `berat` int(20) DEFAULT '0',
   `tujuan_id` int(11) DEFAULT NULL,
   `tujuan_nama` varchar(50) DEFAULT NULL,
-  `status_pembayaran` enum('LUNAS','BELUM') DEFAULT NULL,
+  `status_pembayaran` enum('LUNAS','BELUM') DEFAULT 'BELUM',
+  `tgl_pembayaran` datetime DEFAULT NULL,
+  `tgl_pencairan` datetime DEFAULT NULL,
   `status_pencairan` varchar(20) DEFAULT '0',
   `transportir_id` int(11) DEFAULT NULL,
   `transportir_nama` varchar(50) DEFAULT NULL,
@@ -467,7 +539,7 @@ CREATE TABLE `setoran` (
   `updated_at` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -476,7 +548,7 @@ CREATE TABLE `setoran` (
 
 LOCK TABLES `setoran` WRITE;
 /*!40000 ALTER TABLE `setoran` DISABLE KEYS */;
-INSERT INTO `setoran` VALUES (16,NULL,3,'Udin',NULL,67000,10000,60000,79999,'2023-01-06','2023-01-18',NULL,6,3,'TEBAT PATAH','BELUM','0',3,'ADS',NULL,NULL,'2023-01-18 11:31:25','2023-01-15 22:18:55'),(17,NULL,1,'Andi',NULL,788888,80000,690000,89999,'2023-01-15','2023-01-19',NULL,56,3,'TEBAT PATAH','BELUM','0',1,'PT NAN RAING',NULL,NULL,'2023-01-18 11:08:28','2023-01-15 23:19:53');
+INSERT INTO `setoran` VALUES (16,3,3,'Udin','Lian Mafutra','B 983 OPL',27,90000,1850000,5000,'2023-01-06','2023-01-18',NULL,15820,3,'TEBAT PATAH','BELUM',NULL,NULL,'0',3,'ADS',NULL,NULL,'2023-01-22 23:03:01','2023-01-15 22:18:55'),(17,1,1,'Andi','Ade Sukron','B 981 OPL',1,25000,1000000,-90000,'2023-01-15','2023-01-19',NULL,14330,3,'TEBAT PATAH','LUNAS','2023-01-23 00:43:29',NULL,'0',1,'PT NAN RAING',NULL,NULL,'2023-01-23 00:43:29','2023-01-15 23:19:53'),(18,1,1,'Andi','Ade Sukron','B 981 OPL',1,75000,900000,205000,'2023-01-15','2023-01-20',NULL,14330,5,'KAI','LUNAS','2023-01-23 00:43:29',NULL,'0',1,'PT NAN RAING',NULL,NULL,'2023-01-23 00:43:29','2023-01-15 23:19:53'),(22,1,5,'Dedek','Ade Sukron','B 982 OPL',2,40000,1777,-700000,'2023-01-18','2023-01-18',NULL,6789,3,'TEBAT PATAH','LUNAS','2023-01-22 23:08:25',NULL,'0',3,'ADS',NULL,NULL,'2023-01-22 23:08:25','2023-01-22 07:23:39');
 /*!40000 ALTER TABLE `setoran` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -634,4 +706,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-21 16:01:40
+-- Dump completed on 2023-01-23  1:00:13
