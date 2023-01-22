@@ -45,8 +45,20 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
       Route::get('print/{histori_pembayaran_id}', 'print')->name('print');
    });
 
+   
+   Route::prefix('pencairan')->name('pencairan.')->controller(PencairanController::class)->group(function () {
+      Route::get('/', 'index')->name('index');
+      Route::post('bayar-preview', 'bayarPreview')->name('bayar.preview');
+      Route::post('bayar-histori', 'bayarHistori')->name('bayar.histori');
+   });
 
-   Route::resource('pencairan', PencairanController::class);
+   Route::prefix('pencairan/histori')->name('pencairan.histori.')->controller(PencairanController::class)->group(function () {
+      Route::get('/', 'index')->name('index');
+      Route::delete('hapus/{id}', 'destroy')->name('destroy');
+      Route::get('print/{histori_pencairan_id}', 'print')->name('print');
+   });
+
+
    Route::resource('uang-jalan', UangJalanController::class);
    Route::resource('transportir', TransportirController::class);
 

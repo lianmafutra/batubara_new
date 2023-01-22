@@ -167,7 +167,8 @@
                     <ul class="nav nav-treeview">
 
                         <li class="nav-item">
-                           <a href="{{ route('pembayaran.index') }}" class="nav-link  {{ request()->routeIs('pembayaran.index') ? 'active' : '' }}" >
+                            <a href="{{ route('pembayaran.index') }}"
+                                class="nav-link  {{ request()->routeIs('pembayaran.index') ? 'active' : '' }}">
                                 <i class="fas fa-user-cog nav-icon"></i>
                                 <p>Belum Dibayar</p>
                             </a>
@@ -188,18 +189,38 @@
                         <p>Pembayaran</p>
                     </a>
                 </li> --}}
-                <li class="nav-item">
-                    <a href="" class="nav-link disabled">
+                <li class="nav-item menu-is-opening {{ request()->is('admin/pencairan*') ? 'menu-open' : '' }} ">
+                    <a href="" class="nav-link {{ request()->is('admin/pencairan*') ? 'active' : '' }}">
                         <i class="fas fa-hand-holding-usd nav-icon"></i>
                         <p>Pencairan</p>
+                        <i class="right fas fa-angle-left"></i>
                     </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{ route('pencairan.index') }}"
+                                class="nav-link  {{ request()->routeIs('pencairan.index') ? 'active' : '' }}">
+                                <i class="fas fa-user-cog nav-icon"></i>
+                                <p>Belum Dicairkan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('pencairan.histori.index') }}"
+                                class="nav-link {{ request()->routeIs('pencairan.histori*') ? 'active' : '' }}">
+                                <i class="fas fa-users nav-icon"></i>
+                                <p>Histori</p>
+                            </a>
+                        </li>
+
+                    </ul>
                 </li>
-                <li class="nav-item">
+
+                {{-- <li class="nav-item">
                     <a href="" class="nav-link disabled">
                         <i class="fas fa-file-alt nav-icon"></i>
                         <p>Laporan</p>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
