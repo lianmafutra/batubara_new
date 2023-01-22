@@ -42,6 +42,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
    Route::prefix('pembayaran/histori')->name('pembayaran.histori.')->controller(PembayaranHistoriController::class)->group(function () {
       Route::get('/', 'index')->name('index');
       Route::delete('hapus/{id}', 'destroy')->name('destroy');
+      Route::get('print/{histori_pembayaran_id}', 'print')->name('print');
    });
 
 

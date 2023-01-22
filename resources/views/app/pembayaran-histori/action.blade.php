@@ -8,7 +8,7 @@
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
         </button>
         <ul class="dropdown-menu">
-            <li><a data-url='{{ route('mobil.edit', $data->id) }}' href="#" class="btn_edit dropdown-item">Print</a>
+            <li><a href="{{ route('pembayaran.histori.print', $data->id) }}" target="_blank" class="btn_edit dropdown-item">Print</a>
             </li>
             <li><a data-setoran='{{ $data }}' href="#" class="btn_preview dropdown-item">Preview</a>
             </li>
