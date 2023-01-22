@@ -31,6 +31,26 @@
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
+                  <h4 style="text-align: center">Rekap Pembayaran Bulan September</h4>
+                 
+
+                  <table style="margin-left: 20px">
+                    <tr>
+                      <th>Pemilik Mobil</th>
+                      <th style="padding: 0 10px 0 10px">:</th>
+                      <td>Bill Gates</td>
+                    </tr>
+                    <tr>
+                      <th>Supir</th>
+                      <th style="padding: 0 10px 0 10px">:</th>
+                      <td>555 77 854</td>
+                    </tr>
+                    <tr>
+                      <th>Mobil</th>
+                      <th style="padding: 0 10px 0 10px">:</th>
+                      <td>555 77 855</td>
+                    </tr>
+                  </table>
                     <div class="card-body table-responsive">
                         <table id="datatable2" class="table table-bordered " style="font-size: 12px; width: 100%">
                             <thead>

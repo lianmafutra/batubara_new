@@ -25,52 +25,98 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="d-flex ">
-                                    <div class="mr-auto col-3  ">
-                                        <x-select2 id="mobil_id" label="Filter Mobil" required="false"
-                                            placeholder="Pilih Mobil">
-                                            <option value="all">Semua Mobil</option>
-                                            @foreach ($mobil as $item)
-                                                <option value="{{ $item->id }}">{{ $item->plat }}</option>
-                                            @endforeach
-                                        </x-select2>
+                        <div class="card-body">
+                            <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill"
+                                        href="#custom-content-below-home" role="tab"
+                                        aria-controls="custom-content-below-home" aria-selected="true">Pembayaran</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill"
+                                        href="#custom-content-below-settings" role="tab"
+                                        aria-controls="custom-content-below-settings" aria-selected="false">Histori</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="custom-content-below-tabContent">
+                                <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel"
+                                    aria-labelledby="custom-content-below-home-tab">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="d-flex ">
+                                                <div class="mr-auto col-3  ">
+                                                    <x-select2 id="mobil_id" label="Filter Mobil" required="false"
+                                                        placeholder="Pilih Mobil">
+                                                        <option value="all">Semua Mobil</option>
+                                                        @foreach ($mobil as $item)
+                                                            <option value="{{ $item->id }}">{{ $item->plat }}</option>
+                                                        @endforeach
+                                                    </x-select2>
+                                                </div>
+                                                <div style="margin-top:32px" class="p-2"><button id="btn_bayar"
+                                                        type="button" class="btn btn-primary"><i
+                                                            class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i>
+                                                        Bayar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="tab-content">
+                                                <div class="card-body table-responsive">
+                                                    <table id="datatable" class="table table-bordered ">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>No</th>
+                                                                <th>Supir</th>
+                                                                <th>Berat</th>
+                                                                <th>Tujuan</th>
+                                                                <th>Transportir</th>
+                                                                <th>Tgl Muat</th>
+                                                                <th>Harga</th>
+                                                                <th>Uang Jalan</th>
+                                                                <th>Uang Lainnya</th>
+                                                                <th>Total</th>
+                                                                <th>PG (Pijak Gas)</th>
+                                                                <th>Total Kotor</th>
+                                                                <th>Total Bersih</th>
+                                                                <th>Created_at</th>
+                                                                {{-- <th>#Aksi</th> --}}
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div style="margin-top:32px" class="p-2"><button id="btn_bayar" type="button"
-                                            class="btn btn-primary"><i
-                                                class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i> Bayar</button></div>
                                 </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="tab-content">
-                                    <div class="card-body table-responsive">
-                                        <table id="datatable" class="table table-bordered ">
-                                            <thead>
-                                                <tr>
-                                                   <th>#</th>
+                                <div class="tab-pane fade" id="custom-content-below-settings" role="tabpanel"
+                                    aria-labelledby="custom-content-below-settings-tab">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="tab-content">
+                                                <div class="card-body table-responsive">
+                                                    <table id="datatable2" class="table table-bordered ">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Tgl Bayar</th>
+                                                                <th>Mobil</th>
+                                                                <th>Supir</th>
+                                                                <th>Pemilik Mobil</th>
+                                                                <th>#Aksi</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
 
-                                                   <th>No</th>
-                                                   <th>Supir</th>
-                                                   <th>Berat</th>
-                                                   <th>Tujuan</th>
-                                                   <th>Transportir</th>
-                                                   <th>Tgl Muat</th>
-                                                   <th>Harga</th>
-                                                   <th>Uang Jalan</th>
-                                                   <th>Uang Lainnya</th>
-                                                   <th>Total</th>
-                                                   <th>PG (Pijak Gas)</th>
-                                                   <th>Total Kotor</th>
-                                                   <th>Total Bersih</th>
-                                                   <th>Created_at</th>
-                                                   {{-- <th>#Aksi</th> --}}
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-
-                                        </table>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -164,11 +210,10 @@
                 initComplete: function(settings, json) {
                     $('body').find('.dataTables_scrollBody').addClass("scrollbar");
                 },
-                columns: [
-                  {
+                columns: [{
                         data: 'id',
                     },
-                  {
+                    {
                         data: "DT_RowIndex",
                         orderable: false,
                         searchable: false,
@@ -249,90 +294,99 @@
                         searchable: false,
                         data: 'created_at',
                     },
-                    
+
                 ]
             }).on('select', function(e, dt, type, indexes) {
-      
+
                 if (dt[0].length > 1) {
                     datatable.rows().every(function(rowIdx, tableLoop, rowLoop) {
                         let data = datatable.row(rowIdx).data().id
                         setoran_id_array.push(data)
                     });
                     setoran_id_array = [...new Set(setoran_id_array)];
-                }else{
-                  setoran_id_array.push(datatable.rows(indexes).data()[0].id);
+                } else {
+                    setoran_id_array.push(datatable.rows(indexes).data()[0].id);
                 }
             }).on('deselect', function(e, dt, type, indexes) {
-               if (dt[0].length > 1) {
-                  setoran_id_array=[]
-                }else{
-                  setoran_id_array.splice($.inArray(datatable.rows(indexes).data()[0].id, setoran_id_array), 1);
+                if (dt[0].length > 1) {
+                    setoran_id_array = []
+                } else {
+                    setoran_id_array.splice($.inArray(datatable.rows(indexes).data()[0].id,
+                        setoran_id_array), 1);
                 }
-             
+
             })
 
             $("#btn_bayar").click(function() {
-             
-                $.ajax({
-                    type: 'POST',
-                    url: @json(route('pembayaran.bayar')),
-                    data: {
-                        "setoran_id_array": setoran_id_array,
-                    },
-                    beforeSend: function() {
-                        showLoading()
+         
+                if ($('#mobil_id').val() == 'all' || $('#mobil_id').val() == '') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Mobil Belum dipilih',
+                    })
+                    return;
+                }
 
-                    },
-                    success: (response) => {
-                        $('#modal_hasil_bayar').modal('show')
-                        hideLoading()
-                        $("#datatable2 tbody").empty();
-                        $("#datatable2 tfoot").empty();
-                        let row, footer;
-                        response.data.data_setoran.forEach(function(data, i) {
-                            row += `<tr>
-                              <td>${i+1}</td>
-                              <td>${data.supir_nama}</td>
-                              <td>${data.berat}</td>
-                              <td>${data.tujuan_nama}</td>
-                              <td class="rupiah">${data.harga}</td>
+                  $.ajax({
+                     type: 'POST',
+                     url: @json(route('pembayaran.bayar')),
+                     data: {
+                           "setoran_id_array": setoran_id_array,
+                     },
+                     beforeSend: function() {
+                           showLoading()
 
-                              <td class="rupiah">${data.uang_jalan}</td>
-                              <td class="rupiah">${data.uang_lainnya}</td>
-                              <td class="rupiah">${data.total_uang_lainnya}</td>
-                              <td class="rupiah">${data.pg}</td>
-                              <td class="rupiah">${data.total_kotor}</td>
-                              <td class="rupiah">${data.total_bersih}</td>
-                              </tr>`;
-                        });
+                     },
+                     success: (response) => {
+                           $('#modal_hasil_bayar').modal('show')
+                           hideLoading()
+                           $("#datatable2 tbody").empty();
+                           $("#datatable2 tfoot").empty();
+                           let row, footer;
+                           response.data.data_setoran.forEach(function(data, i) {
+                              row += `<tr>
+                                 <td>${i+1}</td>
+                                 <td>${data.supir_nama}</td>
+                                 <td>${data.berat}</td>
+                                 <td>${data.tujuan_nama}</td>
+                                 <td class="rupiah">${data.harga}</td>
 
-                        footer = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
-                             <td colspan="5">Jumlah Total</td>
-                              <td class="rupiah">${response.data.total_uang_jalan}</td>
-                              <td class="rupiah">${response.data.total_uang_lainnya}</td>
-                              <td class="rupiah">${response.data.total}</td>
-                              <td class="rupiah">${response.data.total_pihak_gas}</td>
-                              <td class="rupiah">${response.data.total_uang_kotor}</td>
-                              <td class="rupiah">${response.data.total_uang_bersih}</td> </tr>`;
+                                 <td class="rupiah">${data.uang_jalan}</td>
+                                 <td class="rupiah">${data.uang_lainnya}</td>
+                                 <td class="rupiah">${data.total_uang_lainnya}</td>
+                                 <td class="rupiah">${data.pg}</td>
+                                 <td class="rupiah">${data.total_kotor}</td>
+                                 <td class="rupiah">${data.total_bersih}</td>
+                                 </tr>`;
+                           });
 
-                        $("#datatable2 tbody").append(row);
-                        $("#datatable2 tfoot").append(footer);
+                           footer = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
+                              <td colspan="5">Jumlah Total</td>
+                                 <td class="rupiah">${response.data.total_uang_jalan}</td>
+                                 <td class="rupiah">${response.data.total_uang_lainnya}</td>
+                                 <td class="rupiah">${response.data.total}</td>
+                                 <td class="rupiah">${response.data.total_pihak_gas}</td>
+                                 <td class="rupiah">${response.data.total_uang_kotor}</td>
+                                 <td class="rupiah">${response.data.total_uang_bersih}</td> </tr>`;
 
-                        new AutoNumeric.multiple('.rupiah', {
-                            currencySymbol: 'Rp ',
-                            digitGroupSeparator: '.',
-                            decimalPlaces: 0,
-                            decimalCharacter: ',',
-                            formatOnPageLoad: true,
-                            allowDecimalPadding: false,
-                            alwaysAllowDecimalCharacter: false
-                        });
+                           $("#datatable2 tbody").append(row);
+                           $("#datatable2 tfoot").append(footer);
 
-                    },
-                    error: function(response) {
-                        showError(response)
-                    }
-                });
+                           new AutoNumeric.multiple('.rupiah', {
+                              currencySymbol: 'Rp ',
+                              digitGroupSeparator: '.',
+                              decimalPlaces: 0,
+                              decimalCharacter: ',',
+                              formatOnPageLoad: true,
+                              allowDecimalPadding: false,
+                              alwaysAllowDecimalCharacter: false
+                           });
+
+                     },
+                     error: function(response) {
+                           showError(response)
+                     }
+                  });
             });
 
 
