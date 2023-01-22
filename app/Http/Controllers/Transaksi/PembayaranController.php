@@ -60,12 +60,13 @@ class PembayaranController extends Controller
       return $this->success(
          'Data Pembayaran',
          [
-            'data_setoran'             => Setoran::whereIn('id',$request->setoran_id_array)->get(),
-            "total_uang_jalan"          => $this->pembayaranService->hitungTotalUangJalan($request->setoran_id_array),
-            "total_uang_jalan_tambahan" => $this->pembayaranService->hitungTotalUangJalanTambahan($request->setoran_id_array),
-            "total_pihak_gas"           => $this->pembayaranService->hitungTotalPijakGas($request->setoran_id_array),
-            "total_uang_kotor"          => $this->pembayaranService->hitungTotalKotor($request->setoran_id_array),
-            "total_uang_bersih"         => $this->pembayaranService->hitungTotalBersih($request->setoran_id_array)
+            'data_setoran'       => Setoran::whereIn('id',$request->setoran_id_array)->get(),
+            "total_uang_jalan"   => $this->pembayaranService->hitungTotalUangJalan($request->setoran_id_array),
+            "total_uang_lainnya" => $this->pembayaranService->hitungTotalUangLainnya($request->setoran_id_array),
+            "total"              => $this->pembayaranService->hitungTotal($request->setoran_id_array),
+            "total_pihak_gas"    => $this->pembayaranService->hitungTotalPijakGas($request->setoran_id_array),
+            "total_uang_kotor"   => $this->pembayaranService->hitungTotalKotor($request->setoran_id_array),
+            "total_uang_bersih"  => $this->pembayaranService->hitungTotalBersih($request->setoran_id_array)
          ]
       );
    }

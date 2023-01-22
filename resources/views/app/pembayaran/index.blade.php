@@ -296,11 +296,10 @@
                               <td>${data.berat}</td>
                               <td>${data.tujuan_nama}</td>
                               <td class="rupiah">${data.harga}</td>
-                              <td>${data.transportir_nama}</td>
-                              <td>${data.tgl_muat}</td>
 
                               <td class="rupiah">${data.uang_jalan}</td>
                               <td class="rupiah">${data.uang_lainnya}</td>
+                              <td class="rupiah">${data.total_uang_lainnya}</td>
                               <td class="rupiah">${data.pg}</td>
                               <td class="rupiah">${data.total_kotor}</td>
                               <td class="rupiah">${data.total_bersih}</td>
@@ -308,9 +307,10 @@
                         });
 
                         footer = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
-                             <td colspan="7">Jumlah Total</td>
+                             <td colspan="5">Jumlah Total</td>
                               <td class="rupiah">${response.data.total_uang_jalan}</td>
-                              <td class="rupiah">${response.data.total_uang_jalan_tambahan}</td>
+                              <td class="rupiah">${response.data.total_uang_lainnya}</td>
+                              <td class="rupiah">${response.data.total}</td>
                               <td class="rupiah">${response.data.total_pihak_gas}</td>
                               <td class="rupiah">${response.data.total_uang_kotor}</td>
                               <td class="rupiah">${response.data.total_uang_bersih}</td> </tr>`;
