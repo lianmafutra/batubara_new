@@ -27,9 +27,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_update" method="POST">
-                @csrf
-                @method('PUT')
+            <form id="form_pembayaran" method="POST">
                 <div class="modal-body">
                   <h4 style="text-align: center">Rekap Pembayaran Bulan September</h4>
                  
@@ -55,13 +53,11 @@
                         <table id="datatable2" class="table table-bordered " style="font-size: 12px; width: 100%">
                             <thead>
                                 <tr>
-                                   
                                     <th>No</th>
                                     <th>Supir</th>
                                     <th>Berat</th>
                                     <th>Tujuan</th>
                                     <th>Harga</th>
-
                                     <th>Uang Jalan</th>
                                     <th>Uang Lainnya</th>
                                     <th>Total</th>
@@ -79,7 +75,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn_submit btn btn-primary">Lanjutkan</button>
+                    <button type="submit" class="btn_lanjutkan btn_submit btn btn-primary">Lanjutkan</button>
                 </div>
             </form>
         </div>

@@ -23,59 +23,61 @@
                 @endcanany
 
                 @role('superadmin')
-                <li class="nav-item menu-is-opening {{ request()->is(['admin/user','admin/role','admin/permission','admin/setting']) ? 'menu-open' : '' }} ">
-                    <a href="" class="nav-link {{ request()->is(['admin/user','admin/role','admin/permission','admin/setting']) ? 'active' : '' }}">
-                     <i class="fas fa-cog nav-icon"></i>
-                        <p>Role Permission</p>
-                        <i class="right fas fa-angle-left"></i>
-                    </a>
-                    <ul class="nav nav-treeview">
-                     @can('read user')
-                     <li class="nav-item">
-                         <a href="{{ route('user.index') }}"
-                             class="nav-link {{ request()->routeIs('user.index') ? 'active' : '' }}">
-                             <i class="fas fa-user nav-icon"></i>
-                             <p>User</p>
-                         </a>
-                     </li>
-                 @endcan
-                 @can('read role')
-                 <li class="nav-item">
-                     <a href="{{ route('role.index') }}"
-                         class="nav-link {{ request()->routeIs('role.index') ? 'active' : '' }}">
-                         <i class="fas fa-user-cog nav-icon"></i>
-                         <p>Role</p>
-                     </a>
-                 </li>
-             @endcan
-             @can('read permission')
-                 <li class="nav-item">
-                     <a href="{{ route('permission.index') }}"
-                         class="nav-link {{ request()->routeIs('permission.index') ? 'active' : '' }}">
-                         <i class="fas fa-unlock nav-icon"></i>
-                         <p>Permission</p>
-                     </a>
-                 </li>
-             @endcan
-             @can('read setting')
-                 {{-- <li class="nav-item">
+                    <li
+                        class="nav-item menu-is-opening {{ request()->is(['admin/user', 'admin/role', 'admin/permission', 'admin/setting']) ? 'menu-open' : '' }} ">
+                        <a href=""
+                            class="nav-link {{ request()->is(['admin/user', 'admin/role', 'admin/permission', 'admin/setting']) ? 'active' : '' }}">
+                            <i class="fas fa-cog nav-icon"></i>
+                            <p>Role Permission</p>
+                            <i class="right fas fa-angle-left"></i>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('read user')
+                                <li class="nav-item">
+                                    <a href="{{ route('user.index') }}"
+                                        class="nav-link {{ request()->routeIs('user.index') ? 'active' : '' }}">
+                                        <i class="fas fa-user nav-icon"></i>
+                                        <p>User</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('read role')
+                                <li class="nav-item">
+                                    <a href="{{ route('role.index') }}"
+                                        class="nav-link {{ request()->routeIs('role.index') ? 'active' : '' }}">
+                                        <i class="fas fa-user-cog nav-icon"></i>
+                                        <p>Role</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('read permission')
+                                <li class="nav-item">
+                                    <a href="{{ route('permission.index') }}"
+                                        class="nav-link {{ request()->routeIs('permission.index') ? 'active' : '' }}">
+                                        <i class="fas fa-unlock nav-icon"></i>
+                                        <p>Permission</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('read setting')
+                                {{-- <li class="nav-item">
                      <a href="{{ route('setting.index') }}"
                          class="nav-link {{ request()->routeIs('setting.index') ? 'active' : '' }}">
                          <i class="fas fa-cog nav-icon"></i>
                          <p>Setting</p>
                      </a>
                  </li> --}}
-             @endcan
-                       
-                    </ul>
-                </li>
-            @endcan
+                            @endcan
+
+                        </ul>
+                    </li>
+                @endcan
 
 
 
-               
-              
-               
+
+
+
                 {{-- @can('profile menu')
                     <li class="nav-item">
                         <a href="{{ route('profile.index') }}"
@@ -110,52 +112,82 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                              <a href="{{ route('supir.index') }}" class="nav-link {{ request()->routeIs('supir*') ? 'active' : '' }}">
-                                  <i class="fas fa-users nav-icon"></i>
-                                  <p>Supir</p>
-                              </a>
-                          </li>
+                                <a href="{{ route('supir.index') }}"
+                                    class="nav-link {{ request()->routeIs('supir*') ? 'active' : '' }}">
+                                    <i class="fas fa-users nav-icon"></i>
+                                    <p>Supir</p>
+                                </a>
+                            </li>
 
                         </ul>
                     </li>
                 @endcan
                 <li class="nav-item">
-                    <a href="{{ route('transportir.index') }}" class="nav-link  {{ request()->routeIs('transportir*') ? 'active' : '' }}" >
+                    <a href="{{ route('transportir.index') }}"
+                        class="nav-link  {{ request()->routeIs('transportir*') ? 'active' : '' }}">
                         <i class="fas fa-warehouse nav-icon"></i>
                         <p>Master Transportir</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{ route('tujuan.index') }}" class="nav-link  {{ request()->routeIs('tujuan*') ? 'active' : '' }}" >
+                    <a href="{{ route('tujuan.index') }}"
+                        class="nav-link  {{ request()->routeIs('tujuan*') ? 'active' : '' }}">
                         <i class="fas fa-road nav-icon"></i>
                         <p>Master Tujuan</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{ route('harga.index') }}" class="nav-link  {{ request()->routeIs('harga*') ? 'active' : '' }}" >
+                    <a href="{{ route('harga.index') }}"
+                        class="nav-link  {{ request()->routeIs('harga*') ? 'active' : '' }}">
                         <i class="fas fa-list-ul nav-icon"></i>
                         <p>Master Harga</p>
                     </a>
                 </li>
                 <li class="nav-header ml-2">Transaksi DO</li>
                 <li class="nav-item">
-                  <a href="{{ route('uang-jalan.index') }}" class="nav-link  {{ request()->routeIs('uang-jalan*') ? 'active' : '' }}" >
-                     <i class="fas fa-file-invoice-dollar  nav-icon"></i>
-                      <p>Uang Jalan</p>
-                  </a>
-              </li>
+                    <a href="{{ route('uang-jalan.index') }}"
+                        class="nav-link  {{ request()->routeIs('uang-jalan*') ? 'active' : '' }}">
+                        <i class="fas fa-file-invoice-dollar  nav-icon"></i>
+                        <p>Uang Jalan</p>
+                    </a>
+                </li>
                 <li class="nav-item">
-                  <a href="{{ route('setoran.index') }}" class="nav-link  {{ request()->routeIs('setoran*') ? 'active' : '' }}" >
-                      <i class="fas fa-shopping-cart nav-icon"></i>
-                      <p>Setoran</p>
-                  </a>
-              </li>
-                <li class="nav-item">
+                    <a href="{{ route('setoran.index') }}"
+                        class="nav-link  {{ request()->routeIs('setoran*') ? 'active' : '' }}">
+                        <i class="fas fa-shopping-cart nav-icon"></i>
+                        <p>Setoran</p>
+                    </a>
+                </li>
+                <li class="nav-item menu-is-opening {{ request()->is('admin/pembayaran*') ? 'menu-open' : '' }} ">
+                    <a href="" class="nav-link {{ request()->is('admin/pembayaran*') ? 'active' : '' }}">
+                        <i class="fas fa-shopping-cart nav-icon"></i>
+                        <p>Pembayaran</p>
+                        <i class="right fas fa-angle-left"></i>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                           <a href="{{ route('pembayaran.index') }}" class="nav-link  {{ request()->routeIs('pembayaran.index') ? 'active' : '' }}" >
+                                <i class="fas fa-user-cog nav-icon"></i>
+                                <p>Belum Dibayar</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('pembayaran.histori.index') }}"
+                                class="nav-link {{ request()->routeIs('pembayaran.histori*') ? 'active' : '' }}">
+                                <i class="fas fa-users nav-icon"></i>
+                                <p>Histori</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                {{-- <li class="nav-item">
                   <a href="{{ route('pembayaran.index') }}" class="nav-link  {{ request()->routeIs('pembayaran*') ? 'active' : '' }}" >
                         <i class="fas fa-shopping-cart nav-icon"></i>
                         <p>Pembayaran</p>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a href="" class="nav-link disabled">
                         <i class="fas fa-hand-holding-usd nav-icon"></i>

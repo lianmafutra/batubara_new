@@ -26,100 +26,53 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card-body">
-                            <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill"
-                                        href="#custom-content-below-home" role="tab"
-                                        aria-controls="custom-content-below-home" aria-selected="true">Pembayaran</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill"
-                                        href="#custom-content-below-settings" role="tab"
-                                        aria-controls="custom-content-below-settings" aria-selected="false">Histori</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="custom-content-below-tabContent">
-                                <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel"
-                                    aria-labelledby="custom-content-below-home-tab">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="d-flex ">
-                                                <div class="mr-auto col-3  ">
-                                                    <x-select2 id="mobil_id" label="Filter Mobil" required="false"
-                                                        placeholder="Pilih Mobil">
-                                                        <option value="all">Semua Mobil</option>
-                                                        @foreach ($mobil as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->plat }}</option>
-                                                        @endforeach
-                                                    </x-select2>
-                                                </div>
-                                                <div style="margin-top:32px" class="p-2"><button id="btn_bayar"
-                                                        type="button" class="btn btn-primary"><i
-                                                            class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i>
-                                                        Bayar</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="tab-content">
-                                                <div class="card-body table-responsive">
-                                                    <table id="datatable" class="table table-bordered ">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>#</th>
-                                                                <th>No</th>
-                                                                <th>Supir</th>
-                                                                <th>Berat</th>
-                                                                <th>Tujuan</th>
-                                                                <th>Transportir</th>
-                                                                <th>Tgl Muat</th>
-                                                                <th>Harga</th>
-                                                                <th>Uang Jalan</th>
-                                                                <th>Uang Lainnya</th>
-                                                                <th>Total</th>
-                                                                <th>PG (Pijak Gas)</th>
-                                                                <th>Total Kotor</th>
-                                                                <th>Total Bersih</th>
-                                                                <th>Created_at</th>
-                                                                {{-- <th>#Aksi</th> --}}
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        </tbody>
+                           <div class="card">
+                              <div class="card-header">
+                                  <div class="d-flex ">
+                                      <div class="mr-auto col-3  ">
+                                          <x-select2 id="mobil_id" label="Filter Mobil" required="false"
+                                              placeholder="Pilih Mobil">
+                                              <option value="all">Semua Mobil</option>
+                                              @foreach ($mobil as $item)
+                                                  <option value="{{ $item->id }}">{{ $item->plat }}</option>
+                                              @endforeach
+                                          </x-select2>
+                                      </div>
+                                      <div style="margin-top:32px" class="p-2"><button id="btn_bayar"
+                                              type="button" class="btn btn-primary"><i
+                                                  class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i>
+                                              Bayar</button>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="card-body table-responsive">
+                                <table id="datatable" class="table table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>No</th>
+                                            <th>Supir</th>
+                                            <th>Berat</th>
+                                            <th>Tujuan</th>
+                                            <th>Transportir</th>
+                                            <th>Tgl Muat</th>
+                                            <th>Harga</th>
+                                            <th>Uang Jalan</th>
+                                            <th>Uang Lainnya</th>
+                                            <th>Total</th>
+                                            <th>PG (Pijak Gas)</th>
+                                            <th>Total Kotor</th>
+                                            <th>Total Bersih</th>
+                                            <th>Created_at</th>
+                                            {{-- <th>#Aksi</th> --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
 
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="custom-content-below-settings" role="tabpanel"
-                                    aria-labelledby="custom-content-below-settings-tab">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="tab-content">
-                                                <div class="card-body table-responsive">
-                                                    <table id="datatable2" class="table table-bordered ">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>#</th>
-                                                                <th>Tgl Bayar</th>
-                                                                <th>Mobil</th>
-                                                                <th>Supir</th>
-                                                                <th>Pemilik Mobil</th>
-                                                                <th>#Aksi</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        </tbody>
-
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </table>
                             </div>
+                          </div>
                         </div>
                     </div>
                 </div>
@@ -329,7 +282,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: @json(route('pembayaran.bayar')),
+                    url: @json(route('pembayaran.bayar.preview')),
                     data: {
                         "setoran_id_array": setoran_id_array,
                         "mobil_id": $('#mobil_id').val(),
@@ -394,7 +347,43 @@
                 });
             });
 
-
+            $("#form_pembayaran").submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: @json(route('pembayaran.bayar.histori')),
+                    data: {
+                        "setoran_id_array": setoran_id_array,
+                        "mobil_id": mobil_id
+                    },
+                    beforeSend: function() {
+                        showLoading()
+                    },
+                    success: (response) => {
+                        if (response) {
+                            this.reset()
+                            datatable.columns().checkboxes.deselect(true);
+                            setoran_id_array = []
+                            $('#modal_hasil_bayar').modal('hide')
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                showCancelButton: true,
+                                allowEscapeKey: false,
+                                showCancelButton: false,
+                                allowOutsideClick: false,
+                            }).then((result) => {
+                                swal.hideLoading()
+                                datatable.ajax.reload()
+                            })
+                            swal.hideLoading()
+                        }
+                    },
+                    error: function(response) {
+                        showError(response)
+                    }
+                });
+            });
 
             $('#mobil_id').on('select2:select', function(e) {
                 mobil_id = $(this).val()
@@ -402,15 +391,11 @@
                 datatable.ajax.reload()
             });
 
-
             $('#mobil_id').on('select2:clear', function(e) {
                 mobil_id = ''
                 datatable.columns().checkboxes.deselect(true);
                 datatable.ajax.reload()
             });
-
-
-
 
             function getHarga() {
                 $.ajax({

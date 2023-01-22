@@ -6,6 +6,7 @@ use App\Http\Controllers\Kendaraan\MobilController;
 use App\Http\Controllers\Kendaraan\PemilikController;
 use App\Http\Controllers\Kendaraan\SupirController;
 use App\Http\Controllers\Transaksi\PembayaranController;
+use App\Http\Controllers\Transaksi\PembayaranHistoriController;
 use App\Http\Controllers\Transaksi\PencairanController;
 use App\Http\Controllers\Transaksi\SetoranController;
 use App\Http\Controllers\Transaksi\UangJalanController;
@@ -34,7 +35,13 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
    Route::prefix('pembayaran')->name('pembayaran.')->controller(PembayaranController::class)->group(function () {
       Route::get('/', 'index')->name('index');
-      Route::post('bayar', 'bayar')->name('bayar');
+      Route::post('bayar-preview', 'bayarPreview')->name('bayar.preview');
+      Route::post('bayar-histori', 'bayarHistori')->name('bayar.histori');
+   });
+
+   Route::prefix('pembayaran/histori')->name('pembayaran.histori.')->controller(PembayaranHistoriController::class)->group(function () {
+      Route::get('/', 'index')->name('index');
+      Route::delete('hapus/{id}', 'destroy')->name('destroy');
    });
 
 
@@ -48,10 +55,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
       Route::post('destroyMulti', 'destroyMulti')->name('destroy.multi');
    });
   
-
    Route::resource('tujuan', TujuanController::class);
-  
-
    
 });
 
