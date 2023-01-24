@@ -68,6 +68,11 @@ class PembayaranController extends Controller
          $kasbon = Kasbon::where('status', 'BELUM')->where('mobil_id', $request->mobil_id);
       }
 
+      $total_bersih = $this->pembayaranService->hitungTotalBersih($request->setoran_id_array);
+      if ($kasbon->sum('jumlah_uang') >  $total_bersih) {
+         
+      }
+
       return $this->success(
          'Data Pembayaran',
          [
@@ -83,7 +88,7 @@ class PembayaranController extends Controller
             "total"              => $this->pembayaranService->hitungTotal($request->setoran_id_array),
             "total_pihak_gas"    => $this->pembayaranService->hitungTotalPijakGas($request->setoran_id_array),
             "total_uang_kotor"   => $this->pembayaranService->hitungTotalKotor($request->setoran_id_array),
-            "total_uang_bersih"  => $this->pembayaranService->hitungTotalBersih($request->setoran_id_array)
+            "total_uang_bersih"  => $total_bersih,
          ]
       );
    }

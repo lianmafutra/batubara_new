@@ -299,14 +299,24 @@
 
                         $('#modal_hasil_bayar').modal('show')
 
+                     $terima_bersih = response.data.total_uang_bersih - response.data.total_kasbon
+
                         $('#bayar_pemilik').text(response.data.pemilik_mobil)
                         $('#bayar_supir').text(response.data.supir_mobil)
                         $('#bayar_mobil').text(response.data.plat_mobil)
 
                         $('#hasil_terima_kotor').text(response.data.total_uang_bersih)
                         $('#hasil_total_bon').text(response.data.total_kasbon)
-                        $('#hasil_terima_bersih').text(response.data.total_uang_bersih -
-                            response.data.total_kasbon)
+                        $('#hasil_terima_bersih').text($terima_bersih)
+
+                        if($terima_bersih < 0){
+                           $('.kasbon_pendapatan').show()
+                           $('.kasbon_pendapatan_hasil').text($terima_bersih)
+                           
+                        }else{
+                           $('.kasbon_pendapatan').hide()
+
+                        }
 
                         hideLoading()
                         $(".to_empty").empty();

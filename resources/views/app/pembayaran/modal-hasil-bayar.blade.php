@@ -6,12 +6,14 @@
         justify-content: center;
         overflow: auto;
     }
+
     @media(max-width: 768px) {
         .modal-dialog {
             min-height: calc(100vh - 20px);
         }
     }
 </style>
+
 <div class="modal fade modal-ajax" id="modal_hasil_bayar">
     <div class="modal-dialog modal-xl" style="max-width: 85% !important;">
         <div class="modal-content">
@@ -26,7 +28,9 @@
             </div>
             <form id="form_pembayaran" method="POST">
                 <div class="modal-body">
-                    <h4 style="text-align: center">Rekap Pembayaran</h4>
+                    <h4 style="text-align: center">Rekap Pembayaran Bulan </h4>
+
+
                     <table style="margin-left: 20px">
                         <tr>
                             <th>Pemilik Mobil</th>
@@ -69,9 +73,11 @@
                             <tbody class="to_empty" style="text-align: center;">
                             </tbody>
                             <tfoot class="to_empty">
+
                             </tfoot>
                         </table>
                     </div>
+
                     <table style="float: right; margin-right: 37px; margin-top: 20px; text-align: left">
                         <tr>
                             <th>Terima Kotor</th>
@@ -88,7 +94,14 @@
                             <th style="padding: 0 10px 0 10px">:</th>
                             <td class="rupiah" id="hasil_terima_bersih"></td>
                         </tr>
+                        <tr class="kasbon_pendapatan">
+                           <th style="color: red">Kasbon Melebihi Pendapatan, maka sisa akan ditambahkan ke kasbon sebesar : </th>
+                           <th style="padding: 0 10px 0 10px">:</th>
+                           <th style="color: red" class="kasbon_pendapatan_hasil rupiah"></th>
+                       </tr>
+                      
                     </table>
+
                     <span style="font-weight: bold;  margin: 0 0 20px 20px">Kasbon</span>
                     <table id="datatable_kasbon" class="table table-bordered "
                         style="font-size: 12px; width: 400px;  margin-left: 20px;
@@ -104,8 +117,15 @@
                         <tbody class="to_empty" style="text-align: center;">
                         </tbody>
                         <tfoot class="to_empty">
+
                         </tfoot>
+
+
                     </table>
+
+
+
+
                 </div>
                 <div class="modal-footer">
                     <div style="float:right; margin-right: 30px;" class="form-group col-3">
@@ -132,6 +152,8 @@
                     </div>
             </form>
         </div>
+
+
     </div>
 </div>
 </div>
