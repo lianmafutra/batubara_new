@@ -14,7 +14,7 @@ class Setoran extends Model
    use HasFactory;
    protected $table = 'setoran';
    protected $guarded = [];
-   protected $appends  = ['harga','total_uang_lainnya', 'total_kotor', 'total_bersih'];
+   protected $appends  = ['harga_bayar','total_uang_lainnya', 'total_kotor', 'total_bersih'];
 
    protected $casts = [
       'created_at'           => 'date:d-m-Y H:m:s',
@@ -40,14 +40,14 @@ class Setoran extends Model
       return parent::setAttribute($key, $value);
    }
 
-   public function getHargaAttribute()
+   public function getHargaBayarAttribute()
    {
-      return $this->getHarga($this->attributes['tgl_muat'], $this->attributes['tujuan_id'])->harga;
+      return $this->getHarga($this->attributes['tgl_muat'], $this->attributes['tujuan_id']);
    }
 
    public function getTotalKotorAttribute()
    {
-      return $this->hitungKotor($this->attributes['berat'], $this->getHargaAttribute(), $this->attributes['pg'] );
+      return $this->hitungKotor($this->attributes['berat'], $this->getHargaBayarAttribute(), $this->attributes['pg'] );
    }
 
    

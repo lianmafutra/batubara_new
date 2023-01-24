@@ -178,7 +178,7 @@
                         searchable: false,
                     },
                     {
-                        data: 'harga',
+                        data: 'harga_bayar',
                         searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)

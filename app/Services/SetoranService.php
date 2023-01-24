@@ -9,19 +9,7 @@ trait SetoranService
 {
    protected $tgl_muat;
 
-   public function hitungHargaByTglMuat($tgl_muat)
-   {
-      $harga = 0;
-      $tgl_muat = Carbon::parse( $tgl_muat)->translatedFormat('Y-m-d');
-      $tgl_awal =  Harga::orderBy('tanggal', 'asc')->first();
 
-      if ($tgl_muat <= $tgl_awal->tanggal) {
-         $harga = $tgl_awal->harga;
-      } else {
-         $harga = Harga::where('tanggal', '<=', $tgl_muat)->orderBy('tanggal', 'desc')->first()->harga;
-      }
-      return $harga;
-   }
 
    public function getHarga($tgl_muat, $tujuan_id)
    {
@@ -41,7 +29,8 @@ trait SetoranService
             ->orderBy('tanggal', 'desc')->first();
          }
         
-         return $data;
+       
+         return $data->harga_pembayaran;
       }
 
    }

@@ -94,7 +94,7 @@
                             <th style="padding: 0 10px 0 10px">:</th>
                             <td class="rupiah" id="hasil_terima_bersih"></td>
                         </tr>
-                        <tr class="kasbon_pendapatan">
+                        <tr style="display: none" class="kasbon_pendapatan">
                            <th style="color: red">Kasbon Melebihi Pendapatan, maka sisa akan ditambahkan ke kasbon sebesar : </th>
                            <th style="padding: 0 10px 0 10px">:</th>
                            <th style="color: red" class="kasbon_pendapatan_hasil rupiah"></th>

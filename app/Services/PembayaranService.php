@@ -41,7 +41,7 @@ class PembayaranService
       $setoran = Setoran::whereIn('id', $setoran_id_array)->get();
 
       foreach ($setoran as $key => $value) {
-         $total_kotor += ($value->berat * $value->harga) + $value->pg;
+         $total_kotor += ($value->berat * $value->harga_bayar) + $value->pg;
       }
       return $total_kotor;
    }
@@ -52,7 +52,7 @@ class PembayaranService
       $setoran = Setoran::whereIn('id', $setoran_id_array)->get();
 
       foreach ($setoran as $value) {
-         $total_bersih +=  (($value->berat * $value->harga) + $value->pg);
+         $total_bersih +=  (($value->berat * $value->harga_bayar) + $value->pg);
       }
       return $total_bersih-$this->hitungTotal($setoran_id_array);
    }

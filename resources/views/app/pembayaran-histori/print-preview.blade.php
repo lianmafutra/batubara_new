@@ -61,7 +61,7 @@
                 <td>{{ $item->supir_nama }}</td>
                 <td class="berat">{{ $item->berat }}</td>
                 <td>{{ $item->tujuan_nama }}</td>
-                <td class="rupiah">{{ $item->harga }}</td>
+                <td class="rupiah">{{ $item->harga_pembayaran }}</td>
                 <td class="rupiah">{{ $item->uang_jalan }}</td>
                 <td class="rupiah">{{ $item->uang_lainnya }}</td>
                 <td class="rupiah">{{ $item->total_uang_lainnya }}</td>
