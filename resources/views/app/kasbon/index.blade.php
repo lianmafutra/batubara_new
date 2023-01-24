@@ -76,18 +76,20 @@
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
             })
+
+            $('.tanggal').mask('00-00-0000');
+            
             $("#pemilik_mobil_id").val(1).trigger('change');
+
             $('#mobil_id').on('select2:select', function(e) {
                 $("#pemilik_mobil_id").val($(this).find(":selected").data("pemilik")).trigger('change');
             })
 
-            tanggal_kasbon = flatpickr("#tanggal_kasbon", {
+           let tanggal_kasbon = flatpickr("#tanggal_kasbon", {
                 allowInput: true,
                 dateFormat: "d-m-Y",
                 locale: "id",
             });
-
-            $('.tanggal').mask('00-00-0000');
 
             let datatable = $("#datatable").DataTable({
                 serverSide: true,
@@ -161,7 +163,6 @@
                 //  currencySymbol: 'Rp ',
                 digitGroupSeparator: '.',
                 decimalPlaces: 0,
-
                 decimalCharacter: ',',
                 formatOnPageLoad: true,
                 allowDecimalPadding: false,
@@ -170,10 +171,8 @@
 
             $("#form_tambah").submit(function(e) {
                 e.preventDefault();
-
                 const formData = new FormData(this);
                 formData.append('pemilik_mobil_id', $("#pemilik_mobil_id").val());
-
                 $.ajax({
                     type: 'POST',
                     url: @json(route('kasbon.store')),
@@ -218,12 +217,13 @@
 
                     $('#id').val(response.data.id)
                     tanggal_kasbon.setDate(response.data.tanggal_kasbon)
+                    AutoNumeric.getAutoNumericElement('#jumlah_uang').set(response.data.jumlah_uang)
                     $('#nama').val(response.data.nama)
                     $('#jumlah_uang').val(response.data.jumlah_uang)
                     $('#mobil_id').val(response.data.mobil_id).trigger('change');
                     $('#pemilik_mobil_id').val(response.data.pemilik_mobil_id).trigger('change');
                     $('#status').val(response.data.status).trigger('change');
-                    AutoNumeric.getAutoNumericElement('#jumlah_uang').set(response.data.jumlah_uang)
+                  
                 })
             });
 
