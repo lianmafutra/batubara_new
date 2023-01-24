@@ -20,6 +20,11 @@
         box-shadow: inset 0 0 0 9999px rgb(13 110 253 / 90%) !important;
         color: white !important;
     }
+
+    .disable-view {
+        background: #efefef;
+        pointer-events: none;
+    }
 </style>
 
 <body class="hold-transition sidebar-mini layout-fixed text-sm">
@@ -155,7 +160,7 @@
             $('.modal').find('.input').val('')
             $('.modal').find('.error').hide()
             $('.modal').find('form').trigger("reset")
-            $('.modal').find('.select2').val(null).trigger("change")
+            $('.modal').find('.select2').val('').trigger("change")
         }
         window.showError = function(response) {
             $('.error').hide();
@@ -214,7 +219,7 @@
             });
         }
         const rupiah = (number) => {
-        return  new Intl.NumberFormat("id-ID", {
+            return new Intl.NumberFormat("id-ID", {
                 style: "currency",
                 currency: "IDR",
                 maximumFractionDigits: 0,
@@ -223,15 +228,15 @@
         }
 
         const rupiahOnlyFormat = (number) => {
-        return  new Intl.NumberFormat("id-ID", {
-              
+            return new Intl.NumberFormat("id-ID", {
+
                 maximumFractionDigits: 0,
                 minimumFractionDigits: 0,
             }).format(number);
         }
-       
+
         const rupiahStyle = (number) => {
-           data = new Intl.NumberFormat("id-ID", {
+            data = new Intl.NumberFormat("id-ID", {
                 style: "currency",
                 currency: "IDR",
                 maximumFractionDigits: 0,
@@ -241,7 +246,7 @@
             if (number < 0) return `<span style='color:red'>${data}</span>`
             else if (number == 0) return data
             else return data
-            
+
         }
 
         //  select2 auto focus search input on open

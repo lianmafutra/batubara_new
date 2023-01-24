@@ -152,6 +152,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                  <a href="{{ route('kasbon.index') }}"
+                      class="nav-link  {{ request()->routeIs('kasbon*') ? 'active' : '' }}">
+                      <i class="fas fa-file-invoice-dollar  nav-icon"></i>
+                      <p>Kasbon</p>
+                  </a>
+              </li>
+                <li class="nav-item">
                     <a href="{{ route('setoran.index') }}"
                         class="nav-link  {{ request()->routeIs('setoran*') ? 'active' : '' }}">
                         <i class="fas fa-shopping-cart nav-icon"></i>

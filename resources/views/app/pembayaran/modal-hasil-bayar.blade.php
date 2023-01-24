@@ -74,13 +74,30 @@
                     </div>
                 </div>
 
-               <div class="col-3">
-                  <x-datepicker id='tanggal' label='Tanggal Pembayaran' required=true />
-                  <button type="submit" class="btn_lanjutkan btn_submit btn btn-primary">Lanjutkan</button>
-  
-                  </div>                
-              
-               
+                <div style="float:right; margin-right: 30px;" class="form-group col-3">
+                    <div class="tgl">
+                        <div class="form-group">
+                            <div class="bd-highlight">
+                                <label>Tanggal Pembayaran
+                                    <span style="color: red">*</span>
+                                </label>
+                                <div style="padding: 0 !important; " class="input-group ">
+                                    <input id="tanggal_bayar" required autocomplete="off" name="tanggal_bayar"
+                                        class="form-control tanggal" type="text" placeholder="Tanggal-Bulan-Tahun"
+                                        data-input>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="text-danger error-text tanggal_bayar_err"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn_lanjutkan btn_submit btn btn-primary">Lanjutkan</button>
+                </div>
+
+
             </form>
         </div>
     </div>

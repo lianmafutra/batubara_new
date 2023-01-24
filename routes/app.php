@@ -5,6 +5,7 @@ use App\Http\Controllers\Harga\HargaPengaturanController;
 use App\Http\Controllers\Kendaraan\MobilController;
 use App\Http\Controllers\Kendaraan\PemilikController;
 use App\Http\Controllers\Kendaraan\SupirController;
+use App\Http\Controllers\Transaksi\KasbonController;
 use App\Http\Controllers\Transaksi\PembayaranController;
 use App\Http\Controllers\Transaksi\PembayaranHistoriController;
 use App\Http\Controllers\Transaksi\PencairanController;
@@ -69,6 +70,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
    });
   
    Route::resource('tujuan', TujuanController::class);
+   Route::resource('kasbon', KasbonController::class);
    
 });
 

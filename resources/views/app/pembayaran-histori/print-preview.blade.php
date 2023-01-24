@@ -22,7 +22,7 @@
 
 <body>
     <h2 style="text-align: center">Rekap Pembayaran Bulan September</h2>
-    <table style="font-size: 22px; margin-left: 20px; margin-bottom: 10px; text-align: left">
+    <table style="font-size: 16px; margin-left: 20px; margin-bottom: 10px; text-align: left">
         <tr>
             <th>Pemilik Mobil</th>
             <th style="padding: 0 10px 0 10px">:</th>
@@ -41,7 +41,7 @@
     </table>
 
     <table class="table_data" style="width: 100%">
-        <tr style="font-size: 22px">
+        <tr style="font-size: 16px">
             <th>No</th>
             <th>Supir</th>
             <th>Berat</th>
@@ -56,7 +56,7 @@
         </tr>
 
         @foreach ($setoran as $index => $item)
-            <tr  style="text-align: center; font-size: 20px">
+            <tr  style="text-align: center; font-size: 16px">
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $item->supir_nama }}</td>
                 <td class="berat">{{ $item->berat }}</td>
@@ -71,7 +71,7 @@
             </tr>
         @endforeach
 
-        <tr style="text-align: center; font-weight: bold;font-size: 20px;">
+        <tr style="text-align: center; font-weight: bold;font-size: 16px;">
             <td colspan="5">Jumlah Total</td>
             <td class="rupiah">{{ $total_uang_jalan }}</td>
             <td class="rupiah">{{ $total_uang_lainnya }}</td>
@@ -82,7 +82,7 @@
         </tr>
 
     </table>
-    <table style="float: right; font-size: 22px; margin-right: 20px; margin-top: 20px; text-align: left">
+    <table style="float: right; font-size: 20px; margin-right: 20px; margin-top: 20px; text-align: left">
       <tr>
           <th>Terima Kotor</th>
           <th style="padding: 0 10px 0 10px">:</th>
