@@ -169,6 +169,7 @@
             });
 
             $('#datatable').on('click', '.btn_edit', function(e) {
+               clearInput()
                 $('#modal_create').modal('show')
                 $('.modal-title').text('Ubah Data')
                 $('.error').hide();
@@ -177,6 +178,7 @@
                   $('#mobil_id').val(response.data.id)
                   $('#plat').val(response.data.plat)
                   $('#mobil_jenis_id').val(response.data.mobil_jenis_id).trigger('change');
+                  $('#supir_id').val(response.data.supir_id).trigger('change');
                   $('#pemilik_mobil_id').val(response.data.pemilik_mobil_id).trigger('change');
                 })
             });

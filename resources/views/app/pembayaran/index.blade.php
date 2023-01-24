@@ -26,61 +26,60 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card-body">
-                           <div class="card">
-                              <div class="card-header">
-                                  <div class="d-flex ">
-                                      <div class="mr-auto col-3  ">
-                                          <x-select2 id="mobil_id" label="Filter Mobil" required="false"
-                                              placeholder="Pilih Mobil">
-                                              <option value="all">Semua Mobil</option>
-                                              @foreach ($mobil as $item)
-                                                  <option value="{{ $item->id }}">{{ $item->plat }}</option>
-                                              @endforeach
-                                          </x-select2>
-                                      </div>
-                                      <div style="margin-top:32px" class="p-2"><button id="btn_bayar"
-                                              type="button" class="btn btn-primary"><i
-                                                  class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i>
-                                              Bayar</button>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="card-body table-responsive">
-                                <table id="datatable" class="table table-bordered ">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>No</th>
-                                            <th>Supir</th>
-                                            <th>Berat</th>
-                                            <th>Tujuan</th>
-                                            <th>Transportir</th>
-                                            <th>Tgl Muat</th>
-                                            <th>Harga</th>
-                                            <th>Uang Jalan</th>
-                                            <th>Uang Lainnya</th>
-                                            <th>Total</th>
-                                            <th>PG (Pijak Gas)</th>
-                                            <th>Total Kotor</th>
-                                            <th>Total Bersih</th>
-                                            <th>Created_at</th>
-                                            {{-- <th>#Aksi</th> --}}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex ">
+                                        <div class="mr-auto col-3  ">
+                                            <x-select2 id="mobil_id" label="Filter Mobil" required="false"
+                                                placeholder="Pilih Mobil">
+                                                <option value="all">Semua Mobil</option>
+                                                @foreach ($mobil as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->plat }}</option>
+                                                @endforeach
+                                            </x-select2>
+                                        </div>
+                                        <div style="margin-top:32px" class="p-2"><button id="btn_bayar" type="button"
+                                                class="btn btn-primary"><i
+                                                    class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i>
+                                                Bayar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body table-responsive">
+                                    <table id="datatable" class="table table-bordered ">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>No</th>
+                                                <th>Supir</th>
+                                                <th>Berat</th>
+                                                <th>Tujuan</th>
+                                                <th>Transportir</th>
+                                                <th>Tgl Muat</th>
+                                                <th>Harga</th>
+                                                <th>Uang Jalan</th>
+                                                <th>Uang Lainnya</th>
+                                                <th>Total</th>
+                                                <th>PG (Pijak Gas)</th>
+                                                <th>Total Kotor</th>
+                                                <th>Total Bersih</th>
+                                                <th>Created_at</th>
+                                                {{-- <th>#Aksi</th> --}}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
 
-                                </table>
+                                    </table>
+                                </div>
                             </div>
-                          </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
-@include('app.pembayaran.modal-hasil-bayar')
-
+    @include('app.pembayaran.modal-hasil-bayar')
 @endsection
 @push('js')
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/fh-3.3.1/sl-1.5.0/datatables.min.js">
@@ -294,19 +293,25 @@
                         $('#bayar_pemilik').text(response.data.pemilik_mobil)
                         $('#bayar_supir').text(response.data.supir_mobil)
                         $('#bayar_mobil').text(response.data.plat_mobil)
+
+
+                        $('#hasil_terima_kotor').text(response.data.total_uang_bersih)
+                        $('#hasil_total_bon').text(response.data.total_kasbon)
+                        $('#hasil_terima_bersih').text(response.data.total_uang_bersih - response.data.total_kasbon)
+                  
+
+
                         hideLoading()
-                        $("#datatable2 tbody").empty();
-                        $("#datatable2 tfoot").empty();
-                        
-                        let row, footer, row_kasbon;
+                        $(".to_empty").empty();
+                        let row, footer, row_kasbon, footer_kasbon;
                         response.data.data_setoran.forEach(function(data, i) {
                             row += `<tr>
                                  <td>${i+1}</td>
                                  <td>${data.supir_nama}</td>
-                                 <td>${data.berat}</td>
+                                 <td  class="berat">${data.berat}</td>
                                  <td>${data.tujuan_nama}</td>
+                              
                                  <td class="rupiah">${data.harga}</td>
-
                                  <td class="rupiah">${data.uang_jalan}</td>
                                  <td class="rupiah">${data.uang_lainnya}</td>
                                  <td class="rupiah">${data.total_uang_lainnya}</td>
@@ -323,6 +328,7 @@
                                  <td>${data.tanggal_kasbon}</td>
                                  <td>${data.nama}</td>
                                  <td class="rupiah">${data.jumlah_uang}</td>
+                             
                                  </tr>`;
                         });
 
@@ -335,16 +341,26 @@
                                  <td class="rupiah">${response.data.total_uang_kotor}</td>
                                  <td class="rupiah">${response.data.total_uang_bersih}</td> </tr>`;
 
+                        footer_kasbon = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
+                              <td colspan="3">Jumlah Total</td>
+                                 <td class="rupiah">${response.data.total_kasbon}</td></tr>`;
+
                         $("#datatable2 tbody").append(row);
                         $("#datatable2 tfoot").append(footer);
-
-                        
                         $("#datatable_kasbon tbody").append(row_kasbon);
-
-
+                        $("#datatable_kasbon tfoot").append(footer_kasbon);
 
                         new AutoNumeric.multiple('.rupiah', {
                             currencySymbol: 'Rp ',
+                            digitGroupSeparator: '.',
+                            decimalPlaces: 0,
+                            decimalCharacter: ',',
+                            formatOnPageLoad: true,
+                            allowDecimalPadding: false,
+                            alwaysAllowDecimalCharacter: false
+                        });
+
+                        new AutoNumeric.multiple('.berat', {
                             digitGroupSeparator: '.',
                             decimalPlaces: 0,
                             decimalCharacter: ',',
@@ -368,7 +384,7 @@
                     data: {
                         "setoran_id_array": setoran_id_array,
                         "mobil_id": mobil_id,
-                        'tgl_bayar' :  $('#tgl_bayar').val()
+                        'tgl_bayar': $('#tgl_bayar').val()
                     },
                     beforeSend: function() {
                         showLoading()

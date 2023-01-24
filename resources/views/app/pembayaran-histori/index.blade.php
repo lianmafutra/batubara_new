@@ -51,8 +51,7 @@
             </div>
         </section>
     </div>
-@include('app.pembayaran.modal-hasil-bayar')
-
+    @include('app.pembayaran.modal-hasil-bayar')
 @endsection
 @push('js')
     <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -95,7 +94,7 @@
                         data: 'tgl_bayar',
                         orderable: false,
                     },
-                    
+
                     {
                         data: 'mobil_plat',
                         orderable: false,
@@ -121,14 +120,14 @@
             });
 
             $('#datatable').on('click', '.btn_preview', function(e) {
-             
-               $('.modal-footer').hide()
-              let histori = JSON.parse($(this).attr('data-setoran'))
+
+                $('.modal-footer').hide()
+                let histori = JSON.parse($(this).attr('data-setoran'))
                 $.ajax({
                     type: 'POST',
                     url: @json(route('pembayaran.bayar.preview')),
                     data: {
-                        "setoran_id_array":  JSON.parse(histori.setoran_id),
+                        "setoran_id_array": JSON.parse(histori.setoran_id),
                         "mobil_id": histori.mobil_id,
                     },
                     beforeSend: function() {
@@ -140,15 +139,20 @@
                         $('#bayar_pemilik').text(response.data.pemilik_mobil)
                         $('#bayar_supir').text(response.data.supir_mobil)
                         $('#bayar_mobil').text(response.data.plat_mobil)
+                        $('#tgl_pembayaran').text(response.data.tgl_bayar)
+
+                        $('#hasil_terima_kotor').text(response.data.total_uang_bersih)
+                        $('#hasil_total_bon').text(response.data.total_kasbon)
+                        $('#hasil_terima_bersih').text(response.data.total_uang_bersih - response.data.total_kasbon)
+                  
                         hideLoading()
-                        $("#datatable2 tbody").empty();
-                        $("#datatable2 tfoot").empty();
-                        let row, footer, row_kasbon;
+                        $(".to_empty").empty();
+                        let row, footer, row_kasbon, footer_kasbon;
                         response.data.data_setoran.forEach(function(data, i) {
                             row += `<tr>
                                  <td>${i+1}</td>
                                  <td>${data.supir_nama}</td>
-                                 <td>${data.berat}</td>
+                                 <td class="berat">${data.berat}</td>
                                  <td>${data.tujuan_nama}</td>
                                  <td class="rupiah">${data.harga}</td>
 
@@ -177,11 +181,26 @@
                                  <td class="rupiah">${response.data.total_uang_kotor}</td>
                                  <td class="rupiah">${response.data.total_uang_bersih}</td> </tr>`;
 
+                        footer_kasbon = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
+                              <td colspan="3">Jumlah Total</td>
+                                 <td class="rupiah">${response.data.total_kasbon}</td></tr>`;
+
                         $("#datatable2 tbody").append(row);
                         $("#datatable2 tfoot").append(footer);
                         $("#datatable_kasbon tbody").append(row_kasbon);
+                        $("#datatable_kasbon tfoot").append(footer_kasbon);
+
                         new AutoNumeric.multiple('.rupiah', {
                             currencySymbol: 'Rp ',
+                            digitGroupSeparator: '.',
+                            decimalPlaces: 0,
+                            decimalCharacter: ',',
+                            formatOnPageLoad: true,
+                            allowDecimalPadding: false,
+                            alwaysAllowDecimalCharacter: false
+                        });
+
+                        new AutoNumeric.multiple('.berat', {
                             digitGroupSeparator: '.',
                             decimalPlaces: 0,
                             decimalCharacter: ',',
@@ -195,78 +214,79 @@
                     }
                 });
 
-          
-        });
 
-        $("#form_tambah").submit(function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            formData.append('method', 'PUT');
-            $.ajax({
-                type: 'POST',
-                url: @json(route('mobil.store')),
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                dataType: 'json',
-                beforeSend: function() {
-                    showLoading()
-                },
-                success: (response) => {
-                    if (response) {
-                        this.reset()
-                        $('#modal_create').modal('hide')
-                        Swal.fire({
-                            icon: 'success',
-                            title: response.message,
-                            showCancelButton: true,
-                            allowEscapeKey: false,
-                            showCancelButton: false,
-                            allowOutsideClick: false,
-                        }).then((result) => {
-                            swal.hideLoading()
-                            datatable.ajax.reload()
-                        })
-                        swal.hideLoading()
-                    }
-                },
-                error: function(response) {
-                    showError(response)
-                }
             });
-        });
 
-        $('#datatable').on('click', '.btn_edit', function(e) {
-            $('#modal_create').modal('show')
-            $('.modal-title').text('Ubah Data')
-            $('.error').hide();
-            let url = $(this).attr('data-url');
-            $.get(url, function(response) {
-                $('#mobil_id').val(response.data.id)
-                $('#plat').val(response.data.plat)
-                $('#mobil_jenis_id').val(response.data.mobil_jenis_id).trigger('change');
-                $('#pemilik_mobil_id').val(response.data.pemilik_mobil_id).trigger('change');
-            })
-        });
+            $("#form_tambah").submit(function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                formData.append('method', 'PUT');
+                $.ajax({
+                    type: 'POST',
+                    url: @json(route('mobil.store')),
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+                    beforeSend: function() {
+                        showLoading()
+                    },
+                    success: (response) => {
+                        if (response) {
+                            this.reset()
+                            $('#modal_create').modal('hide')
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                showCancelButton: true,
+                                allowEscapeKey: false,
+                                showCancelButton: false,
+                                allowOutsideClick: false,
+                            }).then((result) => {
+                                swal.hideLoading()
+                                datatable.ajax.reload()
+                            })
+                            swal.hideLoading()
+                        }
+                    },
+                    error: function(response) {
+                        showError(response)
+                    }
+                });
+            });
 
-        $('#datatable').on('click', '.btn_hapus', function(e) {
-        let data = JSON.parse($(this).attr('data-histori'));
-        Swal.fire({
-            title: 'Apakah anda yakin ingin menghapus data Histori Pembayaran ?',
-            text: "Semua Status Setoran pada histori ( "+data.kode+" ) ini akan dikembalikan menjadi BELUM LUNAS",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Hapus',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $(this).find('#form-delete').submit();
-            }
-        })
-        });
+            $('#datatable').on('click', '.btn_edit', function(e) {
+                $('#modal_create').modal('show')
+                $('.modal-title').text('Ubah Data')
+                $('.error').hide();
+                let url = $(this).attr('data-url');
+                $.get(url, function(response) {
+                    $('#mobil_id').val(response.data.id)
+                    $('#plat').val(response.data.plat)
+                    $('#mobil_jenis_id').val(response.data.mobil_jenis_id).trigger('change');
+                    $('#pemilik_mobil_id').val(response.data.pemilik_mobil_id).trigger('change');
+                })
+            });
+
+            $('#datatable').on('click', '.btn_hapus', function(e) {
+                let data = JSON.parse($(this).attr('data-histori'));
+                Swal.fire({
+                    title: 'Apakah anda yakin ingin menghapus data Histori Pembayaran ?',
+                    text: "Semua Status Setoran pada histori ( " + data.kode +
+                        " ) ini akan dikembalikan menjadi BELUM LUNAS",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $(this).find('#form-delete').submit();
+                    }
+                })
+            });
 
         })
     </script>

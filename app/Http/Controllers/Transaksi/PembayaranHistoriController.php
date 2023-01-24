@@ -40,7 +40,7 @@ class PembayaranHistoriController extends Controller
          Setoran::whereIn('id', json_decode($setoran_id_array))
             ->update([
                'status_pembayaran' => 'BELUM',
-               'tgl_pembayaran'    => NULL
+               'tgl_bayar'    => NULL
             ]);
 
          HistoriPembayaran::destroy($id);

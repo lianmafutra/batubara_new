@@ -13,6 +13,7 @@ class Kasbon extends Model
    protected $table = 'kasbon';
    protected $guarded = [];
 
+
    protected $casts = [
       'created_at'     => 'date:d-m-Y H:m:s',
       'updated_at'     => 'date:d-m-Y H:m:s',
@@ -36,4 +37,6 @@ class Kasbon extends Model
    {
       return $this->attributes['jumlah_uang'] = Rupiah::clean($value);
    }
+
+  
 }

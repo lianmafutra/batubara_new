@@ -47,6 +47,11 @@
                             <th style="padding: 0 10px 0 10px">:</th>
                             <td id="bayar_mobil"></td>
                         </tr>
+                        <tr>
+                           <th>Tanggal Pembayaran</th>
+                           <th style="padding: 0 10px 0 10px">:</th>
+                           <td id="tgl_pembayaran"></td>
+                       </tr>
                     </table>
                     <div class="card-body table-responsive">
                         <table id="datatable2" class="table table-bordered " style="font-size: 12px; width: 100%">
@@ -65,17 +70,34 @@
                                     <th>Total Bersih</th>
                                 </tr>
                             </thead>
-                            <tbody style="text-align: center;">
+                            <tbody class="to_empty" style="text-align: center;">
                             </tbody>
-                            <tfoot>
+                            <tfoot class="to_empty">
 
                             </tfoot>
                         </table>
                     </div>
                     
+                    <table style="float: right; margin-right: 37px; margin-top: 20px; text-align: left">
+                     <tr>
+                         <th>Terima Kotor</th>
+                         <th style="padding: 0 10px 0 10px">:</th>
+                         <td class="rupiah"  id="hasil_terima_kotor"></td>
+                     </tr>
+                     <tr>
+                         <th>Total Bon</th>
+                         <th style="padding: 0 10px 0 10px">:</th>
+                         <td class="rupiah" id="hasil_total_bon"></td>
+                     </tr>
+                     <tr>
+                         <th>Terima Bersih</th>
+                         <th style="padding: 0 10px 0 10px">:</th>
+                         <td class="rupiah"  id="hasil_terima_bersih"></td>
+                     </tr>
+                 </table>
 
                     <span style="font-weight: bold;  margin: 0 0 20px 20px">Kasbon</span>
-                    <table  id="datatable_kasbon" class="table table-bordered " style="font-size: 12px; max-width: 200px;  margin-left: 20px;
+                    <table  id="datatable_kasbon" class="table table-bordered " style="font-size: 12px; width: 400px;  margin-left: 20px;
                     margin-top: 10px;">
                         <thead>
                             <tr>
@@ -85,12 +107,17 @@
                                 <th>Uang</th>
                             </tr>
                         </thead>
-                        <tbody style="text-align: center;">
+                        <tbody class="to_empty" style="text-align: center;">
                         </tbody>
-                        <tfoot>
+                        <tfoot class="to_empty">
 
                         </tfoot>
+
+
                     </table>
+
+
+                  
 
                 </div>
                 <div class="modal-footer">

@@ -21,6 +21,7 @@ class Setoran extends Model
       'updated_at'           => 'date:d-m-Y H:m:s',
       'tgl_ambil_uang_jalan' => 'date:d-m-Y',
       'tgl_muat'             => 'date:d-m-Y',
+    
    ];
 
    // relation
@@ -41,7 +42,7 @@ class Setoran extends Model
 
    public function getHargaAttribute()
    {
-      return $this->hitungHargaByTglMuat($this->attributes['tgl_muat']);
+      return $this->getHarga($this->attributes['tgl_muat'], $this->attributes['tujuan_id'])->harga;
    }
 
    public function getTotalKotorAttribute()

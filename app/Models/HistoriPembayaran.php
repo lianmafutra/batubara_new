@@ -15,7 +15,7 @@ class HistoriPembayaran extends Model
     protected $casts = [
       'created_at'  => 'date:d-m-Y H:m:s',
       'updated_at'  => 'date:d-m-Y H:m:s',
-      'tgl_bayar'  => 'date:d-m-Y ',
+      'tgl_bayar'  => 'date:d-m-Y',
    ];
 
 

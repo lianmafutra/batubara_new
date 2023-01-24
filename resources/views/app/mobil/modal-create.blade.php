@@ -28,6 +28,7 @@
                 <div class="modal-body">
                     <x-input id='plat' label='Plat/Nopol Mobil' required=true />
                     <input hidden  id="mobil_id" name="mobil_id" value="" />
+                    
                     <x-select2 id="supir_id" label="Supir" required="true" placeholder="Pilih Supir Mobil">
                      @foreach ($supir as $item)
                          <option value="{{ $item->id }}">{{ $item->nama }}</option>

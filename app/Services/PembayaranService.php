@@ -21,11 +21,11 @@ class PembayaranService
 
    public function hitungTotal($setoran_id_array)
    {
-      $total=0;
+      $total = 0;
       $setoran = Setoran::whereIn('id', $setoran_id_array)->get();
-     
+
       foreach ($setoran as $key => $value) {
-        $total += $value->uang_jalan + $value->uang_lainnya;
+         $total += $value->uang_jalan + $value->uang_lainnya;
       }
       return $total;
    }
@@ -37,26 +37,23 @@ class PembayaranService
 
    public function hitungTotalKotor($setoran_id_array)
    {
-      $total_kotor=0;
+      $total_kotor = 0;
       $setoran = Setoran::whereIn('id', $setoran_id_array)->get();
-     
+
       foreach ($setoran as $key => $value) {
-        $total_kotor += ($value->berat * $value->harga) + $value->pg;
+         $total_kotor += ($value->berat * $value->harga) + $value->pg;
       }
       return $total_kotor;
    }
 
    public function hitungTotalBersih($setoran_id_array)
    {
-      $total_bersih=0;
+      $total_bersih = 0;
       $setoran = Setoran::whereIn('id', $setoran_id_array)->get();
-     
-      foreach ($setoran as $value) {
-        $total_bersih +=  (($value->berat * $value->harga) + $value->pg) - $value->uang_jalan ;
 
-      
-   }
-   return $total_bersih;
-  
+      foreach ($setoran as $value) {
+         $total_bersih +=  (($value->berat * $value->harga) + $value->pg);
+      }
+      return $total_bersih-$this->hitungTotal($setoran_id_array);
    }
 }

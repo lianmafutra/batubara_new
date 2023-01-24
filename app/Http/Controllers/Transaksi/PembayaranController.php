@@ -59,11 +59,9 @@ class PembayaranController extends Controller
       if ($request->setoran_id_array == null || $request->setoran_id_array == []) {
          return $this->error('Data setoran Belum di pilih !', 400);
       }
+      $setoran = Setoran::where('id', $request->setoran_id_array[0])->first();
+      $kasbon = Kasbon::where('status', 'BELUM')->where('mobil_id', $request->mobil_id);
 
-      $setoran = Setoran::where('id',$request->setoran_id_array[0])->first();
-
-     $kasbon = Kasbon::where('status', 'BELUM')->where('mobil_id', $request->mobil_id);
-    
 
       return $this->success(
          'Data Pembayaran',
@@ -71,7 +69,9 @@ class PembayaranController extends Controller
             'pemilik_mobil'      =>  $setoran->pemilik_nama,
             'supir_mobil'        =>  $setoran->supir_nama,
             'plat_mobil'         =>  $setoran->mobil_plat,
+            'tgl_bayar'          =>  Carbon::parse($setoran->tgl_bayar)->format('d-m-Y'),
             'kasbon'             =>  $kasbon->get(),
+            'total_kasbon'       =>  $kasbon->sum('jumlah_uang'),
             'data_setoran'       => Setoran::whereIn('id', $request->setoran_id_array)->get(),
             "total_uang_jalan"   => $this->pembayaranService->hitungTotalUangJalan($request->setoran_id_array),
             "total_uang_lainnya" => $this->pembayaranService->hitungTotalUangLainnya($request->setoran_id_array),
@@ -86,7 +86,7 @@ class PembayaranController extends Controller
    public function bayarHistori(Request $request, HistoriPembayaran $historiPembayaran)
    {
 
-     
+
       try {
 
          DB::beginTransaction();
@@ -101,11 +101,11 @@ class PembayaranController extends Controller
                'tgl_bayar'         => Carbon::parse($request->tgl_bayar)->translatedFormat('Y-m-d')
             ]);
 
-            
-        $mobil = Mobil::with('supir','pemilik')->where('id', $request->mobil_id);
+
+         $mobil = Mobil::with('supir', 'pemilik')->where('id', $request->mobil_id);
 
          HistoriPembayaran::create([
-            "kode"             => $historiPembayaran->getLastId()."/BYR/".Carbon::now()->format('d-m-y'),
+            "kode"             => $historiPembayaran->getLastId() . "/BYR/" . Carbon::now()->format('d-m-y'),
             'tgl_bayar'        => $request->tgl_bayar,
             "setoran_id"       => json_encode($request->setoran_id_array),
             'supir_id'         => $mobil->first()->supir->id,
