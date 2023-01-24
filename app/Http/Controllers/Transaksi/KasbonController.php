@@ -39,7 +39,8 @@ class KasbonController extends Controller
             ->addColumn('status', function ($data) {
                if ($data->status == 'BELUM') {
                   return '<span class="right badge badge-danger">Belum Lunas</span>';
-               } else {
+               }
+               else if ($data->status == 'LUNAS') {
                   return '<span class="right badge badge-success">Sudah Lunas</span>';
                }
             })
@@ -59,9 +60,10 @@ class KasbonController extends Controller
             [
                'nama'             => $request->nama,
                'jumlah_uang'      => $request->jumlah_uang,
-               'tanggal_kasbon'     => $request->tanggal_kasbon,
+               'tanggal_kasbon'   => $request->tanggal_kasbon,
                'mobil_id'         => $request->mobil_id,
-               'pemilik_mobil_id' =>$request->pemilik_mobil_id,
+               'pemilik_mobil_id' => $request->pemilik_mobil_id,
+               'status'           => $request->status,
             ]
          );
 

@@ -42,7 +42,7 @@
 
                         </label>
                        
-                        <select id="pemilik_mobil_id" name="pemilik_mobil_id" type=""
+                        <select disabled id="pemilik_mobil_id" name="pemilik_mobil_id" type=""
                             class="select2 select2-pemilik_mobil_id form-control select2bs4"
                             placeholder=" Pemilik Mobil" >
                             <option value=""></option>
@@ -52,6 +52,10 @@
                         </select>
                         <span class="text-danger error-text pemilik_mobil_id_err"></span>
                     </div>
+                    <x-select2 id="status" label="Status" required="true" >
+                         <option value="BELUM">Belum Lunas</option>
+                         <option value="LUNAS">Sudah Lunas</option>
+                 </x-select2>
 
 
 

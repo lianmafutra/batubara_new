@@ -99,7 +99,7 @@
                 info: true,
                 ordering: true,
                 order: [
-                    [6, 'desc']
+                    [7, 'desc']
                 ],
                 ajax: @json(route('kasbon.index')),
 
@@ -152,6 +152,7 @@
                 clearInput()
                 $('#modal_create').modal('show')
                 $('.modal-title').text('Tambah Data')
+                $('#status').val('BELUM').trigger('change');
             });
 
             AutoNumeric.multiple('.rupiah', {
@@ -219,6 +220,7 @@
                     $('#jumlah_uang').val(response.data.jumlah_uang)
                     $('#mobil_id').val(response.data.mobil_id).trigger('change');
                     $('#pemilik_mobil_id').val(response.data.pemilik_mobil_id).trigger('change');
+                    $('#status').val(response.data.status).trigger('change');
                     AutoNumeric.getAutoNumericElement('#jumlah_uang').set(response.data.jumlah_uang)
                 })
             });
