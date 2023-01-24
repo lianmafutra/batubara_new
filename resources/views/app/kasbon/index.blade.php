@@ -40,7 +40,7 @@
                                                     <th>Mobil Plat</th>
                                                     <th>Pemilik</th>
                                                     <th>Status</th>
-                                                    <th>Tanggal</th>
+                                                    <th>Tanggal Kasbon</th>
 
                                                     <th>created_at</th>
                                                     <th>#Aksi</th>
@@ -98,6 +98,7 @@
                 lengthChange: true,
                 paging: true,
                 info: true,
+                
                 stateSave: true,
                 ordering: true,
                 order: [

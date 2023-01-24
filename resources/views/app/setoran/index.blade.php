@@ -103,6 +103,18 @@
                 },
             });
             $('.tanggal').mask('00-00-0000');
+
+            AutoNumeric.multiple('#berat', {
+                //  currencySymbol: 'Rp ',
+                digitGroupSeparator: '.',
+                decimalPlaces: 0,
+             
+                decimalCharacter: ',',
+                formatOnPageLoad: true,
+                allowDecimalPadding: false,
+                alwaysAllowDecimalCharacter: false
+            });
+
             AutoNumeric.multiple('.rupiah', {
                 //  currencySymbol: 'Rp ',
                 digitGroupSeparator: '.',
@@ -284,7 +296,7 @@
                 let url = $(this).attr('data-url');
                 let url_update = $(this).attr('data-url-update');
                 $.get(url, function(response) {
-                    $('#berat').val(response.data.berat)
+                
                     $('#url_update').val(url_update)
                     AutoNumeric.getAutoNumericElement('#uang_lainnya').set(response.data
                         .uang_lainnya)
@@ -293,6 +305,7 @@
                     $('#tujuan_id').val(response.data.tujuan_id).trigger('change');
                     $('#transportir_id').val(response.data.transportir_id).trigger('change');
                     AutoNumeric.getAutoNumericElement('#harga').set(response.data.harga)
+                    AutoNumeric.getAutoNumericElement('#berat').set(response.data.berat)
                     AutoNumeric.getAutoNumericElement('#pg').set(response.data.pg)
                     $('#tujuan_id').change(function() {
                         getHarga()

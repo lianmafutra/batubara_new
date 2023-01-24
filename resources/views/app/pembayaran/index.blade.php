@@ -135,6 +135,9 @@
                 select: true,
                 ordering: true,
                 scrollX: true,
+                language: {
+                    processing: "Memproses Data..."
+                },
                 //  fixedColumns: {
                 //      leftColumns: 1,
                 //      rightColumns: 1
