@@ -6,9 +6,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/flatpicker/flatpickr.min.css') }}">
 @endpush
 @section('content')
-    <style>
-
-    </style>
+    
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
@@ -22,7 +20,7 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">
@@ -60,8 +58,9 @@
             </div>
         </section>
     </div>
+    @include('app.kasbon.modal-create')
 @endsection
-@include('app.kasbon.modal-create')
+
 @push('js')
     <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -82,7 +81,7 @@
                 $("#pemilik_mobil_id").val($(this).find(":selected").data("pemilik")).trigger('change');
             })
 
-             tanggal_kasbon = flatpickr("#tanggal_kasbon", {
+            tanggal_kasbon = flatpickr("#tanggal_kasbon", {
                 allowInput: true,
                 dateFormat: "d-m-Y",
                 locale: "id",
@@ -168,10 +167,10 @@
 
             $("#form_tambah").submit(function(e) {
                 e.preventDefault();
-            
+
                 const formData = new FormData(this);
                 formData.append('pemilik_mobil_id', $("#pemilik_mobil_id").val());
-            
+
                 $.ajax({
                     type: 'POST',
                     url: @json(route('kasbon.store')),
@@ -208,12 +207,12 @@
             });
 
             $('#datatable').on('click', '.btn_edit', function(e) {
-               clearInput()
+                clearInput()
                 $('#modal_create').modal('show')
                 $('.modal-title').text('Ubah Data')
                 $('.error').hide();
                 $.get($(this).attr('data-url'), function(response) {
-                   
+
                     $('#id').val(response.data.id)
                     tanggal_kasbon.setDate(response.data.tanggal_kasbon)
                     $('#nama').val(response.data.nama)
