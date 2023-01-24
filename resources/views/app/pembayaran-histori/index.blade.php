@@ -129,6 +129,7 @@
                     data: {
                         "setoran_id_array": JSON.parse(histori.setoran_id),
                         "mobil_id": histori.mobil_id,
+                        "kode_pembayaran":JSON.parse(histori.id),
                     },
                     beforeSend: function() {
                         showLoading()
@@ -151,7 +152,7 @@
                         response.data.data_setoran.forEach(function(data, i) {
                             row += `<tr>
                                  <td>${i+1}</td>
-                                 <td>${data.supir_nama}</td>
+                               
                                  <td class="berat">${data.berat}</td>
                                  <td>${data.tujuan_nama}</td>
                                  <td class="rupiah">${data.harga}</td>
@@ -173,7 +174,7 @@
                                  </tr>`;
                         });
                         footer = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
-                              <td colspan="5">Jumlah Total</td>
+                              <td colspan="4">Jumlah Total</td>
                                  <td class="rupiah">${response.data.total_uang_jalan}</td>
                                  <td class="rupiah">${response.data.total_uang_lainnya}</td>
                                  <td class="rupiah">${response.data.total}</td>

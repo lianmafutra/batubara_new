@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Transaksi;
 
 use App\Http\Controllers\Controller;
 use App\Models\HistoriPembayaran;
+use App\Models\Kasbon;
 use App\Models\Setoran;
 use App\Services\PembayaranService;
 use Illuminate\Http\Request;
@@ -35,13 +36,22 @@ class PembayaranHistoriController extends Controller
    {
       try {
          DB::beginTransaction();
-         $setoran_id_array =  HistoriPembayaran::where('id', $id)->first()->setoran_id;
+         $histori_pembayaran =  HistoriPembayaran::where('id', $id)->first();
 
-         Setoran::whereIn('id', json_decode($setoran_id_array))
+         Setoran::whereIn('id', json_decode($histori_pembayaran->setoran_id))
             ->update([
                'status_pembayaran' => 'BELUM',
                'tgl_bayar'    => NULL
             ]);
+
+
+
+         Kasbon::whereIn('id', json_decode($histori_pembayaran->kasbon_id))
+            ->update([
+               'status'            => 'BELUM',
+               'tgl_bayar'         => NULL
+            ]);
+
 
          HistoriPembayaran::destroy($id);
 
@@ -50,7 +60,7 @@ class PembayaranHistoriController extends Controller
       } catch (\Throwable $th) {
          DB::rollback();
 
-         return redirect()->back()->with('error', 'Gagal Hapus Data', 400);
+         return redirect()->back()->with('error', 'Gagal Hapus Data'.$th, 400);
       }
    }
 

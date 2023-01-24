@@ -60,8 +60,13 @@ class PembayaranController extends Controller
          return $this->error('Data setoran Belum di pilih !', 400);
       }
       $setoran = Setoran::where('id', $request->setoran_id_array[0])->first();
-      $kasbon = Kasbon::where('status', 'BELUM')->where('mobil_id', $request->mobil_id);
 
+      if ($request->has('kode_pembayaran')) {
+         $kasbon_id = HistoriPembayaran::where('id', request()->kode_pembayaran)->first()->kasbon_id;
+         $kasbon = Kasbon::whereIn('id', json_decode($kasbon_id));
+      } else {
+         $kasbon = Kasbon::where('status', 'BELUM')->where('mobil_id', $request->mobil_id);
+      }
 
       return $this->success(
          'Data Pembayaran',
@@ -101,6 +106,14 @@ class PembayaranController extends Controller
                'tgl_bayar'         => Carbon::parse($request->tgl_bayar)->translatedFormat('Y-m-d')
             ]);
 
+         $kasbon_id_array = Kasbon::where('status', 'BELUM')->where('mobil_id', $request->mobil_id)->get()->pluck('id');
+
+         Kasbon::whereIn('id', $kasbon_id_array)
+            ->update([
+               'status' => 'LUNAS',
+               'tgl_bayar'         => Carbon::parse($request->tgl_bayar)->translatedFormat('Y-m-d')
+            ]);
+
 
          $mobil = Mobil::with('supir', 'pemilik')->where('id', $request->mobil_id);
 
@@ -108,13 +121,14 @@ class PembayaranController extends Controller
             "kode"             => $historiPembayaran->getLastId() . "/BYR/" . Carbon::now()->format('d-m-y'),
             'tgl_bayar'        => $request->tgl_bayar,
             "setoran_id"       => json_encode($request->setoran_id_array),
+            "kasbon_id"        => $kasbon_id_array,
             'supir_id'         => $mobil->first()->supir->id,
             'supir_nama'       => $mobil->first()->supir->nama,
             'pemilik_mobil_id' => $mobil->first()->pemilik_mobil_id,
             'pemilik_nama'     => $mobil->first()->pemilik->nama,
             'mobil_id'         => $mobil->first()->id,
             'mobil_plat'       => $mobil->first()->plat,
-            "kasbon_id"        => "",
+
          ]);
 
          DB::commit();

@@ -129,7 +129,7 @@
                 serverSide: true,
                 processing: true,
                 searching: true,
-                lengthChange: true,
+                lengthChange: false,
                 paging: false,
                 info: true,
                 select: true,
@@ -161,11 +161,16 @@
                         e.mobil_id = mobil_id
                     }
                 },
+
+
                 initComplete: function(settings, json) {
+
                     $('body').find('.dataTables_scrollBody').addClass("scrollbar");
                 },
                 columns: [{
                         data: 'id',
+                        class: 'id'
+
                     },
                     {
                         data: "DT_RowIndex",
@@ -291,18 +296,17 @@
 
                     },
                     success: (response) => {
+
                         $('#modal_hasil_bayar').modal('show')
 
                         $('#bayar_pemilik').text(response.data.pemilik_mobil)
                         $('#bayar_supir').text(response.data.supir_mobil)
                         $('#bayar_mobil').text(response.data.plat_mobil)
 
-
                         $('#hasil_terima_kotor').text(response.data.total_uang_bersih)
                         $('#hasil_total_bon').text(response.data.total_kasbon)
-                        $('#hasil_terima_bersih').text(response.data.total_uang_bersih - response.data.total_kasbon)
-                  
-
+                        $('#hasil_terima_bersih').text(response.data.total_uang_bersih -
+                            response.data.total_kasbon)
 
                         hideLoading()
                         $(".to_empty").empty();
@@ -310,7 +314,7 @@
                         response.data.data_setoran.forEach(function(data, i) {
                             row += `<tr>
                                  <td>${i+1}</td>
-                                 <td>${data.supir_nama}</td>
+                            
                                  <td  class="berat">${data.berat}</td>
                                  <td>${data.tujuan_nama}</td>
                               
@@ -331,12 +335,11 @@
                                  <td>${data.tanggal_kasbon}</td>
                                  <td>${data.nama}</td>
                                  <td class="rupiah">${data.jumlah_uang}</td>
-                             
                                  </tr>`;
                         });
 
                         footer = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
-                              <td colspan="5">Jumlah Total</td>
+                              <td colspan="4">Jumlah Total</td>
                                  <td class="rupiah">${response.data.total_uang_jalan}</td>
                                  <td class="rupiah">${response.data.total_uang_lainnya}</td>
                                  <td class="rupiah">${response.data.total}</td>
@@ -420,14 +423,22 @@
 
             $('#mobil_id').on('select2:select', function(e) {
                 mobil_id = $(this).val()
+                datatable.column('.id').visible(false)
                 datatable.columns().checkboxes.deselect(true);
                 datatable.ajax.reload()
+                datatable.on('draw', function() {
+                      datatable.column('.id').visible(true)
+                });
             });
 
             $('#mobil_id').on('select2:clear', function(e) {
                 mobil_id = ''
+                datatable.column('.id').visible(false)
                 datatable.columns().checkboxes.deselect(true);
                 datatable.ajax.reload()
+                datatable.on('draw', function() {
+                      datatable.column('.id').visible(true)
+                });
             });
 
             function getHarga() {
