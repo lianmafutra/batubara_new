@@ -71,8 +71,9 @@
             </div>
         </section>
     </div>
-@endsection
 @include('app.setoran.modal-edit')
+
+@endsection
 @push('js')
     <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>

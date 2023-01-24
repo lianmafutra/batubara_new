@@ -48,8 +48,9 @@
             </div>
         </section>
     </div>
-@endsection
 @include('app.uang-jalan.modal-create')
+
+@endsection
 
 @push('js')
     <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
