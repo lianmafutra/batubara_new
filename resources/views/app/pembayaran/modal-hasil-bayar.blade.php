@@ -28,7 +28,7 @@
             </div>
             <form id="form_pembayaran" method="POST">
                 <div class="modal-body">
-                    <h4 style="text-align: center">Rekap Pembayaran Bulan </h4>
+                    <h4 style="text-align: center">Rekap Pembayaran  </h4>
 
 
                     <table style="margin-left: 20px">

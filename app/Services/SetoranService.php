@@ -13,6 +13,8 @@ trait SetoranService
 
    public function getHarga($tgl_muat, $tujuan_id)
    {
+      // get harga pembayaran sesuai tgl muat dan tujuan id
+      // harga ambil dari harga pembayaran (harga asli -2)
       $data = null;
       $tgl_muat = Carbon::parse( $tgl_muat)->translatedFormat('Y-m-d');
       $tgl_awal =  Harga::with('tujuan','transportir')
@@ -28,8 +30,6 @@ trait SetoranService
             ->where('tanggal', '<=', $tgl_muat)
             ->orderBy('tanggal', 'desc')->first();
          }
-        
-       
          return $data->harga_pembayaran;
       }
 
