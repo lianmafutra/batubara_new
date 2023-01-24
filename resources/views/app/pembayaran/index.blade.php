@@ -266,11 +266,9 @@
                     setoran_id_array.splice($.inArray(datatable.rows(indexes).data()[0].id,
                         setoran_id_array), 1);
                 }
-
             })
 
             $("#btn_bayar").click(function() {
-
                 if ($('#mobil_id').val() == 'all' || $('#mobil_id').val() == '') {
                     Swal.fire({
                         icon: 'error',

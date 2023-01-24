@@ -96,12 +96,12 @@
                 lengthChange: true,
                 paging: true,
                 info: true,
+                stateSave: true,
                 ordering: true,
                 order: [
                     [7, 'desc']
                 ],
                 ajax: @json(route('kasbon.index')),
-
                 columns: [{
                         data: "DT_RowIndex",
                         orderable: false,
@@ -198,7 +198,7 @@
                                 allowOutsideClick: false,
                             }).then((result) => {
                                 swal.hideLoading()
-                                datatable.ajax.reload()
+                                datatable.ajax.reload(null, false)
                             })
                             swal.hideLoading()
                         }
