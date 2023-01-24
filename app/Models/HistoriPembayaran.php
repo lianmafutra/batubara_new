@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,5 +23,11 @@ class HistoriPembayaran extends Model
       $last_id = $this->latest()->first() ? $this->latest()->first()->id+1 : 1;
       return $last_id;
       
+   }
+
+   
+   public function setTglBayarAttribute($value)
+   {
+      $this->attributes['tgl_bayar'] =  Carbon::parse($value)->translatedFormat('Y-m-d');
    }
 }

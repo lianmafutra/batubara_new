@@ -79,8 +79,9 @@
             </div>
         </section>
     </div>
-@endsection
 @include('app.pembayaran.modal-hasil-bayar')
+
+@endsection
 @push('js')
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/fh-3.3.1/sl-1.5.0/datatables.min.js">
     </script>
@@ -104,15 +105,13 @@
                 theme: 'bootstrap4',
                 allowClear: true
             })
-            const tgl_muat = flatpickr("#tanggal", {
+            const tanggal_pembayaran = flatpickr("#tgl_bayar", {
                 allowInput: true,
                 dateFormat: "d-m-Y",
                 locale: "id",
-                onChange: function(selectedDates, dateStr, instance) {
-                    getHarga()
-                },
+                defaultDate: @json(\Carbon\Carbon::now()->format('d-m-Y'))
             });
-            $('#tanggal').mask('00-00-0000');
+            $('#tgl_bayar').mask('00-00-0000');
 
             let setoran_id_array = [];
 
@@ -300,7 +299,8 @@
                         hideLoading()
                         $("#datatable2 tbody").empty();
                         $("#datatable2 tfoot").empty();
-                        let row, footer;
+                        
+                        let row, footer, row_kasbon;
                         response.data.data_setoran.forEach(function(data, i) {
                             row += `<tr>
                                  <td>${i+1}</td>
@@ -318,6 +318,16 @@
                                  </tr>`;
                         });
 
+
+                        response.data.kasbon.forEach(function(data, i) {
+                            row_kasbon += `<tr>
+                                 <td>${i+1}</td>
+                                 <td>${data.tanggal_kasbon}</td>
+                                 <td>${data.nama}</td>
+                                 <td class="rupiah">${data.jumlah_uang}</td>
+                                 </tr>`;
+                        });
+
                         footer = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
                               <td colspan="5">Jumlah Total</td>
                                  <td class="rupiah">${response.data.total_uang_jalan}</td>
@@ -329,6 +339,11 @@
 
                         $("#datatable2 tbody").append(row);
                         $("#datatable2 tfoot").append(footer);
+
+                        
+                        $("#datatable_kasbon tbody").append(row_kasbon);
+
+
 
                         new AutoNumeric.multiple('.rupiah', {
                             currencySymbol: 'Rp ',
@@ -354,7 +369,8 @@
                     url: @json(route('pembayaran.bayar.histori')),
                     data: {
                         "setoran_id_array": setoran_id_array,
-                        "mobil_id": mobil_id
+                        "mobil_id": mobil_id,
+                        'tgl_bayar' :  $('#tgl_bayar').val()
                     },
                     beforeSend: function() {
                         showLoading()

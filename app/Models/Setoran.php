@@ -70,4 +70,9 @@ class Setoran extends Model
    {
       $this->attributes['tgl_muat'] =  Carbon::parse($value)->translatedFormat('Y-m-d');
    }
+
+   public function setTglBayarAttribute($value)
+   {
+      $this->attributes['tgl_bayar'] =  Carbon::parse($value)->translatedFormat('Y-m-d');
+   }
 }

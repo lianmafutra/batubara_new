@@ -114,13 +114,14 @@
                     },
                     {
                         data: 'jumlah_uang',
-                        orderable: false,
+                      
                         render: function(data, type, row, meta) {
                             return rupiah(data)
                         }
                     },
                     {
                         data: 'mobil.plat',
+
                     },
                     {
                         data: 'pemilik.nama',
@@ -129,14 +130,16 @@
                     },
                     {
                         data: 'status',
-
-                        orderable: false,
+                        searchable: false,
+                        orderable: true,
                     },
                     {
                         data: 'tanggal_kasbon',
+                        searchable: false,
                     },
                     {
                         data: 'created_at',
+                        searchable: false,
                     },
 
                     {

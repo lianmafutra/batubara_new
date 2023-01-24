@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Transaksi;
 
 use App\Http\Controllers\Controller;
 use App\Models\HistoriPembayaran;
+use App\Models\Kasbon;
 use App\Models\Mobil;
 use App\Models\Pembayaran;
 use App\Models\Setoran;
@@ -60,7 +61,9 @@ class PembayaranController extends Controller
       }
 
       $setoran = Setoran::where('id',$request->setoran_id_array[0])->first();
-      
+
+     $kasbon = Kasbon::where('status', 'BELUM')->where('mobil_id', $request->mobil_id);
+    
 
       return $this->success(
          'Data Pembayaran',
@@ -68,6 +71,7 @@ class PembayaranController extends Controller
             'pemilik_mobil'      =>  $setoran->pemilik_nama,
             'supir_mobil'        =>  $setoran->supir_nama,
             'plat_mobil'         =>  $setoran->mobil_plat,
+            'kasbon'             =>  $kasbon->get(),
             'data_setoran'       => Setoran::whereIn('id', $request->setoran_id_array)->get(),
             "total_uang_jalan"   => $this->pembayaranService->hitungTotalUangJalan($request->setoran_id_array),
             "total_uang_lainnya" => $this->pembayaranService->hitungTotalUangLainnya($request->setoran_id_array),
@@ -82,6 +86,7 @@ class PembayaranController extends Controller
    public function bayarHistori(Request $request, HistoriPembayaran $historiPembayaran)
    {
 
+     
       try {
 
          DB::beginTransaction();
@@ -93,7 +98,7 @@ class PembayaranController extends Controller
          Setoran::whereIn('id', $request->setoran_id_array)
             ->update([
                'status_pembayaran' => 'LUNAS',
-               'tgl_pembayaran'    => Carbon::now()
+               'tgl_bayar'         => Carbon::parse($request->tgl_bayar)->translatedFormat('Y-m-d')
             ]);
 
             
@@ -101,8 +106,7 @@ class PembayaranController extends Controller
 
          HistoriPembayaran::create([
             "kode"             => $historiPembayaran->getLastId()."/BYR/".Carbon::now()->format('d-m-y'),
-            "tgl_bayar"        => Carbon::now(),
-            "status"           => "lunas",
+            'tgl_bayar'        => $request->tgl_bayar,
             "setoran_id"       => json_encode($request->setoran_id_array),
             'supir_id'         => $mobil->first()->supir->id,
             'supir_nama'       => $mobil->first()->supir->nama,

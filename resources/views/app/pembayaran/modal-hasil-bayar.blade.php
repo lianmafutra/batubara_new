@@ -72,33 +72,53 @@
                             </tfoot>
                         </table>
                     </div>
+                    
+
+                    <span style="font-weight: bold;  margin: 0 0 20px 20px">Kasbon</span>
+                    <table  id="datatable_kasbon" class="table table-bordered " style="font-size: 12px; max-width: 200px;  margin-left: 20px;
+                    margin-top: 10px;">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Tanggal</th>
+                                <th>Nama</th>
+                                <th>Uang</th>
+                            </tr>
+                        </thead>
+                        <tbody style="text-align: center;">
+                        </tbody>
+                        <tfoot>
+
+                        </tfoot>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                  <div style="float:right; margin-right: 30px;" class="form-group col-3">
+                     <div class="tgl">
+                         <div class="form-group">
+                             <div class="bd-highlight">
+                                 <label>Tanggal Pembayaran <span style="color: red">*</span>
+                                 </label>
+                                 <div style="padding: 0 !important; " class="input-group ">
+                                     <input id="tgl_bayar" required autocomplete="off" name="tgl_bayar"
+                                         class="form-control tanggal" type="text" placeholder="Tanggal-Bulan-Tahun"
+                                         data-input>
+                                     <div class="input-group-append">
+                                         <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                             <span class="text-danger error-text tanggal_bayar_err"></span>
+                         </div>
+                     </div>
+                     <button style="float: right" type="submit" class="btn_lanjutkan btn_submit btn btn-primary">Lanjutkan</button>
+                 </div>
+             </form>
                 </div>
 
-                <div style="float:right; margin-right: 30px;" class="form-group col-3">
-                    <div class="tgl">
-                        <div class="form-group">
-                            <div class="bd-highlight">
-                                <label>Tanggal Pembayaran
-                                    <span style="color: red">*</span>
-                                </label>
-                                <div style="padding: 0 !important; " class="input-group ">
-                                    <input id="tanggal_bayar" required autocomplete="off" name="tanggal_bayar"
-                                        class="form-control tanggal" type="text" placeholder="Tanggal-Bulan-Tahun"
-                                        data-input>
-                                    <div class="input-group-append">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="text-danger error-text tanggal_bayar_err"></span>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn_lanjutkan btn_submit btn btn-primary">Lanjutkan</button>
-                </div>
-
-
-            </form>
+               
         </div>
     </div>
 </div>

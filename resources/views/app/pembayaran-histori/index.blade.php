@@ -33,7 +33,6 @@
                                                 <th>No</th>
                                                 <th>Kode</th>
                                                 <th>Tgl Bayar</th>
-                                                <th>Status</th>
                                                 <th>Mobil</th>
                                                 <th>Supir</th>
                                                 <th>Pemilik Mobil</th>
@@ -95,10 +94,7 @@
                         data: 'tgl_bayar',
                         orderable: false,
                     },
-                    {
-                        data: 'status',
-                        orderable: false,
-                    },
+                    
                     {
                         data: 'mobil_plat',
                         orderable: false,
@@ -124,7 +120,8 @@
             });
 
             $('#datatable').on('click', '.btn_preview', function(e) {
-               $('.btn_lanjutkan').hide()
+             
+               $('.modal-footer').hide()
               let histori = JSON.parse($(this).attr('data-setoran'))
                 $.ajax({
                     type: 'POST',
@@ -145,7 +142,7 @@
                         hideLoading()
                         $("#datatable2 tbody").empty();
                         $("#datatable2 tfoot").empty();
-                        let row, footer;
+                        let row, footer, row_kasbon;
                         response.data.data_setoran.forEach(function(data, i) {
                             row += `<tr>
                                  <td>${i+1}</td>
@@ -162,7 +159,14 @@
                                  <td class="rupiah">${data.total_bersih}</td>
                                  </tr>`;
                         });
-
+                        response.data.kasbon.forEach(function(data, i) {
+                            row_kasbon += `<tr>
+                                 <td>${i+1}</td>
+                                 <td>${data.tanggal_kasbon}</td>
+                                 <td>${data.nama}</td>
+                                 <td class="rupiah">${data.jumlah_uang}</td>
+                                 </tr>`;
+                        });
                         footer = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
                               <td colspan="5">Jumlah Total</td>
                                  <td class="rupiah">${response.data.total_uang_jalan}</td>
@@ -174,7 +178,7 @@
 
                         $("#datatable2 tbody").append(row);
                         $("#datatable2 tfoot").append(footer);
-
+                        $("#datatable_kasbon tbody").append(row_kasbon);
                         new AutoNumeric.multiple('.rupiah', {
                             currencySymbol: 'Rp ',
                             digitGroupSeparator: '.',
@@ -184,7 +188,6 @@
                             allowDecimalPadding: false,
                             alwaysAllowDecimalCharacter: false
                         });
-
                     },
                     error: function(response) {
                         showError(response)
