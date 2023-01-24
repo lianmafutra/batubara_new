@@ -12,7 +12,6 @@
             min-height: calc(100vh - 20px);
         }
     }
-
 </style>
 
 <div class="modal fade modal-ajax" id="modal_hasil_bayar">
@@ -29,26 +28,26 @@
             </div>
             <form id="form_pembayaran" method="POST">
                 <div class="modal-body">
-                  <h4 style="text-align: center">Rekap Pembayaran Bulan September</h4>
-                 
+                    <h4 style="text-align: center">Rekap Pembayaran Bulan September</h4>
 
-                  <table style="margin-left: 20px">
-                    <tr>
-                      <th>Pemilik Mobil</th>
-                      <th style="padding: 0 10px 0 10px">:</th>
-                      <td id="bayar_pemilik"></td>
-                    </tr>
-                    <tr>
-                      <th>Supir</th>
-                      <th style="padding: 0 10px 0 10px">:</th>
-                      <td id="bayar_supir"></td>
-                    </tr>
-                    <tr>
-                      <th>Plat Mobil</th>
-                      <th style="padding: 0 10px 0 10px">:</th>
-                      <td id="bayar_mobil"></td>
-                    </tr>
-                  </table>
+
+                    <table style="margin-left: 20px">
+                        <tr>
+                            <th>Pemilik Mobil</th>
+                            <th style="padding: 0 10px 0 10px">:</th>
+                            <td id="bayar_pemilik"></td>
+                        </tr>
+                        <tr>
+                            <th>Supir</th>
+                            <th style="padding: 0 10px 0 10px">:</th>
+                            <td id="bayar_supir"></td>
+                        </tr>
+                        <tr>
+                            <th>Plat Mobil</th>
+                            <th style="padding: 0 10px 0 10px">:</th>
+                            <td id="bayar_mobil"></td>
+                        </tr>
+                    </table>
                     <div class="card-body table-responsive">
                         <table id="datatable2" class="table table-bordered " style="font-size: 12px; width: 100%">
                             <thead>
@@ -68,15 +67,20 @@
                             </thead>
                             <tbody style="text-align: center;">
                             </tbody>
-                            <tfoot >
-                                             
+                            <tfoot>
+
                             </tfoot>
                         </table>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn_lanjutkan btn_submit btn btn-primary">Lanjutkan</button>
-                </div>
+
+               <div class="col-3">
+                  <x-datepicker id='tanggal' label='Tanggal Pembayaran' required=true />
+                  <button type="submit" class="btn_lanjutkan btn_submit btn btn-primary">Lanjutkan</button>
+  
+                  </div>                
+              
+               
             </form>
         </div>
     </div>

@@ -25,17 +25,17 @@
     <table style="font-size: 22px; margin-left: 20px; margin-bottom: 10px; text-align: left">
         <tr>
             <th>Pemilik Mobil</th>
-            <th>:</th>
+            <th style="padding: 0 10px 0 10px">:</th>
             <td>{{ $pemilik_mobil }}</td>
         </tr>
         <tr>
             <th>Supir</th>
-            <th>:</th>
+            <th style="padding: 0 10px 0 10px">:</th>
             <td>{{ $supir_mobil }}</td>
         </tr>
         <tr>
             <th>Plat Mobil</th>
-            <th>:</th>
+            <th style="padding: 0 10px 0 10px">:</th>
             <td>{{ $plat_mobil }}</td>
         </tr>
     </table>
@@ -82,7 +82,23 @@
         </tr>
 
     </table>
-
+    <table style="float: right; font-size: 22px; margin-right: 20px; margin-top: 20px; text-align: left">
+      <tr>
+          <th>Terima Kotor</th>
+          <th style="padding: 0 10px 0 10px">:</th>
+          <td  class="rupiah"></td>
+      </tr>
+      <tr>
+          <th>Total Bon</th>
+          <th style="padding: 0 10px 0 10px">:</th>
+          <td  class="rupiah"></td>
+      </tr>
+      <tr>
+          <th>Terima Bersih</th>
+          <th style="padding: 0 10px 0 10px">:</th>
+          <td  class="rupiah"></td>
+      </tr>
+  </table>
 </body>
 <script src="{{ asset('plugins/autoNumeric.min.js') }}"></script>
 <script>

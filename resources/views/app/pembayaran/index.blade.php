@@ -104,7 +104,7 @@
                 theme: 'bootstrap4',
                 allowClear: true
             })
-            const tgl_muat = flatpickr("#tgl_muat", {
+            const tgl_muat = flatpickr("#tanggal", {
                 allowInput: true,
                 dateFormat: "d-m-Y",
                 locale: "id",
@@ -112,7 +112,7 @@
                     getHarga()
                 },
             });
-            $('.tanggal').mask('00-00-0000');
+            $('#tanggal').mask('00-00-0000');
 
             let setoran_id_array = [];
 
