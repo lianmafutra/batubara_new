@@ -69,9 +69,7 @@ class PembayaranController extends Controller
       }
 
       $total_bersih = $this->pembayaranService->hitungTotalBersih($request->setoran_id_array);
-      if ($kasbon->sum('jumlah_uang') >  $total_bersih) {
-         
-      }
+
 
       return $this->success(
          'Data Pembayaran',
@@ -105,6 +103,8 @@ class PembayaranController extends Controller
             return $this->error('Data setoran Belum di pilih !', 400);
          }
 
+        $kode_pembayaran = $historiPembayaran->getLastId() . "/BYR/" . Carbon::now()->format('d-m-y');
+
          Setoran::whereIn('id', $request->setoran_id_array)
             ->update([
                'status_pembayaran' => 'LUNAS',
@@ -115,26 +115,43 @@ class PembayaranController extends Controller
 
          Kasbon::whereIn('id', $kasbon_id_array)
             ->update([
-               'status' => 'LUNAS',
-               'tgl_bayar'         => Carbon::parse($request->tgl_bayar)->translatedFormat('Y-m-d')
+               'status'    => 'LUNAS',
+               'tgl_bayar' => Carbon::parse($request->tgl_bayar)->translatedFormat('Y-m-d')
             ]);
 
 
-         $mobil = Mobil::with('supir', 'pemilik')->where('id', $request->mobil_id);
+         $mobil = Mobil::with('supir', 'pemilik')->where('id', $request->mobil_id)->first();
 
          HistoriPembayaran::create([
-            "kode"             => $historiPembayaran->getLastId() . "/BYR/" . Carbon::now()->format('d-m-y'),
+            "kode"             => $kode_pembayaran,
             'tgl_bayar'        => $request->tgl_bayar,
             "setoran_id"       => json_encode($request->setoran_id_array),
             "kasbon_id"        => $kasbon_id_array,
-            'supir_id'         => $mobil->first()->supir->id,
-            'supir_nama'       => $mobil->first()->supir->nama,
-            'pemilik_mobil_id' => $mobil->first()->pemilik_mobil_id,
-            'pemilik_nama'     => $mobil->first()->pemilik->nama,
-            'mobil_id'         => $mobil->first()->id,
-            'mobil_plat'       => $mobil->first()->plat,
+            'supir_id'         => $mobil->supir->id,
+            'supir_nama'       => $mobil->supir->nama,
+            'pemilik_mobil_id' => $mobil->pemilik_mobil_id,
+            'pemilik_nama'     => $mobil->pemilik->nama,
+            'mobil_id'         => $mobil->id,
+            'mobil_plat'       => $mobil->plat,
 
          ]);
+
+         // cek jika kasbon lebih besar dari pendapatan
+         $total_bersih = $this->pembayaranService->hitungTotalBersih($request->setoran_id_array);
+         $kasbon = Kasbon::where('status', 'BELUM')->where('mobil_id', $request->mobil_id)->sum('jumlah_uang');
+         if ($kasbon > $total_bersih) {
+            Kasbon::create(
+               [
+                  'nama'             => "Sisa Bon Bulan ".$request->tgl_bayar. ", Kode (".$kode_pembayaran.")",
+                  'jumlah_uang'      => $kasbon-$total_bersih,
+                  'tanggal_kasbon'   => $request->tgl_bayar,
+                  'mobil_id'         => $request->mobil_id,
+                  'pemilik_mobil_id' => $mobil->pemilik_mobil_id,
+                  'status'           => 'BELUM',
+               ]
+            );
+         }
+
 
          DB::commit();
          return $this->success('Berhasil Melakukan Pembayaran');
