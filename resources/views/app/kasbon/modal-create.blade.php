@@ -30,7 +30,7 @@
                     <input hidden id="id" name="id" value="" />
                     <x-datepicker id='tanggal_kasbon' label='Tanggal Kasbon' required="true" />
                     <x-select2 id="mobil_id" label="Mobil" required="true" placeholder="Pilih Mobil">
-                        @foreach ($mobil->get() as $item)
+                        @foreach ($mobil as $item)
                             <option data-pemilik="{{ $item->pemilik->id }}" value="{{ $item->id }}">{{ $item->plat }}</option>
                         @endforeach
                     </x-select2>

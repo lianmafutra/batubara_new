@@ -24,10 +24,14 @@ class KasbonController extends Controller
 
       $x['title']   = 'Kelola Kasbon';
       $x['pemilik'] = Pemilik::get();
-      $x['mobil']   = Mobil::with('pemilik');
+      $x['mobil']   = Mobil::with('pemilik', 'supir')->get();
       $x['supir']   = Supir::get();
 
       $data = Kasbon::with('pemilik', 'mobil');
+
+      if (request()->mobil_id && request()->mobil_id != 'all') {
+         $data->whereRelation('mobil','mobil_id', request()->mobil_id);
+      }
 
 
       if (request()->ajax()) {
