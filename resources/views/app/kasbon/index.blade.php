@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="{{ asset('plugins/flatpicker/flatpickr.min.css') }}">
 @endpush
 @section('content')
-    
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
@@ -23,25 +22,26 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                              <div class="row">
-                                 <div class="col-md-3">
-                                 <x-select2 id="mobil_id_filter" label="Filter Mobil" required="false"
-                                     placeholder="Pilih Mobil">
-                                     <option value="all">Semua Mobil</option>
-                                     @foreach ($mobil as $item)
-                                         <option value="{{ $item->id }}">{{ $item->plat }} | Pemilik : {{ $item->pemilik->nama }} | Supir : {{ $item->supir->nama }}</option>
-                                     @endforeach
-                                 </x-select2>
-                                
-                             </div>
-                             <div class="col-md-3">
-                              <h3 style="margin-top:30px" class="card-title">
-                                 <a href="#" class="btn btn-sm btn-primary" id="btn_tambah"><i
-                                         class="fas fa-plus"></i> Tambah Kasbon</a>
-                             </h3>
-                             </div>
-                              </div>
-                               
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <x-select2 id="mobil_id_filter" label="Filter Mobil" required="false"
+                                            placeholder="Pilih Mobil">
+                                            <option value="all">Semua Mobil</option>
+                                            @foreach ($mobil as $item)
+                                                <option value="{{ $item->id }}">{{ $item->plat }} | Pemilik :
+                                                    {{ $item->pemilik->nama }} | Supir : {{ $item->supir->nama }}</option>
+                                            @endforeach
+                                        </x-select2>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="margin-top:30px" class="card-title">
+                                            <a href="#" class="btn btn-sm btn-primary" id="btn_tambah"><i
+                                                    class="fas fa-plus"></i> Tambah Kasbon</a>
+                                        </h3>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="card-body">
                                 <div class="tab-content">
@@ -90,24 +90,24 @@
 
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
-                allowClear : true
+                allowClear: true
             })
 
             $('.tanggal').mask('00-00-0000');
-            
+
             $("#pemilik_mobil_id").val(1).trigger('change');
 
             $('#mobil_id').on('select2:select', function(e) {
                 $("#pemilik_mobil_id").val($(this).find(":selected").data("pemilik")).trigger('change');
             })
 
-           let tanggal_kasbon = flatpickr("#tanggal_kasbon", {
+            let tanggal_kasbon = flatpickr("#tanggal_kasbon", {
                 allowInput: true,
                 dateFormat: "d-m-Y",
                 locale: "id",
             });
 
-           
+
             let datatable = $("#datatable").DataTable({
                 serverSide: true,
                 processing: true,
@@ -117,10 +117,11 @@
                 info: true,
                 stateSave: false,
                 ordering: true,
+                order : [7, 'desc'],
                 ajax: {
                     url: @json(route('kasbon.index')),
                     data: function(e) {
-                        e.mobil_id =   $('#mobil_id_filter').val()
+                        e.mobil_id = $('#mobil_id_filter').val()
                     }
                 },
                 columns: [{
@@ -135,7 +136,6 @@
                     },
                     {
                         data: 'jumlah_uang',
-                      
                         render: function(data, type, row, meta) {
                             return rupiah(data)
                         }
@@ -165,7 +165,6 @@
                         name: 'created_at',
                         searchable: false,
                     },
-
                     {
                         data: "action",
                         orderable: false,
@@ -173,18 +172,16 @@
                     },
                 ]
             })
-
-
+          
             $('#mobil_id_filter').on('select2:select', function(e) {
                 mobil_id = $(this).val()
                 datatable.ajax.reload()
-                
             });
 
             $('#mobil_id_filter').on('select2:clear', function(e) {
                 mobil_id = ''
                 datatable.ajax.reload()
-              
+
             });
 
             $("#btn_tambah").click(function() {
@@ -258,7 +255,7 @@
                     $('#mobil_id').val(response.data.mobil_id).trigger('change');
                     $('#pemilik_mobil_id').val(response.data.pemilik_mobil_id).trigger('change');
                     $('#status').val(response.data.status).trigger('change');
-                  
+
                 })
             });
 

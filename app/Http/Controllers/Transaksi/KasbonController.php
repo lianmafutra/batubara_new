@@ -9,6 +9,7 @@ use App\Models\Pemilik;
 use App\Models\Supir;
 use App\Utils\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class KasbonController extends Controller
 {
@@ -28,17 +29,11 @@ class KasbonController extends Controller
       $x['supir']   = Supir::get();
 
       $data = Kasbon::with('pemilik', 'mobil');
-
-      
       if (request()->mobil_id && request()->mobil_id != 'all') {
-         $data->whereRelation('mobil','mobil_id', request()->mobil_id);
+         $data->whereRelation('mobil', 'mobil_id', request()->mobil_id);
       }
-
-
-
       if (request()->ajax()) {
-         return  datatables()->eloquent($data)
-          
+         $table = datatables()->of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($data) {
                return view('app.kasbon.action', compact('data'));
@@ -46,15 +41,15 @@ class KasbonController extends Controller
             ->addColumn('status', function ($data) {
                if ($data->status == 'BELUM') {
                   return '<span class="right badge badge-danger">Belum Lunas</span>';
-               }
-               else if ($data->status == 'LUNAS') {
+               } else if ($data->status == 'LUNAS') {
                   return '<span class="right badge badge-success">Sudah Lunas</span>';
                }
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
+             return $table;
       }
-      return view('app.kasbon.index', $x, compact(['data']));
+      return view('app.kasbon.index', $x);
    }
 
 
