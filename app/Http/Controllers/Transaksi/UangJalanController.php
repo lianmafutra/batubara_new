@@ -13,12 +13,16 @@ class UangJalanController extends Controller
 {
    use ApiResponse;
 
-    public function index()
-    {
+   public function index()
+   {
       $x['title']    = 'Kelola Uang Jalan';
       $x['supir']    = Supir::get();
-    
-      $data = Setoran::with('supir');
+      $x['mobil']   = Mobil::with('pemilik', 'supir')->get();
+      $data = Setoran::with('supir','mobil');
+
+      if (request()->mobil_id && request()->mobil_id != 'all') {
+         $data->whereRelation('mobil', 'mobil_id', request()->mobil_id);
+      }
 
       if (request()->ajax()) {
          return  datatables()->of($data)
@@ -30,18 +34,18 @@ class UangJalanController extends Controller
             ->make(true);
       }
       return view('app.uang-jalan.index', $x, compact(['data']));
-    }
+   }
 
 
-    public function store(Request $request)
-    {
+   public function store(Request $request)
+   {
       try {
 
-        $mobil = Mobil::with('supir','pemilik')->where('supir_id', $request->supir_id);
-         
-        if($mobil->first()==null){
-            return $this->error('Supir belum mempunyai Mobil' , 400);
-        }
+         $mobil = Mobil::with('supir', 'pemilik')->where('supir_id', $request->supir_id);
+
+         if ($mobil->first() == null) {
+            return $this->error('Supir belum mempunyai Mobil', 400);
+         }
 
          Setoran::updateOrCreate(
             ['id'               => $request->id],
@@ -62,20 +66,20 @@ class UangJalanController extends Controller
       } catch (\Throwable $th) {
          return $this->error('Gagal, Terjadi Kesalahan' . $th, 400);
       }
-    }
+   }
 
-    public function edit(Setoran $uang_jalan)
-    {
+   public function edit(Setoran $uang_jalan)
+   {
       return $this->success('Data Mobil', $uang_jalan);
-    }
+   }
 
-    public function destroy(Setoran $uang_jalan)
-    {
+   public function destroy(Setoran $uang_jalan)
+   {
       try {
          $uang_jalan->delete();
          return redirect()->back()->with('success', 'Berhasil Hapus Data', 200);
       } catch (\Throwable $th) {
          return redirect()->back()->with('error', 'Gagal Hapus Data', 400);
       }
-    }
+   }
 }

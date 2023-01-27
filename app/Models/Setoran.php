@@ -7,6 +7,7 @@ use App\Utils\Rupiah;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use PhpParser\Node\Expr\AssignOp\Mod;
 
 class Setoran extends Model
 {
@@ -37,6 +38,11 @@ class Setoran extends Model
    public function supir()
    {
       return $this->hasOne(Supir::class, 'id', 'supir_id');
+   }
+
+   public function mobil()
+   {
+      return $this->hasOne(Mobil::class, 'id', 'mobil_id');
    }
 
    public function getHargaBayarAttribute()
