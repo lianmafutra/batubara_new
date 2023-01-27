@@ -26,15 +26,26 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <div class="col-md-3">
-                                    <x-select2 id="supir_id" label="Filter Supir" required="false"
-                                        placeholder="Pilih Supir">
-                                        <option value="all">Semua Supir</option>
-                                        @foreach ($supir as $item)
-                                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                                        @endforeach
-                                    </x-select2>
-                                </div>
+                              <div class="row">
+                                 <div class="col-md-3">
+                                     <x-select2 id="mobil_id_filter" label="Filter Mobil" required="false"
+                                         placeholder="Pilih Mobil">
+                                         <option value="all">Semua Mobil</option>
+                                         @foreach ($mobil as $item)
+                                             <option value="{{ $item->id }}">{{ $item->plat }} | Pemilik :
+                                                 {{ $item->pemilik->nama }} | Supir : {{ $item->supir->nama }}</option>
+                                         @endforeach
+                                     </x-select2>
+
+                                 </div>
+                                 {{-- <div class="col-md-3">
+                                     <h3 style="margin-top:30px" class="card-title">
+                                         <a href="#" class="btn btn-sm btn-primary" id="btn_tambah"><i
+                                                 class="fas fa-plus"></i> Tambah Kasbon</a>
+                                     </h3>
+                                 </div> --}}
+                             </div>
+                               
                             </div>
                             <div class="card-body">
                                 <div class="tab-content">
@@ -145,7 +156,7 @@
                 ajax: {
                     url: @json(route('setoran.index')),
                     data: function(e) {
-                        e.supir_id = supir_id
+                        e.mobil_id = $('#mobil_id_filter').val()
                     }
                 },
                 initComplete: function(settings, json) {
@@ -238,7 +249,20 @@
                         searchable: false,
                     },
                 ]
+            })
+
+            $('#mobil_id_filter').on('select2:select', function(e) {
+                mobil_id = $(this).val()
+                datatable.ajax.reload()
             });
+
+            $('#mobil_id_filter').on('select2:clear', function(e) {
+                mobil_id = ''
+                datatable.ajax.reload()
+
+            });
+
+
             $("#btn_tambah").click(function() {
                 clearInput()
                 $('#modal_create').modal('show')

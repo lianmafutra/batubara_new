@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Transaksi;
 
 use App\Http\Controllers\Controller;
 use App\Models\Harga;
+use App\Models\Mobil;
 use App\Models\Setoran;
 use App\Models\Supir;
 use App\Models\Transportir;
@@ -24,11 +25,15 @@ class SetoranController extends Controller
       $x['tujuan']      = Tujuan::all();
       $x['transportir'] = Transportir::all();
       $x['supir']       = Supir::all();
-         $data          = Setoran::with('supir');
+      $x['mobil']   = Mobil::with('pemilik', 'supir')->get();
 
-      if (request()->supir_id && request()->supir_id != 'all') {
-         $data->where('supir_id', request()->supir_id);
+
+      $data = Setoran::with('supir','mobil');
+
+      if (request()->mobil_id && request()->mobil_id != 'all') {
+         $data->whereRelation('mobil', 'mobil_id', request()->mobil_id);
       }
+
 
       if (request()->ajax()) {
          return  datatables()->of($data)
