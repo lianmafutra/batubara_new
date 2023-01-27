@@ -90,6 +90,7 @@
 
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
+                allowClear : true
             })
 
             $('.tanggal').mask('00-00-0000');
@@ -106,7 +107,7 @@
                 locale: "id",
             });
 
-       
+           
             let datatable = $("#datatable").DataTable({
                 serverSide: true,
                 processing: true,
@@ -114,11 +115,8 @@
                 lengthChange: true,
                 paging: true,
                 info: true,
-                stateSave: true,
+                stateSave: false,
                 ordering: true,
-                order: [
-                    [7, 'desc']
-                ],
                 ajax: {
                     url: @json(route('kasbon.index')),
                     data: function(e) {
@@ -144,6 +142,7 @@
                     },
                     {
                         data: 'mobil.plat',
+                        name: 'mobil.plat',
 
                     },
                     {
@@ -158,10 +157,12 @@
                     },
                     {
                         data: 'tanggal_kasbon',
+                        name: 'tanggal_kasbon',
                         searchable: false,
                     },
                     {
                         data: 'created_at',
+                        name: 'created_at',
                         searchable: false,
                     },
 
@@ -171,7 +172,8 @@
                         searchable: false,
                     },
                 ]
-            });
+            })
+
 
             $('#mobil_id_filter').on('select2:select', function(e) {
                 mobil_id = $(this).val()

@@ -29,13 +29,16 @@ class KasbonController extends Controller
 
       $data = Kasbon::with('pemilik', 'mobil');
 
+      
       if (request()->mobil_id && request()->mobil_id != 'all') {
          $data->whereRelation('mobil','mobil_id', request()->mobil_id);
       }
 
 
+
       if (request()->ajax()) {
-         return  datatables()->of($data)
+         return  datatables()->eloquent($data)
+          
             ->addIndexColumn()
             ->addColumn('action', function ($data) {
                return view('app.kasbon.action', compact('data'));
