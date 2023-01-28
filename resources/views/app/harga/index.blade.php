@@ -123,7 +123,7 @@
                 ordering: true,
 
                 order: [
-                    [7, 'asc']
+                    [6, 'asc']
                 ],
                 columnDefs: [{
                     targets: 0,

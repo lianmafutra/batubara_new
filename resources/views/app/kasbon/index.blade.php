@@ -117,7 +117,7 @@
                 info: true,
                 stateSave: false,
                 ordering: true,
-                order : [7, 'desc'],
+                order : [6, 'desc'],
                 ajax: {
                     url: @json(route('kasbon.index')),
                     data: function(e) {

@@ -4,8 +4,17 @@ namespace App\Http\Controllers\Transaksi;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pencairan;
+use App\Models\Mobil;
+use App\Models\Pembayaran;
+use App\Models\Setoran;
+use App\Models\Supir;
+use App\Models\Transportir;
+use App\Models\Tujuan;
+use App\Services\PembayaranService;
+use App\Utils\ApiResponse;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class PencairanController extends Controller
 {
     /**
@@ -15,7 +24,27 @@ class PencairanController extends Controller
      */
     public function index()
     {
-        //
+      $x['title']       = 'Kelola Data Pembayaran';
+      $x['tujuan']      = Tujuan::all();
+      $x['transportir'] = Transportir::all();
+      $x['supir']       = Supir::all();
+      $x['mobil']       = Mobil::all();
+      $data          = Setoran::with('supir')->where('status_pembayaran', 'BELUM');
+
+      if (request()->transportir_id && request()->transportir_id != 'all') {
+         $data->where('transportir_id', request()->transportir_id);
+      }
+
+      if (request()->ajax()) {
+         return  datatables()->of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+               return view('app.pencairan.action', compact('data'));
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+      }
+      return view('app.pencairan.index', $x, compact(['data']));
     }
 
     /**

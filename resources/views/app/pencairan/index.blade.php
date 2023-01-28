@@ -16,7 +16,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Pembayaran Setoran</h1>
+                        <h1 class="m-0">Pencairan</h1>
                     </div>
                 </div>
             </div>
@@ -28,26 +28,26 @@
                         <div class="card-body">
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <x-select2 id="mobil_id" label="Filter Mobil" required="false"
-                                                placeholder="Pilih Mobil">
-                                                <option value="all">Semua Mobil</option>
-                                                @foreach ($mobil as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->plat }}</option>
+                                 <div class="row">
+                                    <div class="col-md-3">
+                                       <x-select2 id="transportir_id" label="Filter Transportir" required="false"
+                                                placeholder="Pilih Transportir">
+                                                <option value="all">Semua Transportir</option>
+                                                @foreach ($transportir as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
                                                 @endforeach
                                             </x-select2>
 
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div style="margin-top:28px"><button id="btn_bayar"
-                                                    type="button" class="btn btn-primary"><i
-                                                        class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i>
-                                                    Bayar</button>
-                                            </div>
-                                        </div>
                                     </div>
-
+                                    <div class="col-md-3">
+                                       <div style="margin-top:28px"><button id="btn_bayar" type="button"
+                                          class="btn btn-primary"><i
+                                              class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i>
+                                          Cairkan</button>
+                                  </div>
+                                    </div>
+                                </div>
+                                    
                                 </div>
                                 <div class="card-body table-responsive">
                                     <table id="datatable" class="table table-bordered ">
@@ -83,11 +83,10 @@
             </div>
         </section>
     </div>
-    @include('app.pembayaran.modal-hasil-bayar')
+    @include('app.pencairan.modal-hasil')
 @endsection
 @push('js')
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/fh-3.3.1/sl-1.5.0/datatables.min.js">
-    </script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/fh-3.3.1/sl-1.5.0/datatables.min.js"></script>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>>
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('plugins/sweetalert2/sweetalert2-min.js') }}"></script>
@@ -128,7 +127,7 @@
                 allowDecimalPadding: false,
                 alwaysAllowDecimalCharacter: false
             });
-            let mobil_id = '';
+            let transportir_id = '';
             let datatable = $("#datatable").DataTable({
                 serverSide: true,
                 processing: true,
@@ -160,9 +159,9 @@
                     selector: 'td:not(:last-child)'
                 },
                 ajax: {
-                    url: @json(route('pembayaran.index')),
+                    url: @json(route('pencairan.index')),
                     data: function(e) {
-                        e.mobil_id = mobil_id
+                        e.transportir_id = transportir_id
                     }
                 },
 
@@ -280,7 +279,7 @@
             })
 
             $("#btn_bayar").click(function() {
-                if ($('#mobil_id').val() == 'all' || $('#mobil_id').val() == '') {
+                if ($('#transportir_id').val() == 'all' || $('#transportir_id').val() == '') {
                     Swal.fire({
                         icon: 'error',
                         title: 'Mobil Belum dipilih',
@@ -293,7 +292,7 @@
                     url: @json(route('pembayaran.bayar.preview')),
                     data: {
                         "setoran_id_array": setoran_id_array,
-                        "mobil_id": $('#mobil_id').val(),
+                        "transportir_id": $('#transportir_id').val(),
                     },
                     beforeSend: function() {
                         showLoading()
@@ -303,8 +302,7 @@
 
                         $('#modal_hasil_bayar').modal('show')
 
-                        $terima_bersih = response.data.total_uang_bersih - response.data
-                            .total_kasbon
+                     $terima_bersih = response.data.total_uang_bersih - response.data.total_kasbon
 
                         $('#bayar_pemilik').text(response.data.pemilik_mobil)
                         $('#bayar_supir').text(response.data.supir_mobil)
@@ -314,12 +312,12 @@
                         $('#hasil_total_bon').text(response.data.total_kasbon)
                         $('#hasil_terima_bersih').text($terima_bersih)
 
-                        if ($terima_bersih < 0) {
-                            $('.kasbon_pendapatan').show()
-                            $('.kasbon_pendapatan_hasil').text($terima_bersih)
-
-                        } else {
-                            $('.kasbon_pendapatan').hide()
+                        if($terima_bersih < 0){
+                           $('.kasbon_pendapatan').show()
+                           $('.kasbon_pendapatan_hasil').text($terima_bersih)
+                           
+                        }else{
+                           $('.kasbon_pendapatan').hide()
 
                         }
 
@@ -404,7 +402,7 @@
                     url: @json(route('pembayaran.bayar.histori')),
                     data: {
                         "setoran_id_array": setoran_id_array,
-                        "mobil_id": mobil_id,
+                        "transportir_id": transportir_id,
                         'tgl_bayar': $('#tgl_bayar').val()
                     },
                     beforeSend: function() {
@@ -436,23 +434,23 @@
                 });
             });
 
-            $('#mobil_id').on('select2:select', function(e) {
-                mobil_id = $(this).val()
+            $('#transportir_id').on('select2:select', function(e) {
+               transportir_id = $(this).val()
                 datatable.column('.id').visible(false)
                 datatable.columns().checkboxes.deselect(true);
                 datatable.ajax.reload()
                 datatable.on('draw', function() {
-                    datatable.column('.id').visible(true)
+                      datatable.column('.id').visible(true)
                 });
             });
 
-            $('#mobil_id').on('select2:clear', function(e) {
-                mobil_id = ''
+            $('#transportir_id').on('select2:clear', function(e) {
+               transportir_id = ''
                 datatable.column('.id').visible(false)
                 datatable.columns().checkboxes.deselect(true);
                 datatable.ajax.reload()
                 datatable.on('draw', function() {
-                    datatable.column('.id').visible(true)
+                      datatable.column('.id').visible(true)
                 });
             });
 

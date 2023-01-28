@@ -151,7 +151,7 @@
                     rightColumns: 1
                 },
                 order: [
-                    [3, 'desc']
+                    [13, 'desc']
                 ],
                 ajax: {
                     url: @json(route('setoran.index')),

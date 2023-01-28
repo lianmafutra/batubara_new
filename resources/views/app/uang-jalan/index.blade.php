@@ -112,7 +112,7 @@
                 info: true,
                 ordering: true,
                 order: [
-                    [4, 'desc']
+                    [2, 'desc']
                 ],
                 ajax: {
                     url: @json(route('uang-jalan.index')),
