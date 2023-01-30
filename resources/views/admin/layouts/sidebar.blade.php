@@ -128,6 +128,13 @@
                         <p>Master Harga</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                  <a href="{{ route('pengaturan_harga.index') }}"
+                      class="nav-link  {{ request()->routeIs('pengaturan_harga*') ? 'active' : '' }}">
+                      <i class="fas fa-list-ul nav-icon"></i>
+                      <p>Pengaturan Harga</p>
+                  </a>
+              </li>
                 <li class="nav-header ml-2">Transaksi DO</li>
                 <li class="nav-item">
                     <a href="{{ route('uang-jalan.index') }}"

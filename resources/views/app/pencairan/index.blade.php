@@ -28,9 +28,9 @@
                         <div class="card-body">
                             <div class="card">
                                 <div class="card-header">
-                                 <div class="row">
-                                    <div class="col-md-3">
-                                       <x-select2 id="transportir_id" label="Filter Transportir" required="false"
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <x-select2 id="transportir_id" label="Filter Transportir" required="false"
                                                 placeholder="Pilih Transportir">
                                                 <option value="all">Semua Transportir</option>
                                                 @foreach ($transportir as $item)
@@ -38,16 +38,16 @@
                                                 @endforeach
                                             </x-select2>
 
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div style="margin-top:28px"><button id="btn_bayar" type="button"
+                                                    class="btn btn-primary"><i
+                                                        class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i>
+                                                    Cairkan</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-3">
-                                       <div style="margin-top:28px"><button id="btn_bayar" type="button"
-                                          class="btn btn-primary"><i
-                                              class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i>
-                                          Cairkan</button>
-                                  </div>
-                                    </div>
-                                </div>
-                                    
+
                                 </div>
                                 <div class="card-body table-responsive">
                                     <table id="datatable" class="table table-bordered ">
@@ -86,7 +86,8 @@
     @include('app.pencairan.modal-hasil')
 @endsection
 @push('js')
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/fh-3.3.1/sl-1.5.0/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/fh-3.3.1/sl-1.5.0/datatables.min.js">
+    </script>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>>
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('plugins/sweetalert2/sweetalert2-min.js') }}"></script>
@@ -289,7 +290,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: @json(route('pembayaran.bayar.preview')),
+                    url: @json(route('pencairan.preview')),
                     data: {
                         "setoran_id_array": setoran_id_array,
                         "transportir_id": $('#transportir_id').val(),
@@ -301,61 +302,36 @@
                     success: (response) => {
 
                         $('#modal_hasil_bayar').modal('show')
-
-                     $terima_bersih = response.data.total_uang_bersih - response.data.total_kasbon
-
-                        $('#bayar_pemilik').text(response.data.pemilik_mobil)
-                        $('#bayar_supir').text(response.data.supir_mobil)
-                        $('#bayar_mobil').text(response.data.plat_mobil)
+                        $terima_bersih = response.data.total_uang_bersih
+                        $('#transportir').text(response.data.transportir.nama)
+                        $('.judul_pencairan').text('Rekap Pencairan '+response.data.transportir.nama)
+                       
 
                         $('#hasil_terima_kotor').text(response.data.total_uang_bersih)
-                        $('#hasil_total_bon').text(response.data.total_kasbon)
                         $('#hasil_terima_bersih').text($terima_bersih)
-
-                        if($terima_bersih < 0){
-                           $('.kasbon_pendapatan').show()
-                           $('.kasbon_pendapatan_hasil').text($terima_bersih)
-                           
-                        }else{
-                           $('.kasbon_pendapatan').hide()
-
-                        }
 
                         hideLoading()
                         $(".to_empty").empty();
-                        let row, footer, row_kasbon, footer_kasbon;
+                        let row, footer
                         response.data.data_setoran.forEach(function(data, i) {
                             row += `<tr>
                                  <td>${i+1}</td>
-                            
+                                 <td>${data.tgl_muat}</td>
+                                 <td>${data.tgl_muat}</td>
+                                 <td>${data.supir_nama}</td>
+                                 <td>${data.mobil_plat}</td>
                                  <td  class="berat">${data.berat}</td>
                                  <td>${data.tujuan_nama}</td>
-                              
                                  <td class="rupiah">${data.harga}</td>
-                                 <td class="rupiah">${data.uang_jalan}</td>
-                                 <td class="rupiah">${data.uang_lainnya}</td>
-                                 <td class="rupiah">${data.total_uang_lainnya}</td>
                                  <td class="rupiah">${data.pg}</td>
                                  <td class="rupiah">${data.total_kotor}</td>
-                                 <td class="rupiah">${data.total_bersih}</td>
                                  </tr>`;
                         });
 
-
-                        response.data.kasbon.forEach(function(data, i) {
-                            row_kasbon += `<tr>
-                                 <td>${i+1}</td>
-                                 <td>${data.tanggal_kasbon}</td>
-                                 <td>${data.nama}</td>
-                                 <td class="rupiah">${data.jumlah_uang}</td>
-                                 </tr>`;
-                        });
 
                         footer = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
-                              <td colspan="4">Jumlah Total</td>
-                                 <td class="rupiah">${response.data.total_uang_jalan}</td>
-                                 <td class="rupiah">${response.data.total_uang_lainnya}</td>
-                                 <td class="rupiah">${response.data.total}</td>
+                              <td colspan="7">Jumlah Total</td>
+                               
                                  <td class="rupiah">${response.data.total_pihak_gas}</td>
                                  <td class="rupiah">${response.data.total_uang_kotor}</td>
                                  <td class="rupiah">${response.data.total_uang_bersih}</td> </tr>`;
@@ -366,8 +342,7 @@
 
                         $("#datatable2 tbody").append(row);
                         $("#datatable2 tfoot").append(footer);
-                        $("#datatable_kasbon tbody").append(row_kasbon);
-                        $("#datatable_kasbon tfoot").append(footer_kasbon);
+
 
                         new AutoNumeric.multiple('.rupiah', {
                             currencySymbol: 'Rp ',
@@ -399,7 +374,7 @@
                 e.preventDefault();
                 $.ajax({
                     type: 'POST',
-                    url: @json(route('pembayaran.bayar.histori')),
+                    url: @json(route('pencairan.histori')),
                     data: {
                         "setoran_id_array": setoran_id_array,
                         "transportir_id": transportir_id,
@@ -435,22 +410,22 @@
             });
 
             $('#transportir_id').on('select2:select', function(e) {
-               transportir_id = $(this).val()
+                transportir_id = $(this).val()
                 datatable.column('.id').visible(false)
                 datatable.columns().checkboxes.deselect(true);
                 datatable.ajax.reload()
                 datatable.on('draw', function() {
-                      datatable.column('.id').visible(true)
+                    datatable.column('.id').visible(true)
                 });
             });
 
             $('#transportir_id').on('select2:clear', function(e) {
-               transportir_id = ''
+                transportir_id = ''
                 datatable.column('.id').visible(false)
                 datatable.columns().checkboxes.deselect(true);
                 datatable.ajax.reload()
                 datatable.on('draw', function() {
-                      datatable.column('.id').visible(true)
+                    datatable.column('.id').visible(true)
                 });
             });
 

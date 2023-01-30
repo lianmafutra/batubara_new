@@ -30,8 +30,8 @@
                                 <h3 class="card-title">
                                     <a href="#" class="btn btn-sm btn-primary" id="btn_tambah"><i
                                             class="fas fa-plus"></i> Tambah harga</a>
-                                    <a href="#" class="btn btn-sm btn-warning" id="btn_pengaturan_harga"><i
-                                            class="fas fa-tools"></i> Pengaturan Harga</a>
+                                    {{-- <a href="#" class="btn btn-sm btn-warning" id="btn_pengaturan_harga"><i
+                                            class="fas fa-tools"></i> Pengaturan Harga</a> --}}
                                     <a style="display: none" href="#" class="btn btn-sm btn-danger"
                                         id="btn_hapus_masal"><i class="fas fa-trash"></i> Hapus Masal</a>
                                 </h3>

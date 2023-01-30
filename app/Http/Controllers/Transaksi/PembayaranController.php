@@ -30,8 +30,8 @@ class PembayaranController extends Controller
    public function index()
    {
       $x['title']       = 'Kelola Data Pembayaran';
-      $x['tujuan']      = Tujuan::all();
-      $x['transportir'] = Transportir::all();
+      $x['tujuan']        = Tujuan::all();
+      $x['transportir']   = Transportir::all();
       $x['supir']       = Supir::all();
       $x['mobil']       = Mobil::all();
       $data          = Setoran::with('supir')->where('status_pembayaran', 'BELUM');
@@ -98,30 +98,22 @@ class PembayaranController extends Controller
       try {
 
          DB::beginTransaction();
-
          if ($request->setoran_id_array == null || $request->setoran_id_array == []) {
             return $this->error('Data setoran Belum di pilih !', 400);
          }
-
         $kode_pembayaran = $historiPembayaran->getLastId() . "/BYR/" . Carbon::now()->format('d-m-y');
-
          Setoran::whereIn('id', $request->setoran_id_array)
             ->update([
                'status_pembayaran' => 'LUNAS',
                'tgl_bayar'         => Carbon::parse($request->tgl_bayar)->translatedFormat('Y-m-d')
             ]);
-
          $kasbon_id_array = Kasbon::where('status', 'BELUM')->where('mobil_id', $request->mobil_id)->get()->pluck('id');
-
          Kasbon::whereIn('id', $kasbon_id_array)
             ->update([
                'status'    => 'LUNAS',
                'tgl_bayar' => Carbon::parse($request->tgl_bayar)->translatedFormat('Y-m-d')
             ]);
-
-
          $mobil = Mobil::with('supir', 'pemilik')->where('id', $request->mobil_id)->first();
-
          HistoriPembayaran::create([
             "kode"             => $kode_pembayaran,
             'tgl_bayar'        => $request->tgl_bayar,
@@ -133,7 +125,6 @@ class PembayaranController extends Controller
             'pemilik_nama'     => $mobil->pemilik->nama,
             'mobil_id'         => $mobil->id,
             'mobil_plat'       => $mobil->plat,
-
          ]);
 
          // cek jika kasbon lebih besar dari pendapatan

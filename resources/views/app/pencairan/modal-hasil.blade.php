@@ -28,25 +28,17 @@
             </div>
             <form id="form_pembayaran" method="POST">
                 <div class="modal-body">
-                    <h4 style="text-align: center">Rekap Pembayaran  </h4>
+                    <h4 class="judul_pencairan" style="text-align: center"></h4>
 
 
                     <table style="margin-left: 20px">
                         <tr>
-                            <th>Pemilik Mobil</th>
+                            <th>Transportir</th>
                             <th style="padding: 0 10px 0 10px">:</th>
-                            <td id="bayar_pemilik"></td>
+                            <td id="transportir"></td>
                         </tr>
-                        <tr>
-                            <th>Supir</th>
-                            <th style="padding: 0 10px 0 10px">:</th>
-                            <td id="bayar_supir"></td>
-                        </tr>
-                        <tr>
-                            <th>Plat Mobil</th>
-                            <th style="padding: 0 10px 0 10px">:</th>
-                            <td id="bayar_mobil"></td>
-                        </tr>
+                       
+                       
                         <tr>
                             <th>Tanggal Pembayaran</th>
                             <th style="padding: 0 10px 0 10px">:</th>
@@ -58,16 +50,15 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    {{-- <th>Supir</th> --}}
+                                    <th>Tanggal Muat</th>
+                                    <th>Tanggal Bongkar</th>
+                                    <th>Supir</th>
+                                    <th>Plat</th>
                                     <th>Berat</th>
                                     <th>Tujuan</th>
                                     <th>Harga</th>
-                                    <th>Uang Jalan</th>
-                                    <th>Uang Lainnya</th>
-                                    <th>Total</th>
                                     <th>Pijak Gas</th>
-                                    <th>Total Kotor</th>
-                                    <th>Total Bersih</th>
+                                    <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody class="to_empty" style="text-align: center;">
@@ -78,7 +69,7 @@
                         </table>
                     </div>
 
-                    <table style="float: right; margin-right: 37px; margin-top: 20px; text-align: left">
+                    {{-- <table style="float: right; margin-right: 37px; margin-top: 20px; text-align: left">
                         <tr>
                             <th>Terima Kotor</th>
                             <th style="padding: 0 10px 0 10px">:</th>
@@ -100,30 +91,10 @@
                            <th style="color: red" class="kasbon_pendapatan_hasil rupiah"></th>
                        </tr>
                       
-                    </table>
+                    </table> --}}
 
-                    <span style="font-weight: bold;  margin: 0 0 20px 20px">Kasbon</span>
-                    <table id="datatable_kasbon" class="table table-bordered "
-                        style="font-size: 12px; width: 400px;  margin-left: 20px;
-                    margin-top: 10px;">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Tanggal</th>
-                                <th>Nama</th>
-                                <th>Uang</th>
-                            </tr>
-                        </thead>
-                        <tbody class="to_empty" style="text-align: center;">
-                        </tbody>
-                        <tfoot class="to_empty">
-
-                        </tfoot>
-
-
-                    </table>
-
-
+                  
+                 
 
 
                 </div>
@@ -132,7 +103,7 @@
                         <div class="tgl">
                             <div class="form-group">
                                 <div class="bd-highlight">
-                                    <label>Tanggal Pembayaran <span style="color: red">*</span>
+                                    <label>Tanggal Pencairan <span style="color: red">*</span>
                                     </label>
                                     <div style="padding: 0 !important; " class="input-group ">
                                         <input id="tgl_bayar" required autocomplete="off" name="tgl_bayar"

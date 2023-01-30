@@ -3,30 +3,68 @@
 namespace App\Http\Controllers\Harga;
 
 use App\Http\Controllers\Controller;
+use App\Models\Harga;
 use App\Models\HargaPengaturan;
+use App\Models\Transportir;
 use Illuminate\Http\Request;
 
 class HargaPengaturanController extends Controller
 {
 
-
-   public function update(Request $request)
+   public function index()
    {
+      // abort_if(Gate::denies('kelola mobil'), 403);
+      $x['title']    = 'Kelola Pengaturan Harga';
 
+      $x['transportir']    = Transportir::all();
+      $x['harga_pembayaran']    = HargaPengaturan::find(1)->hrg_pembayaran;
+      $data = Transportir::all();
+
+      if (request()->ajax()) {
+         return  datatables()->of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+               return view('app.harga_pengaturan.action', compact('data'));
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+      }
+      return view('app.harga_pengaturan.index', $x, compact(['data']));
+   }
+
+
+
+   public function edit_harga_pencairan($id)
+   {
+      return $this->success('Pengaturan Data Harga', Transportir::find($id));
+   }
+
+
+   public function update_harga_pencairan(Request $request)
+   {
+    
       try {
-         HargaPengaturan::where('id', 1)->update([
-            'hrg_pembayaran' => $request->hrg_pembayaran,
-            'hrg_pencairan'  => $request->hrg_pencairan
+         Transportir::where('id', $request->id)->update([
+            'harga_pencairan'  => $request->harga_pencairan
          ]);
-        return $this->success('Berhasil Mengubah Data');
+         return $this->success('Berhasil Mengubah Data');
       } catch (\Throwable $th) {
          return $this->error('Gagal, Terjadi Kesalahan' . $th, 400);
       }
    }
 
-
-   public function edit()
+   public function update_harga_pembayaran(Request $request)
    {
-      return $this->success('Pengaturan Data Harga', HargaPengaturan::find(1));
+    
+      // id default 1 karena hanya ada 1 , hanya ada method update
+      try {
+       $data =  HargaPengaturan::find(1);
+       $data->update([
+         'hrg_pembayaran'  => $request->hrg_pembayaran
+      ]);
+         return $this->success('Berhasil Mengubah Data', $data);
+      } catch (\Throwable $th) {
+         return $this->error('Gagal, Terjadi Kesalahan' . $th, 400);
+      }
    }
 }

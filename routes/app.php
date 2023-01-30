@@ -49,8 +49,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
    
    Route::prefix('pencairan')->name('pencairan.')->controller(PencairanController::class)->group(function () {
       Route::get('/', 'index')->name('index');
-      Route::post('bayar-preview', 'bayarPreview')->name('bayar.preview');
-      Route::post('bayar-histori', 'bayarHistori')->name('bayar.histori');
+      Route::post('pencairan-preview', 'pencairanPreview')->name('preview');
+      Route::post('pencairan-histori', 'pencairanHistori')->name('histori');
    });
 
    Route::prefix('pencairan/histori')->name('pencairan.histori.')->controller(PencairanController::class)->group(function () {
@@ -65,9 +65,16 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
    Route::controller(HargaController::class)->group(function () {
       Route::resource('harga', HargaController::class);
-      Route::resource('pengaturan_harga', HargaPengaturanController::class);
       Route::post('destroyMulti', 'destroyMulti')->name('destroy.multi');
    });
+
+   Route::resource('pengaturan_harga', HargaPengaturanController::class);
+   Route::controller(HargaPengaturanController::class)->name('pengaturan_harga.')->group(function () {
+      Route::get('harga_pencairan/{id}', 'edit_harga_pencairan')->name('pencairan');
+      Route::post('harga_pencairan', 'update_harga_pencairan')->name('pencairan.update');
+      Route::post('harga_pembayaran', 'update_harga_pembayaran')->name('pembayaran.update');
+   });
+  
   
    Route::resource('tujuan', TujuanController::class);
    Route::resource('kasbon', KasbonController::class);
