@@ -294,6 +294,7 @@
                     data: {
                         "setoran_id_array": setoran_id_array,
                         "mobil_id": $('#mobil_id').val(),
+                        
                     },
                     beforeSend: function() {
                         showLoading()

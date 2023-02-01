@@ -70,6 +70,7 @@ class PembayaranController extends Controller
 
       $total_bersih = $this->pembayaranService->hitungTotalBersih($request->setoran_id_array);
 
+      // return json_decode(HistoriPembayaran::where('id', request()->kode_pembayaran)->first()->data);
 
       return $this->success(
          'Data Pembayaran',
@@ -108,12 +109,39 @@ class PembayaranController extends Controller
                'tgl_bayar'         => Carbon::parse($request->tgl_bayar)->translatedFormat('Y-m-d')
             ]);
          $kasbon_id_array = Kasbon::where('status', 'BELUM')->where('mobil_id', $request->mobil_id)->get()->pluck('id');
+
          Kasbon::whereIn('id', $kasbon_id_array)
             ->update([
                'status'    => 'LUNAS',
                'tgl_bayar' => Carbon::parse($request->tgl_bayar)->translatedFormat('Y-m-d')
             ]);
+
          $mobil = Mobil::with('supir', 'pemilik')->where('id', $request->mobil_id)->first();
+
+         $total_bersih = $this->pembayaranService->hitungTotalBersih($request->setoran_id_array);
+         $setoran = Setoran::where('id', $request->setoran_id_array[0])->first();
+
+         $kasbon = Kasbon::whereIn('id', json_decode($kasbon_id_array));
+         
+         $data =  $this->success(
+            'Data Pembayaran',
+            [
+               'pemilik_mobil'      =>  $setoran->pemilik_nama,
+               'supir_mobil'        =>  $setoran->supir_nama,
+               'plat_mobil'         =>  $setoran->mobil_plat,
+               'tgl_bayar'          =>  Carbon::parse($setoran->tgl_bayar)->format('d-m-Y'),
+               'kasbon'             =>  $kasbon->get(),
+               'total_kasbon'       =>  $kasbon->sum('jumlah_uang'),
+               'data_setoran'       => Setoran::whereIn('id', $request->setoran_id_array)->get(),
+               "total_uang_jalan"   => $this->pembayaranService->hitungTotalUangJalan($request->setoran_id_array),
+               "total_uang_lainnya" => $this->pembayaranService->hitungTotalUangLainnya($request->setoran_id_array),
+               "total"              => $this->pembayaranService->hitungTotal($request->setoran_id_array),
+               "total_pihak_gas"    => $this->pembayaranService->hitungTotalPijakGas($request->setoran_id_array),
+               "total_uang_kotor"   => $this->pembayaranService->hitungTotalKotor($request->setoran_id_array),
+               "total_uang_bersih"  => $total_bersih,
+            ]
+         );
+
          HistoriPembayaran::create([
             "kode"             => $kode_pembayaran,
             'tgl_bayar'        => $request->tgl_bayar,
@@ -125,6 +153,7 @@ class PembayaranController extends Controller
             'pemilik_nama'     => $mobil->pemilik->nama,
             'mobil_id'         => $mobil->id,
             'mobil_plat'       => $mobil->plat,
+            'data'               => $data
          ]);
 
          // cek jika kasbon lebih besar dari pendapatan
@@ -142,6 +171,8 @@ class PembayaranController extends Controller
                ]
             );
          }
+
+
 
 
          DB::commit();
