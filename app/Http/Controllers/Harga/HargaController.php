@@ -29,7 +29,7 @@ class HargaController extends Controller
             ->rawColumns(['action'])
             ->make(true);
       }
-      return view('app.harga.index', $x, compact(['data']));
+      return view('app.harga.index', $x);
    }
 
    public function store(Request $request)
@@ -57,9 +57,10 @@ class HargaController extends Controller
       }
    }
 
-   public function edit(Harga $Harga)
+   public function edit(Harga $harga)
    {
-      return $this->success('Data Harga', $Harga);
+      dd("a");
+      return $this->success('Data Harga', $harga);
    }
 
    public function destroy(Harga $Harga)
@@ -70,15 +71,17 @@ class HargaController extends Controller
       } catch (\Throwable $th) {
          return redirect()->back()->with('error', 'Gagal Hapus Data', 400);
       }
-    }
+   }
 
-    public function destroyMulti(Request $request)
-    {
-       try {
-          Harga::whereIn('id',$request->id_array)->delete();
-          return $this->success('Berhasil Hapus Data');
-       } catch (\Throwable $th) {
+   public function destroyMulti(Request $request)
+   {
+      try {
+         Harga::whereIn('id', $request->id_array)->delete();
+         return $this->success('Berhasil Hapus Data');
+      } catch (\Throwable $th) {
          return $this->error('Gagal, Terjadi Kesalahan' . $th, 400);
-       }
-     }
+      }
+   }
+
+   
 }

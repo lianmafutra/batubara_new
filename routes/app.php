@@ -68,11 +68,13 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
       Route::post('destroyMulti', 'destroyMulti')->name('destroy.multi');
    });
 
-   Route::resource('pengaturan_harga', HargaPengaturanController::class);
+  
    Route::controller(HargaPengaturanController::class)->name('pengaturan_harga.')->group(function () {
+      Route::get('/', 'index')->name('index');
       Route::get('harga_pencairan/{id}', 'edit_harga_pencairan')->name('pencairan');
       Route::post('harga_pencairan', 'update_harga_pencairan')->name('pencairan.update');
       Route::post('harga_pembayaran', 'update_harga_pembayaran')->name('pembayaran.update');
+      Route::get('harga_perubahan/{id_transportir}', 'getHargaPerubahan')->name('get_harga_perubahan');
    });
   
   
