@@ -83,18 +83,21 @@
 
     <script>
         $(document).ready(function() {
-            let id_array = [];
+            let id_array = []
             $('.select2bs4').select2({
                 theme: 'bootstrap4',
             })
+            $('#harga').prop('readonly', true);
+            $('#harga_pembayaran').prop('readonly', true);
+            $('#harga_pencairan').prop('readonly', true);
 
             const flatpicker = flatpickr("#tanggal", {
                 allowInput: true,
                 dateFormat: "d-m-Y",
                 locale: "id",
-            });
+            })
 
-            $('.tanggal').mask('00-00-0000');
+            $('.tanggal').mask('00-00-0000')
 
             AutoNumeric.multiple('.rupiah', {
                 //  currencySymbol: 'Rp ',
@@ -104,7 +107,7 @@
                 formatOnPageLoad: true,
                 allowDecimalPadding: false,
                 alwaysAllowDecimalCharacter: false
-            });
+            })
 
             let datatable = $("#datatable").DataTable({
                 serverSide: true,
@@ -120,7 +123,7 @@
                 ordering: true,
 
                 order: [
-                    [6, 'asc']
+                    [7, 'desc']
                 ],
                 columnDefs: [{
                     targets: 0,
@@ -184,8 +187,8 @@
 
                 let count = datatable.rows({
                     selected: true
-                });
-                id_array.push(datatable.rows(indexes).data()[0].id);
+                })
+                id_array.push(datatable.rows(indexes).data()[0].id)
 
                 if (count.count() >= 1) {
                     $('#btn_hapus_masal').show()
@@ -194,29 +197,22 @@
                 let count = datatable.rows({
                     selected: true
                 })
-                id_array.splice($.inArray(datatable.rows(indexes).data()[0].id, id_array), 1);
+                id_array.splice($.inArray(datatable.rows(indexes).data()[0].id, id_array), 1)
                 if (count.count() <= 0) {
                     $('#btn_hapus_masal').hide()
                 }
             })
 
-            $('#transportir_id').on('select2:select', function(e) {
+            $('#transportir_id').on('change', function(e) {
+                $('#harga').prop('readonly', false);
+                $('#harga_pembayaran').prop('readonly', false);
+                $('#harga_pencairan').prop('readonly', false);
                 let url = '{{ route('pengaturan_harga.get_harga_perubahan', ':id') }}'
                 url = url.replace(':id', $('#transportir_id').val())
+                $('#harga_pembayaran-info').show()
+                $('#harga_pencairan-info').show()
                 $.get(url,
                     function(response) {
-                        AutoNumeric.getAutoNumericElement('#harga_pembayaran').set(0)
-                        AutoNumeric.getAutoNumericElement('#harga_pencairan').set(0)
-                        $('#harga').keyup(function() {
-                            harga_pembayaran = parseInt($('input[id$=harga]').val().replace(
-                                /[^\d,-]/g, ''))
-                            harga_pencairan = parseInt($('input[id$=harga]').val().replace(
-                                /[^\d,-]/g, ''))
-                            AutoNumeric.getAutoNumericElement('#harga_pembayaran').set(
-                                harga_pembayaran + response.harga_pembayaran.hrg_pembayaran)
-                            AutoNumeric.getAutoNumericElement('#harga_pencairan').set(
-                                harga_pencairan + response.harga_pencairan.harga_pencairan)
-                        });
                         if (response.harga_pembayaran.hrg_pembayaran > 0) {
                             $('#harga_pembayaran-info').html(
                                 "<span style='color:green; font-size:11px'> ( Harga +" + response
@@ -235,6 +231,31 @@
                                 "<span style='color:red; font-size:11px'> ( Harga " + response
                                 .harga_pencairan.harga_pencairan + " )</span>")
                         }
+
+                        AutoNumeric.getAutoNumericElement('#harga_pembayaran').set(0)
+                        AutoNumeric.getAutoNumericElement('#harga_pencairan').set(0)
+
+                        harga_pembayaran = parseInt($('input[id$=harga]').val().replace(
+                            /[^\d,-]/g, ''))
+                        harga_pencairan = parseInt($('input[id$=harga]').val().replace(
+                            /[^\d,-]/g, ''))
+                        AutoNumeric.getAutoNumericElement('#harga_pembayaran').set(harga_pembayaran +
+                            response.harga_pembayaran.hrg_pembayaran)
+                        AutoNumeric.getAutoNumericElement('#harga_pencairan').set(
+                            harga_pencairan + response.harga_pencairan.harga_pencairan)
+
+                        $('#harga').keyup(function() {
+                            harga_pembayaran = parseInt($('input[id$=harga]').val().replace(
+                                /[^\d,-]/g, ''))
+                            harga_pencairan = parseInt($('input[id$=harga]').val().replace(
+                                /[^\d,-]/g, ''))
+                            AutoNumeric.getAutoNumericElement('#harga_pembayaran').set(
+                                harga_pembayaran + response.harga_pembayaran.hrg_pembayaran)
+                            AutoNumeric.getAutoNumericElement('#harga_pencairan').set(
+                                harga_pencairan + response.harga_pencairan.harga_pencairan)
+                        })
+
+
                     })
             })
 
@@ -243,6 +264,11 @@
                 clearInput()
                 $('#modal_create').modal('show')
                 $('.modal-title').text('Tambah Data')
+                $('#harga').prop('readonly', true);
+                $('#harga_pembayaran').prop('readonly', true);
+                $('#harga_pencairan').prop('readonly', true);
+                $('#harga_pembayaran-info').hide()
+                $('#harga_pencairan-info').hide()
 
             })
 
@@ -281,21 +307,21 @@
                                         location.reload()
                                     })
                                     swal.hideLoading()
-                                    id_array = [];
+                                    id_array = []
                                 }
                             },
                             error: function(response) {
                                 showError(response)
                             }
-                        });
+                        })
                     }
                 })
             })
 
             $("#form_create").submit(function(e) {
-                e.preventDefault();
-                const formData = new FormData(this);
-                formData.append('method', 'PUT');
+                e.preventDefault()
+                const formData = new FormData(this)
+                formData.append('method', 'PUT')
                 $.ajax({
                     type: 'POST',
                     url: @json(route('harga.store')),
@@ -328,18 +354,44 @@
                     error: function(response) {
                         showError(response)
                     }
-                });
-            });
+                })
+            })
             $('#datatable').on('click', '.btn_edit', function(e) {
                 clearInput()
+                $('#harga').prop('readonly', false);
+                $('#harga_pembayaran').prop('readonly', false);
+                $('#harga_pencairan').prop('readonly', false);
                 $('#modal_create').modal('show')
                 $('.modal-title').text('Ubah Data')
-                $('.error').hide();
-                let url = $(this).attr('data-url');
-                alert(url)
-            });
+                $('.error').hide()
+                $('#harga_pembayaran-info').hide()
+                $('#harga_pencairan-info').hide()
+                
+                let url = $(this).attr('data-url')
+                $.get(url, function(response) {
+                  $('#harga_pembayaran-info').show()
+                $('#harga_pencairan-info').show()
+
+                    $('#id').val(response.data.id)
+                    AutoNumeric.getAutoNumericElement('#harga').set(response.data.harga)
+                    AutoNumeric.getAutoNumericElement('#harga_pembayaran').set(response.data
+                        .harga_pembayaran)
+                    AutoNumeric.getAutoNumericElement('#harga_pencairan').set(response.data
+                        .harga_pencairan)
+
+                    flatpicker.setDate(response.data.tanggal)
+
+                    $('#tujuan_id').val(response.data.tujuan_id).trigger('change')
+                    $('#transportir_id').val(response.data.transportir_id).trigger('change')
+                    $('#harga_pembayaran-info').html("")
+                    $('#harga_pencairan-info').html("")
+                   
+                    
+                })
+            })
+
             $('#datatable').on('click', '.btn_hapus', function(e) {
-                let data = $(this).attr('data-hapus');
+                let data = $(this).attr('data-hapus')
                 Swal.fire({
                     title: 'Apakah anda yakin ingin menghapus data harga?',
                     text: data,
@@ -351,10 +403,10 @@
                     cancelButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $(this).find('#form-delete').submit();
+                        $(this).find('#form-delete').submit()
                     }
                 })
-            });
+            })
         })
     </script>
 @endpush

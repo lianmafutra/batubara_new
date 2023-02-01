@@ -23,12 +23,12 @@ class Harga extends Model
 
    public function tujuan()
    {
-      return $this->belongsTo(Tujuan::class);
+      return $this->hasOne(Tujuan::class, 'id', 'tujuan_id');
    }
 
    public function transportir()
    {
-      return $this->belongsTo(Transportir::class);
+      return $this->hasOne(Transportir::class, 'id', 'transportir_id');
    }
 
    public function setHargaAttribute($value) {

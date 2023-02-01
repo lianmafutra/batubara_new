@@ -19,6 +19,7 @@ class HargaController extends Controller
       $x['tujuan']    = Tujuan::all();
       $x['transportir']    = Transportir::all();
       $data = Harga::with('tujuan', 'transportir');
+     
 
       if (request()->ajax()) {
          return  datatables()->of($data)
@@ -59,7 +60,7 @@ class HargaController extends Controller
 
    public function edit(Harga $harga)
    {
-      dd("a");
+      
       return $this->success('Data Harga', $harga);
    }
 

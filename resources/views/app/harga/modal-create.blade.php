@@ -1,5 +1,5 @@
 <x-modal id="create" title="Tambah Harga" size="md">
-    <input  id="id" name="id" />
+    <input hidden  id="id" name="id" />
     <x-select2 id="transportir_id" label="Transportir" required="true" placeholder="Pilih Transportir">
       @foreach ($transportir as $item)
           <option value="{{ $item->id }}">{{ $item->nama }}</option>
