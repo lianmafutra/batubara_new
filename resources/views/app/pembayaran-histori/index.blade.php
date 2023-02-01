@@ -76,7 +76,7 @@
                 info: true,
                 ordering: true,
                 order: [
-                    [2, 'desc']
+                    [6, 'desc']
                 ],
                 ajax: @json(route('pembayaran.histori.index')),
 
