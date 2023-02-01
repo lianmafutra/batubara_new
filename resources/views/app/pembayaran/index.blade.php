@@ -334,7 +334,7 @@
                                  <td  class="berat">${data.berat}</td>
                                  <td>${data.tujuan_nama}</td>
                               
-                                 <td class="rupiah">${data.harga}</td>
+                                 <td class="rupiah">${data.harga_bayar}</td>
                                  <td class="rupiah">${data.uang_jalan}</td>
                                  <td class="rupiah">${data.uang_lainnya}</td>
                                  <td class="rupiah">${data.total_uang_lainnya}</td>
