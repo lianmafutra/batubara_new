@@ -30,7 +30,7 @@ trait SetoranService
             ->where('tanggal', '<=', $tgl_muat)
             ->orderBy('tanggal', 'desc')->first();
          }
-         return $data->harga_pembayaran;
+         return $data;
       }
 
    }

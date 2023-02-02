@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Transaksi;
 
 use App\Http\Controllers\Controller;
 use App\Models\HistoriPembayaran;
+use App\Models\HistoriPencairan;
 use App\Models\Kasbon;
 use App\Models\Pencairan;
 use App\Models\Mobil;
@@ -17,6 +18,7 @@ use App\Utils\ApiResponse;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 class PencairanController extends Controller
 {
    protected $pembayaranService;
@@ -26,9 +28,9 @@ class PencairanController extends Controller
    {
       $this->pembayaranService = $pembayaranService;
    }
-   
-    public function index()
-    {
+
+   public function index()
+   {
       $x['title']       = 'Kelola Data Pembayaran';
       $x['tujuan']      = Tujuan::all();
       $x['transportir'] = Transportir::all();
@@ -50,9 +52,9 @@ class PencairanController extends Controller
             ->make(true);
       }
       return view('app.pencairan.index', $x, compact(['data']));
-    }
+   }
 
-    public function pencairanPreview(Request $request)
+   public function pencairanPreview(Request $request)
    {
 
 
@@ -62,13 +64,13 @@ class PencairanController extends Controller
       $setoran = Setoran::where('id', $request->setoran_id_array[0])->first();
 
       $total_bersih = $this->pembayaranService->hitungTotalBersih($request->setoran_id_array);
-     $transportir = Transportir::find($request->transportir_id);
+      $transportir = Transportir::find($request->transportir_id);
 
       return $this->success(
          'Data Pembayaran',
          [
             'transportir'        =>   $transportir,
-            'tgl_bayar'          =>  Carbon::parse($setoran->tgl_bayar)->format('d-m-Y'),
+            // 'tgl_pencairan'          =>  Carbon::parse($setoran->tgl_bayar)->format('d-m-Y'),
             'data_setoran'       => Setoran::whereIn('id', $request->setoran_id_array)->get(),
             "total_uang_jalan"   => $this->pembayaranService->hitungTotalUangJalan($request->setoran_id_array),
             "total_uang_lainnya" => $this->pembayaranService->hitungTotalUangLainnya($request->setoran_id_array),
@@ -80,58 +82,27 @@ class PencairanController extends Controller
       );
    }
 
-   public function pencairanHistori(Request $request, HistoriPembayaran $historiPembayaran)
+   public function pencairanHistori(Request $request, HistoriPencairan $historiPencairan)
    {
-
-
       try {
-
          DB::beginTransaction();
          if ($request->setoran_id_array == null || $request->setoran_id_array == []) {
             return $this->error('Data setoran Belum di pilih !', 400);
          }
-        $kode_pembayaran = $historiPembayaran->getLastId() . "/BYR/" . Carbon::now()->format('d-m-y');
+         $kode_pencairan = $historiPencairan->getLastId() . "/PCR/" . Carbon::now()->format('d-m-y');
          Setoran::whereIn('id', $request->setoran_id_array)
             ->update([
-               'status_pembayaran' => 'LUNAS',
-               'tgl_bayar'         => Carbon::parse($request->tgl_bayar)->translatedFormat('Y-m-d')
+               'status_pencairan' => 'LUNAS',
+               'tgl_pencairan'         => Carbon::parse($request->tgl_pencairan)->translatedFormat('Y-m-d')
             ]);
-         $kasbon_id_array = Kasbon::where('status', 'BELUM')->where('mobil_id', $request->mobil_id)->get()->pluck('id');
-         Kasbon::whereIn('id', $kasbon_id_array)
-            ->update([
-               'status'    => 'LUNAS',
-               'tgl_bayar' => Carbon::parse($request->tgl_bayar)->translatedFormat('Y-m-d')
-            ]);
-         $mobil = Mobil::with('supir', 'pemilik')->where('id', $request->mobil_id)->first();
-         HistoriPembayaran::create([
-            "kode"             => $kode_pembayaran,
-            'tgl_bayar'        => $request->tgl_bayar,
-            "setoran_id"       => json_encode($request->setoran_id_array),
-            "kasbon_id"        => $kasbon_id_array,
-            'supir_id'         => $mobil->supir->id,
-            'supir_nama'       => $mobil->supir->nama,
-            'pemilik_mobil_id' => $mobil->pemilik_mobil_id,
-            'pemilik_nama'     => $mobil->pemilik->nama,
-            'mobil_id'         => $mobil->id,
-            'mobil_plat'       => $mobil->plat,
+
+
+         HistoriPencairan::create([
+            "kode"           => $kode_pencairan,
+            "transportir_id" =>  $request->transportir_id,
+            'tgl_pencairan'  => $request->tgl_pencairan,
+            "setoran_id"     => json_encode($request->setoran_id_array),
          ]);
-
-         // cek jika kasbon lebih besar dari pendapatan
-         $total_bersih = $this->pembayaranService->hitungTotalBersih($request->setoran_id_array);
-         $kasbon = Kasbon::where('status', 'BELUM')->where('mobil_id', $request->mobil_id)->sum('jumlah_uang');
-         if ($kasbon > $total_bersih) {
-            Kasbon::create(
-               [
-                  'nama'             => "Sisa Bon Bulan ".$request->tgl_bayar. ", Kode (".$kode_pembayaran.")",
-                  'jumlah_uang'      => $kasbon-$total_bersih,
-                  'tanggal_kasbon'   => $request->tgl_bayar,
-                  'mobil_id'         => $request->mobil_id,
-                  'pemilik_mobil_id' => $mobil->pemilik_mobil_id,
-                  'status'           => 'BELUM',
-               ]
-            );
-         }
-
 
          DB::commit();
          return $this->success('Berhasil Melakukan Pembayaran');
@@ -141,8 +112,8 @@ class PencairanController extends Controller
       }
    }
 
-    public function destroy(Pencairan $pencairan)
-    {
-        //
-    }
+   public function destroy(Pencairan $pencairan)
+   {
+      //
+   }
 }

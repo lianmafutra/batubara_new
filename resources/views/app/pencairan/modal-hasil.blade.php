@@ -21,7 +21,7 @@
                 <i class="fas fa-2x fa-sync-alt fa-spin"></i>
             </div>
             <div class="modal-header">
-                <h6 class="modal-title">Pembayaran</h6>
+                <h6 class="modal-title">Pencairan</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -40,9 +40,9 @@
                        
                        
                         <tr>
-                            <th>Tanggal Pembayaran</th>
+                            <th>Tanggal Pencairan</th>
                             <th style="padding: 0 10px 0 10px">:</th>
-                            <td id="tgl_pembayaran"></td>
+                            <td id="tgl_pencairan"></td>
                         </tr>
                     </table>
                     <div class="card-body table-responsive">

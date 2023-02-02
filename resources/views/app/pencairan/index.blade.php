@@ -203,7 +203,7 @@
                         searchable: false,
                     },
                     {
-                        data: 'harga_bayar',
+                        data: 'harga_cair',
                         searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)
@@ -294,6 +294,7 @@
                     data: {
                         "setoran_id_array": setoran_id_array,
                         "transportir_id": $('#transportir_id').val(),
+                       
                     },
                     beforeSend: function() {
                         showLoading()
@@ -322,7 +323,7 @@
                                  <td>${data.mobil_plat}</td>
                                  <td  class="berat">${data.berat}</td>
                                  <td>${data.tujuan_nama}</td>
-                                 <td class="rupiah">${data.harga}</td>
+                                 <td class="rupiah">${data.harga_cair}</td>
                                  <td class="rupiah">${data.pg}</td>
                                  <td class="rupiah">${data.total_kotor}</td>
                                  </tr>`;
@@ -378,7 +379,7 @@
                     data: {
                         "setoran_id_array": setoran_id_array,
                         "transportir_id": transportir_id,
-                        'tgl_bayar': $('#tgl_bayar').val()
+                        'tgl_pencairan': $('#tgl_pencairan').val()
                     },
                     beforeSend: function() {
                         showLoading()
