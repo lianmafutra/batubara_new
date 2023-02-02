@@ -9,9 +9,8 @@
     <link rel="stylesheet" href="{{ asset('plugins/datatable/dataTables.checkboxes.css') }}">
 @endpush
 @section('content')
-    <style>
-    </style>
-    <div style="" class="content-wrapper">
+   
+    <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
@@ -25,60 +24,58 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card-body">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <x-select2 id="mobil_id" label="Filter Mobil" required="false"
-                                                placeholder="Pilih Mobil">
-                                                <option value="all">Semua Mobil</option>
-                                                @foreach ($mobil as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->plat }}</option>
-                                                @endforeach
-                                            </x-select2>
-
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div style="margin-top:28px"><button id="btn_bayar"
-                                                    type="button" class="btn btn-primary"><i
-                                                        class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i>
-                                                    Bayar</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                     <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <x-select2 id="mobil_id" label="Filter Mobil" required="false"
+                                        placeholder="Pilih Mobil">
+                                        <option value="all">Semua Mobil</option>
+                                        @foreach ($mobil as $item)
+                                            <option value="{{ $item->id }}">{{ $item->plat }}</option>
+                                        @endforeach
+                                    </x-select2>
 
                                 </div>
-                                <div class="card-body table-responsive">
-                                    <table id="datatable" class="table table-bordered ">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>No</th>
-                                                <th>Supir</th>
-                                                <th>Berat</th>
-                                                <th>Tujuan</th>
-                                                <th>Transportir</th>
-                                                <th>Tgl Muat</th>
-                                                <th>Tgl Bongkar</th>
-                                                <th>Harga</th>
-                                                <th>Uang Jalan</th>
-                                                <th>Uang Lainnya</th>
-                                                <th>Total</th>
-                                                <th>PG (Pijak Gas)</th>
-                                                <th>Total Kotor</th>
-                                                <th>Total Bersih</th>
-                                                <th>Created_at</th>
-                                                {{-- <th>#Aksi</th> --}}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-
-                                    </table>
+                                <div class="col-md-3">
+                                    <div style="margin-top:28px"><button id="btn_bayar"
+                                            type="button" class="btn btn-primary"><i
+                                                class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i>
+                                            Bayar</button>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
+                        <div class="card-body table-responsive">
+                            <table id="datatable" class="table table-bordered ">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>No</th>
+                                        <th>Supir</th>
+                                        <th>Berat</th>
+                                        <th>Tujuan</th>
+                                        <th>Transportir</th>
+                                        <th>Tgl Muat</th>
+                                        <th>Tgl Bongkar</th>
+                                        <th>Harga</th>
+                                        <th>Uang Jalan</th>
+                                        <th>Uang Lainnya</th>
+                                        <th>Total</th>
+                                        <th>PG (Pijak Gas)</th>
+                                        <th>Total Kotor</th>
+                                        <th>Total Bersih</th>
+                                        <th>Created_at</th>
+                                        {{-- <th>#Aksi</th> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>

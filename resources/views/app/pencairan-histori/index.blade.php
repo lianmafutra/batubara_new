@@ -49,7 +49,7 @@
             </div>
         </section>
     </div>
-    @include('app.pembayaran.modal-hasil-bayar')
+    @include('app.pencairan.modal-hasil')
 @endsection
 @push('js')
     <script src="{{ asset('template/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -114,71 +114,53 @@
                 let histori = JSON.parse($(this).attr('data-setoran'))
                 $.ajax({
                     type: 'POST',
-                    url: @json(route('pembayaran.bayar.preview')),
+                    url: @json(route('pencairan.preview')),
                     data: {
                         "setoran_id_array": JSON.parse(histori.setoran_id),
-                        "mobil_id": histori.mobil_id,
-                        "kode_pembayaran":JSON.parse(histori.id),
+                        "kode_pencairan":JSON.parse(histori.id),
                     },
                     beforeSend: function() {
                         showLoading()
                     },
                     success: (response) => {
-                        $('#modal_hasil_bayar').modal('show')
+                        $('#modal_hasil').modal('show')
 
-                        $('#bayar_pemilik').text(response.data.pemilik_mobil)
-                        $('#bayar_supir').text(response.data.supir_mobil)
-                        $('#bayar_mobil').text(response.data.plat_mobil)
-                        $('#tgl_pembayaran').text(response.data.tgl_bayar)
-
+                        $terima_bersih = response.data.total_uang_bersih
+                        $('#transportir').text(response.data.transportir.nama)
+                        $('.judul_pencairan').text('Rekap Pencairan '+response.data.transportir.nama)
                         $('#hasil_terima_kotor').text(response.data.total_uang_bersih)
-                        $('#hasil_total_bon').text(response.data.total_kasbon)
-                        $('#hasil_terima_bersih').text(response.data.total_uang_bersih - response.data.total_kasbon)
-                  
+                        $('#hasil_terima_bersih').text($terima_bersih)
+                        $('#tgl_pencairan').text(response.data.tgl_pencairan)
+
+                        console.log(response)
+
                         hideLoading()
                         $(".to_empty").empty();
-                        let row, footer, row_kasbon, footer_kasbon;
+                        let row, footer;
                         response.data.data_setoran.forEach(function(data, i) {
                             row += `<tr>
                                  <td>${i+1}</td>
-                               
-                                 <td class="berat">${data.berat}</td>
+                                 <td>${data.tgl_muat}</td>
+                                 <td>${data.tgl_muat}</td>
+                                 <td>${data.supir_nama}</td>
+                                 <td>${data.mobil_plat}</td>
+                                 <td  class="berat">${data.berat}</td>
                                  <td>${data.tujuan_nama}</td>
-                                 <td class="rupiah">${data.harga_bayar}</td>
-
-                                 <td class="rupiah">${data.uang_jalan}</td>
-                                 <td class="rupiah">${data.uang_lainnya}</td>
-                                 <td class="rupiah">${data.total_uang_lainnya}</td>
+                                 <td class="rupiah">${data.harga_cair}</td>
                                  <td class="rupiah">${data.pg}</td>
-                                 <td class="rupiah">${data.total_kotor}</td>
-                                 <td class="rupiah">${data.total_bersih}</td>
+                                 <td class="rupiah">${data.total_bersih_pencairan}</td>
                                  </tr>`;
                         });
-                        response.data.kasbon.forEach(function(data, i) {
-                            row_kasbon += `<tr>
-                                 <td>${i+1}</td>
-                                 <td>${data.tanggal_kasbon}</td>
-                                 <td>${data.nama}</td>
-                                 <td class="rupiah">${data.jumlah_uang}</td>
-                                 </tr>`;
-                        });
+                      
                         footer = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
-                              <td colspan="4">Jumlah Total</td>
-                                 <td class="rupiah">${response.data.total_uang_jalan}</td>
-                                 <td class="rupiah">${response.data.total_uang_lainnya}</td>
-                                 <td class="rupiah">${response.data.total}</td>
+                              <td colspan="8">Jumlah Total</td>
                                  <td class="rupiah">${response.data.total_pihak_gas}</td>
-                                 <td class="rupiah">${response.data.total_uang_kotor}</td>
                                  <td class="rupiah">${response.data.total_uang_bersih}</td> </tr>`;
-
-                        footer_kasbon = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
-                              <td colspan="3">Jumlah Total</td>
-                                 <td class="rupiah">${response.data.total_kasbon}</td></tr>`;
 
                         $("#datatable2 tbody").append(row);
                         $("#datatable2 tfoot").append(footer);
-                        $("#datatable_kasbon tbody").append(row_kasbon);
-                        $("#datatable_kasbon tfoot").append(footer_kasbon);
+
+                     
 
                         new AutoNumeric.multiple('.rupiah', {
                             currencySymbol: 'Rp ',

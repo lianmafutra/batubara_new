@@ -298,23 +298,17 @@
                     data: {
                         "setoran_id_array": setoran_id_array,
                         "transportir_id": $('#transportir_id').val(),
-                       
                     },
                     beforeSend: function() {
                         showLoading()
-
                     },
                     success: (response) => {
-
-                        $('#modal_hasil_bayar').modal('show')
+                        $('#modal_hasil').modal('show')
                         $terima_bersih = response.data.total_uang_bersih
                         $('#transportir').text(response.data.transportir.nama)
                         $('.judul_pencairan').text('Rekap Pencairan '+response.data.transportir.nama)
-                       
-
                         $('#hasil_terima_kotor').text(response.data.total_uang_bersih)
                         $('#hasil_terima_bersih').text($terima_bersih)
-
                         hideLoading()
                         $(".to_empty").empty();
                         let row, footer
@@ -329,25 +323,18 @@
                                  <td>${data.tujuan_nama}</td>
                                  <td class="rupiah">${data.harga_cair}</td>
                                  <td class="rupiah">${data.pg}</td>
-                                 <td class="rupiah">${data.total_kotor}</td>
+                                 <td class="rupiah">${data.total_bersih_pencairan}</td>
                                  </tr>`;
                         });
 
-
                         footer = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
-                              <td colspan="7">Jumlah Total</td>
+                              <td colspan="8">Jumlah Total</td>
                                
                                  <td class="rupiah">${response.data.total_pihak_gas}</td>
-                                 <td class="rupiah">${response.data.total_uang_kotor}</td>
                                  <td class="rupiah">${response.data.total_uang_bersih}</td> </tr>`;
-
-                        footer_kasbon = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
-                              <td colspan="3">Jumlah Total</td>
-                                 <td class="rupiah">${response.data.total_kasbon}</td></tr>`;
 
                         $("#datatable2 tbody").append(row);
                         $("#datatable2 tfoot").append(footer);
-
 
                         new AutoNumeric.multiple('.rupiah', {
                             currencySymbol: 'Rp ',

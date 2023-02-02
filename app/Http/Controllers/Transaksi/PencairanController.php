@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Transaksi;
 
 use App\Http\Controllers\Controller;
-use App\Models\HistoriPembayaran;
 use App\Models\HistoriPencairan;
-use App\Models\Kasbon;
 use App\Models\Pencairan;
 use App\Models\Mobil;
 use App\Models\Pembayaran;
@@ -13,7 +11,7 @@ use App\Models\Setoran;
 use App\Models\Supir;
 use App\Models\Transportir;
 use App\Models\Tujuan;
-use App\Services\PembayaranService;
+use App\Services\pencairanService;
 use App\Utils\ApiResponse;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,12 +19,12 @@ use Illuminate\Support\Facades\DB;
 
 class PencairanController extends Controller
 {
-   protected $pembayaranService;
+   protected $pencairanService;
    use ApiResponse;
 
-   public function __construct(PembayaranService $pembayaranService)
+   public function __construct(PencairanService $pencairanService)
    {
-      $this->pembayaranService = $pembayaranService;
+      $this->pencairanService = $pencairanService;
    }
 
    public function index()
@@ -62,22 +60,25 @@ class PencairanController extends Controller
       if ($request->setoran_id_array == null || $request->setoran_id_array == []) {
          return $this->error('Data setoran Belum di pilih !', 400);
       }
-      $setoran = Setoran::where('id', $request->setoran_id_array[0])->first();
+      // $setoran = Setoran::where('id', $request->setoran_id_array[0])->first();
 
-      $total_bersih = $this->pembayaranService->hitungTotalBersih($request->setoran_id_array);
+      $total_bersih = $this->pencairanService->hitungTotalBersih($request->setoran_id_array);
       $transportir = Transportir::find($request->transportir_id);
 
+      if ($request->has('kode_pencairan')) {
+         return json_decode(HistoriPencairan::where('id', request()->kode_pencairan)->first()->data, true);
+      } 
       return $this->success(
          'Data Pembayaran',
          [
             'transportir'        =>   $transportir,
             // 'tgl_pencairan'          =>  Carbon::parse($setoran->tgl_bayar)->format('d-m-Y'),
             'data_setoran'       => Setoran::whereIn('id', $request->setoran_id_array)->get(),
-            "total_uang_jalan"   => $this->pembayaranService->hitungTotalUangJalan($request->setoran_id_array),
-            "total_uang_lainnya" => $this->pembayaranService->hitungTotalUangLainnya($request->setoran_id_array),
-            "total"              => $this->pembayaranService->hitungTotal($request->setoran_id_array),
-            "total_pihak_gas"    => $this->pembayaranService->hitungTotalPijakGas($request->setoran_id_array),
-            "total_uang_kotor"   => $this->pembayaranService->hitungTotalKotor($request->setoran_id_array),
+            "total_uang_jalan"   => $this->pencairanService->hitungTotalUangJalan($request->setoran_id_array),
+            "total_uang_lainnya" => $this->pencairanService->hitungTotalUangLainnya($request->setoran_id_array),
+            "total"              => $this->pencairanService->hitungTotal($request->setoran_id_array),
+            "total_pihak_gas"    => $this->pencairanService->hitungTotalPijakGas($request->setoran_id_array),
+            "total_uang_kotor"   => $this->pencairanService->hitungTotalKotor($request->setoran_id_array),
             "total_uang_bersih"  => $total_bersih,
          ]
       );
@@ -98,18 +99,18 @@ class PencairanController extends Controller
             ]);
 
             $transportir = Transportir::find($request->transportir_id);
-            $total_bersih = $this->pembayaranService->hitungTotalBersih($request->setoran_id_array);
+            $total_bersih = $this->pencairanService->hitungTotalBersih($request->setoran_id_array);
 
             $data = [
                'data'=> [
                   'transportir'        =>   $transportir,
-                  // 'tgl_pencairan'          =>  Carbon::parse($setoran->tgl_bayar)->format('d-m-Y'),
+                  'tgl_pencairan'      =>  Carbon::parse($request->tgl_pencairan)->format('d-m-Y'),
                   'data_setoran'       => Setoran::whereIn('id', $request->setoran_id_array)->get(),
-                  "total_uang_jalan"   => $this->pembayaranService->hitungTotalUangJalan($request->setoran_id_array),
-                  "total_uang_lainnya" => $this->pembayaranService->hitungTotalUangLainnya($request->setoran_id_array),
-                  "total"              => $this->pembayaranService->hitungTotal($request->setoran_id_array),
-                  "total_pihak_gas"    => $this->pembayaranService->hitungTotalPijakGas($request->setoran_id_array),
-                  "total_uang_kotor"   => $this->pembayaranService->hitungTotalKotor($request->setoran_id_array),
+                  "total_uang_jalan"   => $this->pencairanService->hitungTotalUangJalan($request->setoran_id_array),
+                  "total_uang_lainnya" => $this->pencairanService->hitungTotalUangLainnya($request->setoran_id_array),
+                  "total"              => $this->pencairanService->hitungTotal($request->setoran_id_array),
+                  "total_pihak_gas"    => $this->pencairanService->hitungTotalPijakGas($request->setoran_id_array),
+                  "total_uang_kotor"   => $this->pencairanService->hitungTotalKotor($request->setoran_id_array),
                   "total_uang_bersih"  => $total_bersih,
                ]
             ];

@@ -7,7 +7,6 @@ use App\Utils\Rupiah;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use PhpParser\Node\Expr\AssignOp\Mod;
 
 class Setoran extends Model
 {
@@ -15,7 +14,7 @@ class Setoran extends Model
    use HasFactory;
    protected $table = 'setoran';
    protected $guarded = [];
-   protected $appends  = ['harga_bayar','harga_cair','total_uang_lainnya', 'total_kotor', 'total_bersih'];
+   protected $appends  = ['harga_bayar','harga_cair','total_uang_lainnya', 'total_kotor', 'total_bersih', 'total_bersih_pencairan'];
 
    protected $casts = [
       'created_at'           => 'date:d-m-Y H:m:s',
@@ -70,6 +69,11 @@ class Setoran extends Model
    public function getTotalBersihAttribute()
    {
       return $this->hitungBersih($this->getTotalKotorAttribute(),  $this->attributes['uang_jalan']+$this->attributes['uang_lainnya']);
+   }
+
+   public function getTotalBersihPencairanAttribute()
+   {
+      return ($this->attributes['berat'] * $this->getHarga($this->attributes['tgl_muat'], $this->attributes['tujuan_id'])->harga_pencairan)+$this->attributes['pg'];
    }
 
 
