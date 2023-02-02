@@ -13,7 +13,6 @@ use App\Http\Controllers\Transaksi\SetoranController;
 use App\Http\Controllers\Transaksi\UangJalanController;
 use App\Http\Controllers\Transportir\TransportirController;
 use App\Http\Controllers\Tujuan\TujuanController;
-use App\Models\HargaPengaturan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
