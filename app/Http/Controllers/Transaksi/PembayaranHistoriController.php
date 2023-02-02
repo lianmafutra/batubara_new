@@ -7,6 +7,8 @@ use App\Models\HistoriPembayaran;
 use App\Models\Kasbon;
 use App\Models\Setoran;
 use App\Services\PembayaranService;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -68,7 +70,9 @@ class PembayaranHistoriController extends Controller
    {
 
       $data = json_decode(HistoriPembayaran::where('id', $histori_pembayaran_id)->first()->data, true);
-
-      return view('app.pembayaran-histori.print-preview', compact('data'));
+      $pdf = PDF::loadview('app.pembayaran-histori.print-preview', ['data' => $data])
+      ->setPaper('a4', 'landscape');
+      return $pdf->stream("rekap_pencairan_".$histori_pembayaran_id.".pdf", array("Attachment" => false));
+      // return view('app.pembayaran-histori.print-preview', compact('data'));
    }
 }
