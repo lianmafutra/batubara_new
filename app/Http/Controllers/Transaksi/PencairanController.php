@@ -132,8 +132,5 @@ class PencairanController extends Controller
       }
    }
 
-   public function destroy(Pencairan $pencairan)
-   {
-      //
-   }
+  
 }
