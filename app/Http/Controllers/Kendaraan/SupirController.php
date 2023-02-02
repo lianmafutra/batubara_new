@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Kendaraan;
 
 use App\Http\Controllers\Controller;
-use App\Models\supir;
+use App\Models\Supir;
 use App\Utils\ApiResponse;
 use Illuminate\Http\Request;
 
