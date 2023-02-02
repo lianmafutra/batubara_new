@@ -103,17 +103,17 @@
     {{-- <div class="page-break"></div> --}}
     <table style="float: right;  margin-right: 20px; margin-top: 20px; text-align: left">
         <tr>
-            <th>Terima Kotor</th>
+         <th style="text-align: left">Terima Kotor</th>
             <th style="padding: 0 10px 0 10px">:</th>
             <td class="rupiah">@rupiah(  $data['data']['total_uang_bersih'] )</td>
         </tr>
         <tr>
-            <th>Total Bon</th>
+         <th style="text-align: left">Total Bon</th>
             <th style="padding: 0 10px 0 10px">:</th>
             <td class="rupiah">@rupiah(  $data['data']['total_kasbon'] )</td>
         </tr>
         <tr>
-            <th>Terima Bersih</th>
+         <th style="text-align: left">Terima Bersih</th>
             <th style="padding: 0 10px 0 10px">:</th>
             <td class="rupiah">@rupiah(  $data['data']['total_uang_bersih'] - $data['data']['total_kasbon'] )</td>
         </tr>
