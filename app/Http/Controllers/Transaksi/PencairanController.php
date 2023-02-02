@@ -11,7 +11,7 @@ use App\Models\Setoran;
 use App\Models\Supir;
 use App\Models\Transportir;
 use App\Models\Tujuan;
-use App\Services\pencairanService;
+use App\Services\PencairanService;
 use App\Utils\ApiResponse;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
