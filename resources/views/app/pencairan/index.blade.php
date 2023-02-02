@@ -60,6 +60,7 @@
                                                 <th>Tujuan</th>
                                                 <th>Transportir</th>
                                                 <th>Tgl Muat</th>
+                                                <th>Tgl Bongkar</th>
                                                 <th>Harga</th>
                                                 <th>Uang Jalan</th>
                                                 <th>Uang Lainnya</th>
@@ -146,7 +147,7 @@
                 //      rightColumns: 1
                 //  },
                 order: [
-                    [5, 'desc']
+                    [6, 'desc']
                 ],
                 columnDefs: [{
                     targets: 0,
@@ -199,6 +200,10 @@
                     },
                     {
                         data: 'tgl_muat',
+                        searchable: false,
+                    },
+                    {
+                        data: 'tgl_bongkar',
                         searchable: false,
                     },
                     {
