@@ -54,6 +54,6 @@ class PencairanService
       foreach ($setoran as $value) {
          $total_bersih +=  (($value->berat * $value->harga_cair) + $value->pg);
       }
-      return $total_bersih-$this->hitungTotal($setoran_id_array);
+      return $total_bersih;
    }
 }

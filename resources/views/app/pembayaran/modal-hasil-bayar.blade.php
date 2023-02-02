@@ -11,6 +11,15 @@
             min-height: calc(100vh - 20px);
         }
     }
+
+  
+
+
+
+</style>
+
+
+
 </style>
 <div class="modal fade modal-ajax" id="modal_hasil_bayar">
     <div class="modal-dialog modal-xl" style="max-width: 85% !important;">
@@ -94,6 +103,7 @@
                            <th style="color: red" class="kasbon_pendapatan_hasil rupiah"></th>
                        </tr>
                     </table>
+                   
                     <span style="font-weight: bold;  margin: 0 0 20px 20px">Kasbon</span>
                     <table id="datatable_kasbon" class="table table-bordered "
                         style="font-size: 12px; width: 400px;  margin-left: 20px;

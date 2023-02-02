@@ -316,7 +316,7 @@
                             row += `<tr>
                                  <td>${i+1}</td>
                                  <td>${data.tgl_muat}</td>
-                                 <td>${data.tgl_muat}</td>
+                                 <td>${data.tgl_bongkar}</td>
                                  <td>${data.supir_nama}</td>
                                  <td>${data.mobil_plat}</td>
                                  <td  class="berat">${data.berat}</td>
@@ -331,7 +331,7 @@
                               <td colspan="8">Jumlah Total</td>
                                
                                  <td class="rupiah">${response.data.total_pihak_gas}</td>
-                                 <td class="rupiah">${response.data.total_uang_bersih}</td> </tr>`;
+                                 <td class="rupiah">${response.data.total_}</td> </tr>`;
 
                         $("#datatable2 tbody").append(row);
                         $("#datatable2 tfoot").append(footer);
