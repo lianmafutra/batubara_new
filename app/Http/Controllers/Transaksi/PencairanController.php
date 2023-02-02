@@ -97,12 +97,30 @@ class PencairanController extends Controller
                'tgl_pencairan'         => Carbon::parse($request->tgl_pencairan)->translatedFormat('Y-m-d')
             ]);
 
+            $transportir = Transportir::find($request->transportir_id);
+            $total_bersih = $this->pembayaranService->hitungTotalBersih($request->setoran_id_array);
 
+            $data = [
+               'data'=> [
+                  'transportir'        =>   $transportir,
+                  // 'tgl_pencairan'          =>  Carbon::parse($setoran->tgl_bayar)->format('d-m-Y'),
+                  'data_setoran'       => Setoran::whereIn('id', $request->setoran_id_array)->get(),
+                  "total_uang_jalan"   => $this->pembayaranService->hitungTotalUangJalan($request->setoran_id_array),
+                  "total_uang_lainnya" => $this->pembayaranService->hitungTotalUangLainnya($request->setoran_id_array),
+                  "total"              => $this->pembayaranService->hitungTotal($request->setoran_id_array),
+                  "total_pihak_gas"    => $this->pembayaranService->hitungTotalPijakGas($request->setoran_id_array),
+                  "total_uang_kotor"   => $this->pembayaranService->hitungTotalKotor($request->setoran_id_array),
+                  "total_uang_bersih"  => $total_bersih,
+               ]
+            ];
+
+           
          HistoriPencairan::create([
             "kode"           => $kode_pencairan,
             "transportir_id" =>  $request->transportir_id,
             'tgl_pencairan'  => $request->tgl_pencairan,
             "setoran_id"     => json_encode($request->setoran_id_array),
+            "data"           => json_encode($data)
          ]);
 
          DB::commit();

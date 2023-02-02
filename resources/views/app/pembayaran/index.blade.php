@@ -86,8 +86,7 @@
     @include('app.pembayaran.modal-hasil-bayar')
 @endsection
 @push('js')
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/fh-3.3.1/sl-1.5.0/datatables.min.js">
-    </script>
+<script src="{{ asset('plugins/datatable/datatable2.min.js') }}"></script>>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>>
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('plugins/sweetalert2/sweetalert2-min.js') }}"></script>

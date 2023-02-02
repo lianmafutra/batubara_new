@@ -14,7 +14,7 @@
     }
 </style>
 
-<div class="modal fade modal-ajax" id="modal_hasil_bayar">
+<div class="modal fade modal-ajax" id="modal_hasil">
     <div class="modal-dialog modal-xl" style="max-width: 85% !important;">
         <div class="modal-content">
             <div class="overlay modal-loading">
@@ -26,7 +26,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_pembayaran" method="POST">
+            <form id="form_pencairan" method="POST">
                 <div class="modal-body">
                     <h4 class="judul_pencairan" style="text-align: center"></h4>
 

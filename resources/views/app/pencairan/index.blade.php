@@ -86,8 +86,7 @@
     @include('app.pencairan.modal-hasil')
 @endsection
 @push('js')
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/fh-3.3.1/sl-1.5.0/datatables.min.js">
-    </script>
+     <script src="{{ asset('plugins/datatable/datatable2.min.js') }}"></script>>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>>
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('plugins/sweetalert2/sweetalert2-min.js') }}"></script>
@@ -371,7 +370,7 @@
                 });
             });
 
-            $("#form_pembayaran").submit(function(e) {
+            $("#form_pencairan").submit(function(e) {
                 e.preventDefault();
                 $.ajax({
                     type: 'POST',
@@ -389,7 +388,7 @@
                             this.reset()
                             datatable.columns().checkboxes.deselect(true);
                             setoran_id_array = []
-                            $('#modal_hasil_bayar').modal('hide')
+                            $('#modal_hasil').modal('hide')
                             Swal.fire({
                                 icon: 'success',
                                 title: response.message,
