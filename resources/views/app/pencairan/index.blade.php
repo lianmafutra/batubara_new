@@ -283,7 +283,7 @@
                 if ($('#transportir_id').val() == 'all' || $('#transportir_id').val() == '') {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Mobil Belum dipilih',
+                        title: 'Transportir Belum dipilih',
                     })
                     return;
                 }

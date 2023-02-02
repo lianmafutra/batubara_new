@@ -9,6 +9,7 @@ use App\Http\Controllers\Transaksi\KasbonController;
 use App\Http\Controllers\Transaksi\PembayaranController;
 use App\Http\Controllers\Transaksi\PembayaranHistoriController;
 use App\Http\Controllers\Transaksi\PencairanController;
+use App\Http\Controllers\Transaksi\PencairanHistoriController;
 use App\Http\Controllers\Transaksi\SetoranController;
 use App\Http\Controllers\Transaksi\UangJalanController;
 use App\Http\Controllers\Transportir\TransportirController;
@@ -46,13 +47,14 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
    });
 
    
+   
    Route::prefix('pencairan')->name('pencairan.')->controller(PencairanController::class)->group(function () {
       Route::get('/', 'index')->name('index');
       Route::post('pencairan-preview', 'pencairanPreview')->name('preview');
       Route::post('pencairan-histori', 'pencairanHistori')->name('histori');
    });
 
-   Route::prefix('pencairan/histori')->name('pencairan.histori.')->controller(PencairanController::class)->group(function () {
+   Route::prefix('pencairan/histori')->name('pencairan.histori.')->controller(PencairanHistoriController::class)->group(function () {
       Route::get('/', 'index')->name('index');
       Route::delete('hapus/{id}', 'destroy')->name('destroy');
       Route::get('print/{histori_pencairan_id}', 'print')->name('print');

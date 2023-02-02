@@ -26,7 +26,10 @@ class HistoriPencairan extends Model
    public function getLastId(){
       $last_id = $this->latest()->first() ? $this->latest()->first()->id+1 : 1;
       return $last_id;
-      
+   }
+
+   public function transportir(){
+     return $this->hasOne(Transportir::class, 'id', 'transportir_id');
    }
 
 }

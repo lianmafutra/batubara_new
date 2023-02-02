@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Login - {{ ENV('APP_NAME') }}</title>
+        <title>Login - App</title>
         <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png" />
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -25,8 +25,7 @@
         <!-- /.login-logo -->
             <div class="card card-outline card-primary">
                 <div class="card-header text-center">
-                    <a href="{{ route('login') }}" class="h1"><b>{{ ENV('APP_NAME') }}</b></a>
-                 
+                    <a href="{{ route('login') }}" class="h1"><b>Dua Putra Raden</b></a>
                 </div>
                 <div class="card-body">
                     <form method="POST" id="#recaptcha-form" action="{{ route('login') }}">

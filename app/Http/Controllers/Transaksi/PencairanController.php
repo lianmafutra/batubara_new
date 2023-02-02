@@ -36,7 +36,8 @@ class PencairanController extends Controller
       $x['transportir'] = Transportir::all();
       $x['supir']       = Supir::all();
       $x['mobil']       = Mobil::all();
-      $data          = Setoran::with('supir')->where('status_pencairan', 'BELUM');
+      $data             = Setoran::with('supir')->where('status_pencairan', 'BELUM');
+  
 
       if (request()->transportir_id && request()->transportir_id != 'all') {
          $data->where('transportir_id', request()->transportir_id);
@@ -105,7 +106,7 @@ class PencairanController extends Controller
          ]);
 
          DB::commit();
-         return $this->success('Berhasil Melakukan Pembayaran');
+         return $this->success('Berhasil Melakukan Pencairan');
       } catch (\Throwable $th) {
          DB::rollBack();
          return $this->error('Gagal, Terjadi Kesalahan' . $th, 400);
