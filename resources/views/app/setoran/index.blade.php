@@ -59,6 +59,7 @@
                                                     <th>Tujuan</th>
                                                     <th>Transportir</th>
                                                     <th>Tgl Muat</th>
+                                                    <th>Tgl Bongkar</th>
                                                     <th>Harga</th>
                                                     <th>Uang Jalan</th>
                                                     <th>Uang Lainnya</th>
@@ -105,6 +106,7 @@
                 theme: 'bootstrap4',
                 allowClear: true
             })
+
             const tgl_muat = flatpickr("#tgl_muat", {
                 allowInput: true,
                 dateFormat: "d-m-Y",
@@ -112,7 +114,15 @@
                 onChange: function(selectedDates, dateStr, instance) {
                     getHarga()
                 },
-            });
+            })
+
+            const tgl_bongkar = flatpickr("#tgl_bongkar", {
+                allowInput: true,
+                dateFormat: "d-m-Y",
+                locale: "id",
+            })
+
+
             $('.tanggal').mask('00-00-0000');
 
             AutoNumeric.multiple('#berat', {
@@ -151,7 +161,7 @@
                     rightColumns: 1
                 },
                 order: [
-                    [13, 'desc']
+                    [5, 'desc']
                 ],
                 ajax: {
                     url: @json(route('setoran.index')),
@@ -186,6 +196,10 @@
                     },
                     {
                         data: 'tgl_muat',
+                        searchable: false,
+                    },
+                    {
+                        data: 'tgl_bongkar',
                         searchable: false,
                     },
                     {
@@ -326,6 +340,7 @@
                         .uang_lainnya)
                   
                     tgl_muat.setDate(response.data.tgl_muat)
+                    tgl_bongkar.setDate(response.data.tgl_bongkar)
                     $('#tujuan_id').val(response.data.tujuan_id).trigger('change');
                     $('#transportir_id').val(response.data.transportir_id).trigger('change');
                     AutoNumeric.getAutoNumericElement('#harga').set(response.data.harga)

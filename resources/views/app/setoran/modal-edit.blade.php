@@ -43,7 +43,7 @@
                         @endforeach
                     </x-select2>
                     <x-datepicker id='tgl_muat' label='Tanggal Muat' required=true />
-
+                    <x-datepicker id='tgl_bongkar' label='Tanggal Bongkar' required=true />
                     <x-select2 id="transportir_id" label="Transportir" required="true" placeholder="Pilih Transportir">
                         @foreach ($transportir as $item)
                             <option value="{{ $item->id }}">{{ $item->nama }}</option>

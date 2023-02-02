@@ -22,6 +22,7 @@ class Setoran extends Model
       'updated_at'           => 'date:d-m-Y H:m:s',
       'tgl_ambil_uang_jalan' => 'date:d-m-Y',
       'tgl_muat'             => 'date:d-m-Y',
+      'tgl_bongkar'          => 'date:d-m-Y',
    ];
 
    // global setter format uang input kedatabase
@@ -80,6 +81,11 @@ class Setoran extends Model
    public function setTglMuatAttribute($value)
    {
       $this->attributes['tgl_muat'] =  Carbon::parse($value)->translatedFormat('Y-m-d');
+   }
+
+   public function setTglBongkarAttribute($value)
+   {
+      $this->attributes['tgl_bongkar'] =  Carbon::parse($value)->translatedFormat('Y-m-d');
    }
 
    public function setTglBayarAttribute($value)
