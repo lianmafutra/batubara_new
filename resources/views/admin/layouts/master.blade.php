@@ -29,7 +29,7 @@
     }
 </style>
 
-<body data-scrollbar-auto-hide="n" class="hold-transition sidebar-mini layout-fixed text-sm">
+<body  class="hold-transition sidebar-mini  layout-fixed text-sm">
     @php
         if (!$errors->isEmpty()) {
             alert()
