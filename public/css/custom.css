@@ -16,7 +16,7 @@ ul.nav.nav-treeview {
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-link, .sidebar-mini-md .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-link, .sidebar-mini-xs .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-link {
-   padding: 10px;
+   /* padding: 10px; */
    width: 214px;
 }
 
@@ -27,6 +27,7 @@ ul.nav.nav-treeview {
    margin-right: 30px;
    width: 214px !important;
 }
+
 
 [class*=sidebar-dark] .nav-legacy .nav-treeview>.nav-item>.nav-link.active, [class*=sidebar-dark] .nav-legacy .nav-treeview>.nav-item>.nav-link:focus, [class*=sidebar-dark] .nav-legacy .nav-treeview>.nav-item>.nav-link:hover {
    background-color: rgb(154 99 253 / 10%);
@@ -43,7 +44,12 @@ ul.nav.nav-treeview {
 }
 
 .layout-fixed .main-sidebar {
+    
    background: white;
+}
+
+ul.nav.nav-pills.nav-sidebar.flex-column.nav-child-indent.nav-legacy.nav-compact {
+   padding-bottom: 100px !important;
 }
 
 [class*=sidebar-dark-] .sidebar a {
@@ -124,6 +130,7 @@ span.brand-text.font-weight-light {
 }
 
 .layout-fixed .main-sidebar {
+ 
    box-shadow: none !important;
 }
 

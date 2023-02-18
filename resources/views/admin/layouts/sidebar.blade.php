@@ -169,14 +169,14 @@
                         <li class="nav-item">
                             <a href="{{ route('pembayaran.index') }}"
                                 class="nav-link  {{ request()->routeIs('pembayaran.index') ? 'active' : '' }}">
-                                <i class="fas fa-user-cog nav-icon"></i>
+                                <i class="far fa-circle"></i>
                                 <p>Belum Dibayar</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('pembayaran.histori.index') }}"
                                 class="nav-link {{ request()->routeIs('pembayaran.histori*') ? 'active' : '' }}">
-                                <i class="fas fa-users nav-icon"></i>
+                                <i class="far fa-circle"></i>
                                 <p>Histori</p>
                             </a>
                         </li>
@@ -200,14 +200,14 @@
                         <li class="nav-item">
                             <a href="{{ route('pencairan.index') }}"
                                 class="nav-link  {{ request()->routeIs('pencairan.index') ? 'active' : '' }}">
-                                <i class="fas fa-user-cog nav-icon"></i>
+                                <i class="far fa-circle"></i>
                                 <p>Belum Dicairkan</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('pencairan.histori.index') }}"
                                 class="nav-link {{ request()->routeIs('pencairan.histori*') ? 'active' : '' }}">
-                                <i class="fas fa-users nav-icon"></i>
+                                <i class="far fa-circle"></i>
                                 <p>Histori</p>
                             </a>
                         </li>
