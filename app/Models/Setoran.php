@@ -47,16 +47,21 @@ class Setoran extends Model
 
    public function getHargaBayarAttribute()
    {
-      return $this->getHarga($this->attributes['tgl_muat'], $this->attributes['tujuan_id'])->harga_pembayaran;
+      if($this->attributes['tgl_muat'] != null){
+         return $this->getHarga($this->attributes['tgl_muat'], $this->attributes['tujuan_id'])->harga_pembayaran;
+
+      }
    }
 
    public function getHargaCairAttribute()
    {
+      if($this->attributes['tgl_muat'] != null)
       return $this->getHarga($this->attributes['tgl_muat'], $this->attributes['tujuan_id'])->harga_pencairan;
    }
 
    public function getTotalKotorAttribute()
    {
+      if($this->attributes['tgl_muat'] != null)
       return $this->hitungKotor($this->attributes['berat'], $this->getHargaBayarAttribute(), $this->attributes['pg'] );
    }
 
@@ -73,6 +78,7 @@ class Setoran extends Model
 
    public function getTotalBersihPencairanAttribute()
    {
+      if($this->attributes['tgl_muat'] != null)
       return ($this->attributes['berat'] * $this->getHarga($this->attributes['tgl_muat'], $this->attributes['tujuan_id'])->harga_pencairan)+$this->attributes['pg'];
    }
 
