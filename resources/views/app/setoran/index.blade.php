@@ -55,6 +55,7 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Supir</th>
+                                                    <th>Mobil</th>
                                                     <th>Berat</th>
                                                     <th>Tujuan</th>
                                                     <th>Transportir</th>
@@ -180,6 +181,9 @@
                     },
                     {
                         data: 'supir_nama',
+                    },
+                    {
+                        data: 'mobil.plat',
                     },
                     {
                         data: 'berat',

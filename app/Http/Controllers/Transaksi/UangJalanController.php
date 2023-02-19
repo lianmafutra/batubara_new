@@ -41,7 +41,7 @@ class UangJalanController extends Controller
    {
       try {
 
-         $mobil = Mobil::with('supir', 'pemilik')->where('supir_id', $request->supir_id);
+         $mobil = Mobil::with('supir', 'pemilik')->where('id', $request->mobil_id);
 
          if ($mobil->first() == null) {
             return $this->error('Supir belum mempunyai Mobil', 400);
@@ -50,7 +50,7 @@ class UangJalanController extends Controller
          Setoran::updateOrCreate(
             ['id'               => $request->id],
             [
-               'supir_id'             => $request->supir_id,
+               'supir_id'             => $mobil->first()->supir->id,
                'pemilik_mobil_id'     => $mobil->first()->pemilik_mobil_id,
                'supir_nama'           => $mobil->first()->supir->nama,
                'mobil_plat'           => $mobil->first()->plat,

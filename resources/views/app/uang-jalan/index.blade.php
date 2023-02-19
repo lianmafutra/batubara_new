@@ -50,7 +50,7 @@
                                 <div class="tab-content">
                                     <x-datatable id="datatable" :th="[
                                         'No',
-                                        'Nama Supir',
+                                        'Mobil',
                                         'Tanggal',
                                         'Uang Jalan',
                                         'created_at',
@@ -127,7 +127,7 @@
                         width: '1%'
                     },
                     {
-                        data: 'supir.nama',
+                        data: 'mobil.plat',
                     },
                     {
                         data: 'tgl_ambil_uang_jalan',
