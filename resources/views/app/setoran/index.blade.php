@@ -350,6 +350,7 @@
                    
                     AutoNumeric.getAutoNumericElement('#berat').set(response.data.berat)
                     AutoNumeric.getAutoNumericElement('#pg').set(response.data.pg)
+                    getHarga()
                     $('#tujuan_id').change(function() {
                         getHarga()
                     })
