@@ -338,7 +338,7 @@
                 let url = $(this).attr('data-url');
                 let url_update = $(this).attr('data-url-update');
                 $.get(url, function(response) {
-                
+                  //   AutoNumeric.getAutoNumericElement('#harga').set(response.data.harga)
                     $('#url_update').val(url_update)
                     AutoNumeric.getAutoNumericElement('#uang_lainnya').set(response.data
                         .uang_lainnya)
@@ -347,7 +347,7 @@
                     tgl_bongkar.setDate(response.data.tgl_bongkar)
                     $('#tujuan_id').val(response.data.tujuan_id).trigger('change');
                     $('#transportir_id').val(response.data.transportir_id).trigger('change');
-                    AutoNumeric.getAutoNumericElement('#harga').set(response.data.harga)
+                   
                     AutoNumeric.getAutoNumericElement('#berat').set(response.data.berat)
                     AutoNumeric.getAutoNumericElement('#pg').set(response.data.pg)
                     $('#tujuan_id').change(function() {
@@ -365,8 +365,7 @@
                         tujuan_id: $('#tujuan_id').val(),
                     },
                     success: (response) => {
-                        AutoNumeric.getAutoNumericElement('#harga').set(
-                            response.data.harga)
+                        AutoNumeric.getAutoNumericElement('#harga').set(response.data.harga)
                     },
                     error: function(response) {
                         showError(response)
