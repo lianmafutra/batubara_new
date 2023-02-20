@@ -119,6 +119,7 @@
         </tr>
     </table>
 
+    @if ($data['data']['kasbon'] !=[])
     <div class="kasbon" style="margin-top: 50px;">
       <span style="font-weight: bold; ">Kasbon</span>
       <table class="table_data" style="width: 400px; margin-top:10px">
@@ -145,6 +146,10 @@
         
       </table>
     </div>
+   
+        
+    @endif
+   
    
 </body>
 
