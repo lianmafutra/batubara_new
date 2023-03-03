@@ -64,19 +64,20 @@ class deploy extends Command
          // Execute command and capture output
          $output = exec($command, $outputLines,$return);
 
-   
+         $progressBar->start(100);
+         for ($i = 0; $i < 100; $i++) {
+            usleep(10000);
+            $progressBar->advance();
+         }
+       
 
          if ($return != 0) {
+            $progressBar->finish();
             $this->error("\n git ftp push failed \n");
             return 1;
          } else {
-            $progressBar->start(100);
-            for ($i = 0; $i < 100; $i++) {
-               usleep(10000);
-               $progressBar->advance();
-            }
             $progressBar->finish();
-            $this->info("git ftp success");
+            $this->info("\ngit ftp success\n");
             sleep(1.5);
             $this->info("Running : php artisan optimize");
             $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
