@@ -21,7 +21,12 @@ const mix = require('laravel-mix');
      'public/template/admin/plugins/fontawesome-free/css/all.min.css', 
      'public/template/admin/dist/css/pace-theme-default.min.css', 
      'public/css/custom.css', 
-   
+     'public/template/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css',
+     'public/plugins/select2/css/select2.min.css', 
+     'public/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css', 
+     'public/plugins/flatpicker/flatpickr.min.css', 
+     'public/plugins/datatable/fixedColumns.dataTables.min.css', 
+     'public/plugins/datatable/datatable-custom-fixed-coloumns.css', 
    ],'public/css/template.css').version();
 
 
