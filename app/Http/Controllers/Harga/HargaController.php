@@ -60,7 +60,6 @@ class HargaController extends Controller
 
    public function edit(Harga $harga)
    {
-      
       return $this->success('Data Harga', $harga);
    }
 

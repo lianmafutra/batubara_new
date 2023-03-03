@@ -23,7 +23,7 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">
@@ -46,6 +46,7 @@
                                                     <th>No</th>
                                                     <th>Transportir</th>
                                                     <th>Harga Pencairan</th>
+                                                    <th>Harga Pembayaran</th>
                                                     <th>created_at</th>
                                                     <th>updated_at</th>
                                                     <th>#Aksi</th>
@@ -57,28 +58,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">
-                                    Harga Pembayaran
-                                </h3>
-                            </div>
-                            <div class="card-body">
-                                <form id="form_update_pembayaran">
-                                    @csrf
-                                    <div class="tab-content">
-                                        <div class="card-body">
-                                            <x-input-rupiah id='hrg_pembayaran' label='Harga Pembayaran' required=true />
-                                        </div>
-                                    </div>
-                            </div>
-                            <div class="card-footer">
-                                <button type="submit" class="float-right btn_submit btn btn-primary">Update Harga</button>
-                            </div>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -139,6 +118,17 @@
 
                     },
                     {
+                        data: 'harga_pembayaran',
+                        className: 'dt-center',
+                        render: function(data, type, row, meta) {
+                            if (data < 0) return `<span style='color:red'>${rupiah(data)}</span>`
+                            else if (data == 0) return rupiah(data)
+                            else return `<span style='color:green'>+ ${rupiah(data)}</span>`
+
+                        }
+
+                    },
+                    {
                         data: 'created_at',
                     },
                     {
@@ -163,7 +153,7 @@
                 alwaysAllowDecimalCharacter: false
             })
 
-            AutoNumeric.getAutoNumericElement('#hrg_pembayaran').set(@json($harga_pembayaran))
+          
 
             $('#datatable').on('click', '.btn_edit', function(e) {
                 clearInput()
@@ -175,6 +165,8 @@
                     $('#modal_edit #id').val(response.data.id)
                     AutoNumeric.getAutoNumericElement('#harga_pencairan').set(response.data
                         .harga_pencairan)
+                    AutoNumeric.getAutoNumericElement('#harga_pembayaran').set(response.data
+                        .harga_pembayaran)
                 })
             })
 
@@ -216,44 +208,8 @@
                 })
             })
 
-            
-            $("#form_update_pembayaran").submit(function(e) {
-                e.preventDefault()
-                const formData = new FormData(this)
-                $.ajax({
-                    type: 'POST',
-                    url: @json(route('pengaturan_harga.pembayaran.update')),
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    dataType: 'json',
-                    beforeSend: function() {
-                        showLoading()
-                    },
-                    success: (response) => {
-                        if (response) {
-                          
-                           AutoNumeric.getAutoNumericElement('#hrg_pembayaran').set(response.data.hrg_pembayaran)
-                            Swal.fire({
-                                icon: 'success',
-                                title: response.message,
-                                showCancelButton: true,
-                                allowEscapeKey: false,
-                                showCancelButton: false,
-                                allowOutsideClick: false,
-                            }).then((result) => {
-                                swal.hideLoading()
-                                
-                            })
-                            swal.hideLoading()
-                        }
-                    },
-                    error: function(response) {
-                        showError(response)
-                    }
-                })
-            })
+
+       
         })
     </script>
 @endpush

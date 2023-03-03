@@ -170,7 +170,7 @@
                             <a href="{{ route('pembayaran.index') }}"
                                 class="nav-link  {{ request()->routeIs('pembayaran.index') ? 'active' : '' }}">
                                 <i class="far fa-circle"></i>
-                                <p>Belum Dibayar</p>
+                                <p>Data Pembayaran</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -201,7 +201,7 @@
                             <a href="{{ route('pencairan.index') }}"
                                 class="nav-link  {{ request()->routeIs('pencairan.index') ? 'active' : '' }}">
                                 <i class="far fa-circle"></i>
-                                <p>Belum Dicairkan</p>
+                                <p>Data Pencairan</p>
                             </a>
                         </li>
                         <li class="nav-item">

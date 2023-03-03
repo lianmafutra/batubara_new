@@ -30,11 +30,16 @@ class PembayaranController extends Controller
    public function index()
    {
       $x['title']       = 'Kelola Data Pembayaran';
-      $x['tujuan']        = Tujuan::all();
-      $x['transportir']   = Transportir::all();
+      $x['tujuan']      = Tujuan::all();
+      $x['transportir'] = Transportir::all();
       $x['supir']       = Supir::all();
       $x['mobil']       = Mobil::all();
-      $data          = Setoran::with('supir')->where('status_pembayaran', 'BELUM');
+      $data             = Setoran::with('supir');
+
+
+      if (request()->status_bayar && request()->status_bayar != 'all') {
+         $data->where('status_pembayaran', request()->status_bayar);
+      }
 
       if (request()->mobil_id && request()->mobil_id != 'all') {
          $data->where('mobil_id', request()->mobil_id);

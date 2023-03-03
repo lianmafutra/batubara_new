@@ -56,7 +56,9 @@ class SetoranController extends Controller
    public function getMasterHarga()
    {
     
-      return $this->success('Data Master Harga Sesuai tgl muat',  $this->getHarga(request()->tgl_muat, request()->tujuan_id));
+      return $this->success('Data Master Harga Sesuai tgl muat',  $this->getHarga(request()->tgl_muat, request()->tujuan_id, 
+      request()->transportir_id 
+   ));
    }
 
 

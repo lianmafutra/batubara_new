@@ -40,6 +40,16 @@
 
                                         </div>
                                         <div class="col-md-3">
+                                          <x-select2 id="status_cair" label="Filter Status Pencairan" required="false"
+                                          placeholder="Pilih Status Pencairan">
+                                          <option value="all">Semua </option>
+                                          <option value="LUNAS">Sudah Dicairkan </option>
+                                          <option value="BELUM">Belum Dicairkan </option>
+
+                                      </x-select2>
+                                        </div>
+                                     
+                                        <div class="col-md-3">
                                             <div style="margin-top:28px"><button id="btn_bayar" type="button"
                                                     class="btn btn-primary"><i
                                                         class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i>
@@ -129,6 +139,7 @@
                 alwaysAllowDecimalCharacter: false
             });
             let transportir_id = '';
+            let status_cair = '';
             let datatable = $("#datatable").DataTable({
                 serverSide: true,
                 processing: true,
@@ -162,7 +173,8 @@
                 ajax: {
                     url: @json(route('pencairan.index')),
                     data: function(e) {
-                        e.transportir_id = transportir_id
+                        e.transportir_id = transportir_id,
+                        e.status_cair = status_cair
                     }
                 },
 
@@ -421,6 +433,27 @@
                 });
             });
 
+
+            $('#status_cair').on('select2:select', function(e) {
+               status_cair = $(this).val()
+                datatable.column('.id').visible(false)
+                datatable.columns().checkboxes.deselect(true);
+                datatable.ajax.reload()
+                datatable.on('draw', function() {
+                    datatable.column('.id').visible(true)
+                });
+            });
+
+            $('#status_cair').on('select2:clear', function(e) {
+               status_cair = ''
+                datatable.column('.id').visible(false)
+                datatable.columns().checkboxes.deselect(true);
+                datatable.ajax.reload()
+                datatable.on('draw', function() {
+                    datatable.column('.id').visible(true)
+                });
+            });
+
             function getHarga() {
                 $.ajax({
                     type: 'POST',
@@ -428,6 +461,8 @@
                     data: {
                         tgl_muat: $('#tgl_muat').val(),
                         tujuan_id: $('#tujuan_id').val(),
+                        transportir_id: $('#transportir_id').val(),
+
                     },
                     success: (response) => {
                         AutoNumeric.getAutoNumericElement('#harga').set(

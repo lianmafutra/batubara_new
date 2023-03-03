@@ -162,7 +162,7 @@
                     rightColumns: 1
                 },
                 order: [
-                    [5, 'desc']
+                    [6, 'desc']
                 ],
                 ajax: {
                     url: @json(route('setoran.index')),
@@ -353,16 +353,22 @@
                     $('#tujuan_id').change(function() {
                         getHarga()
                     })
+                    $('#transportir_id').change(function() {
+                        getHarga()
+                    })
                 })
             })
 
             function getHarga() {
+               AutoNumeric.getAutoNumericElement('#harga').set(0)
                 $.ajax({
                     type: 'POST',
                     url: @json(route('master.harga')),
                     data: {
                         tgl_muat: $('#tgl_muat').val(),
                         tujuan_id: $('#tujuan_id').val(),
+                        transportir_id: $('#transportir_id').val(),
+
                     },
                     success: (response) => {
                         AutoNumeric.getAutoNumericElement('#harga').set(

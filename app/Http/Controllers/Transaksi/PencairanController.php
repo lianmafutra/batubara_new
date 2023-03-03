@@ -34,11 +34,16 @@ class PencairanController extends Controller
       $x['transportir'] = Transportir::all();
       $x['supir']       = Supir::all();
       $x['mobil']       = Mobil::all();
-      $data             = Setoran::with('supir')->where('status_pencairan', 'BELUM');
+      $data             = Setoran::with('supir');
   
 
       if (request()->transportir_id && request()->transportir_id != 'all') {
          $data->where('transportir_id', request()->transportir_id);
+      }
+
+      
+      if (request()->status_cair && request()->status_cair != 'all') {
+         $data->where('status_pencairan', request()->status_cair);
       }
 
       if (request()->ajax()) {

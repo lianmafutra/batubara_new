@@ -16,8 +16,8 @@ class HargaPengaturanController extends Controller
       // abort_if(Gate::denies('kelola mobil'), 403);
       $x['title']    = 'Kelola Pengaturan Harga';
 
-      $x['transportir']    = Transportir::all();
-      $x['harga_pembayaran']    = HargaPengaturan::find(1)->hrg_pembayaran;
+      // $x['transportir']    = Transportir::all();
+    
       $data = Transportir::all();
 
       if (request()->ajax()) {
@@ -45,7 +45,8 @@ class HargaPengaturanController extends Controller
 
       try {
          Transportir::where('id', $request->id)->update([
-            'harga_pencairan'  => $request->harga_pencairan
+            'harga_pencairan'  => $request->harga_pencairan,
+            'harga_pembayaran'  => $request->harga_pembayaran,
          ]);
          return $this->success('Berhasil Mengubah Data');
       } catch (\Throwable $th) {
@@ -53,29 +54,15 @@ class HargaPengaturanController extends Controller
       }
    }
 
-   public function update_harga_pembayaran(Request $request)
-   {
-
-      // id default 1 karena hanya ada 1 , hanya ada method update
-      try {
-         $data =  HargaPengaturan::find(1);
-         $data->update([
-            'hrg_pembayaran'  => $request->hrg_pembayaran
-         ]);
-         return $this->success('Berhasil Mengubah Data', $data);
-      } catch (\Throwable $th) {
-         return $this->error('Gagal, Terjadi Kesalahan' . $th, 400);
-      }
-   }
+  
 
    public function getHargaPerubahan($id_transportir)
    {
-      $data =  HargaPengaturan::find(1);
-      $data2 =  Transportir::find($id_transportir);
+ 
+      $data =  Transportir::find($id_transportir);
 
       return response()->json([
-         "harga_pembayaran" =>   $data,
-         "harga_pencairan" =>    $data2,
+         "transportir" =>   $data,
       ], 200);
    }
 }

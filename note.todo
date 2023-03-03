@@ -15,3 +15,10 @@ harga pencairan -> PT
 ✔ total kasbon di preview dan laporan @done (1/24/2023, 9:48:28 PM)
 ☐ Pilih harga asli pembayaran dan pencairan yang mana yang di cetak ?
 
+REVISI
+✔ master pengaturan harga pembayaran sesuai Transportir @done (3/3/2023, 1:37:34 PM)
+✔ sesuaikan perubahan harga pembayaran di master harga @done (3/3/2023, 1:58:22 PM)
+✔ get harga tambah filter harga berdasarkan transaportir_id @done (3/3/2023, 2:19:28 PM)
+✔ urutkan data setoran sesuai tgl muat @done (3/3/2023, 2:36:40 PM)
+✔ filter berdasarkan status semua/lunas/belum di pembayaran dan pencairan @done (3/3/2023, 2:37:28 PM)
+

@@ -35,8 +35,21 @@
                                             <option value="{{ $item->id }}">{{ $item->plat }}</option>
                                         @endforeach
                                     </x-select2>
+                                    
 
                                 </div>
+                                <div class="col-md-3">
+                                 <x-select2 id="status_bayar" label="Filter Status Bayar" required="false"
+                                     placeholder="Pilih Status Bayar">
+                                     <option value="all">Semua </option>
+                                     <option value="LUNAS">Sudah Dibayar </option>
+                                     <option value="BELUM">Belum Dibayar </option>
+                                       
+                                   
+                                 </x-select2>
+                                 
+
+                             </div>
                                 <div class="col-md-3">
                                     <div style="margin-top:28px"><button id="btn_bayar"
                                             type="button" class="btn btn-primary"><i
@@ -126,6 +139,7 @@
                 alwaysAllowDecimalCharacter: false
             });
             let mobil_id = '';
+            let status_bayar = '';
             let datatable = $("#datatable").DataTable({
                 serverSide: true,
                 processing: true,
@@ -159,7 +173,8 @@
                 ajax: {
                     url: @json(route('pembayaran.index')),
                     data: function(e) {
-                        e.mobil_id = mobil_id
+                        e.mobil_id = mobil_id,
+                        e.status_bayar = status_bayar
                     }
                 },
 
@@ -458,6 +473,27 @@
                 });
             });
 
+
+            $('#status_bayar').on('select2:select', function(e) {
+               status_bayar = $(this).val()
+                datatable.column('.id').visible(false)
+                datatable.columns().checkboxes.deselect(true);
+                datatable.ajax.reload()
+                datatable.on('draw', function() {
+                    datatable.column('.id').visible(true)
+                });
+            });
+
+            $('#status_bayar').on('select2:clear', function(e) {
+               status_bayar = ''
+                datatable.column('.id').visible(false)
+                datatable.columns().checkboxes.deselect(true);
+                datatable.ajax.reload()
+                datatable.on('draw', function() {
+                    datatable.column('.id').visible(true)
+                });
+            });
+
             function getHarga() {
                 $.ajax({
                     type: 'POST',
@@ -465,6 +501,8 @@
                     data: {
                         tgl_muat: $('#tgl_muat').val(),
                         tujuan_id: $('#tujuan_id').val(),
+                        transportir_id: $('#transportir_id').val(),
+
                     },
                     success: (response) => {
                         AutoNumeric.getAutoNumericElement('#harga').set(
