@@ -55,7 +55,7 @@ class HargaController extends Controller
          );
 
          if ($request->id) {
-            $setoran = Setoran::where('status_pembayaran', 'BELUM')->get();
+            $setoran = Setoran::where('transportir_id', '!=', NULL)->where('tujuan_id', '!=', NULL)->where('status_pembayaran', 'BELUM')->get();
             if($setoran!=[]){
                foreach ($setoran as $key => $value) {
                
@@ -73,9 +73,6 @@ class HargaController extends Controller
                   ]);
                }
             }
-         
-          
-           
          }
          DB::commit();
          if ($request->id)  return $this->success('Berhasil Mengubah Data');
