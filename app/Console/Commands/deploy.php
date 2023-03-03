@@ -67,7 +67,7 @@ class deploy extends Command
    
 
          if ($return != 0) {
-            $this->error("git ftp push failed \n");
+            $this->error("\n git ftp push failed \n");
             return 1;
          } else {
             $progressBar->start(100);
@@ -76,7 +76,7 @@ class deploy extends Command
                $progressBar->advance();
             }
             $progressBar->finish();
-            $this->error("git ftp success");
+            $this->info("git ftp success");
             sleep(1.5);
             $this->info("Running : php artisan optimize");
             $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
