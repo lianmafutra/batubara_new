@@ -60,20 +60,19 @@ class deploy extends Command
 
          // Initialize progress bar
          $output = new ConsoleOutput();
-         ProgressBar::setFormatDefinition(
-            'minimal',
-            '<info>%percent%</info>\033[32m%\033[0m <fg=white;bg=blue>%remaining%</>'
-        );
-         $progressBar = new ProgressBar($output, 100);
+        
+         $progressBar = new ProgressBar($output);
 
          // Execute command and capture output
          $output = exec($command, $outputLines,$return);
-         $this->info(  $output);
+
+       
          $progressBar->start(100);
          for ($i = 0; $i < 100; $i++) {
             usleep(10000);
             $progressBar->advance();
          }
+         $this->info(  $output);
        
 
          if ($return != 0) {
