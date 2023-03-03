@@ -76,6 +76,7 @@ class deploy extends Command
             $this->error("\n git ftp push failed \n");
             return 1;
          } else {
+            $this->info(  $output);
             $progressBar->finish();
             $this->info("\ngit ftp success\n");
             sleep(1.5);
