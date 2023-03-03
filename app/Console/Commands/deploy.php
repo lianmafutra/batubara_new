@@ -95,7 +95,7 @@ class deploy extends Command
             $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
 
          
-            $this->line("<bg=blue;options=blink;>Success deploy to production</>\n");
+            $this->line("<bg=blue;options=blink;>  Success deploy to production  </>\n");
            
 
             // $this->info("Success deploy to production");
