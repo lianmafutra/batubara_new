@@ -36,7 +36,7 @@ class deploy extends Command
          throw new \Exception('Login failed');
       }
 
-      $pass = $this->secret('Masukan Password untuk deploy :');
+      $pass = $this->secret('Masukan Password untuk deploy');
 
       if ($pass == "lian112277") {
          $this->info("Auth sukses");
