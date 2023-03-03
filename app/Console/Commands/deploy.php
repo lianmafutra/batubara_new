@@ -84,7 +84,7 @@ class deploy extends Command
          } else {
           
             $progressBar->finish();
-            $this->line('\n<bg=green>git ftp success</>\n');
+            $this->line("\n<bg=green>git ftp success</>\n");
           
             sleep(1.5);
             $this->info("Running : php artisan optimize");
