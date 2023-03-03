@@ -18,8 +18,8 @@ harga pencairan -> PT
 REVISI
 ✔ master pengaturan harga pembayaran sesuai Transportir
 ✔ sesuaikan perubahan harga pembayaran di master harga 
-✔ get harga tambah filter harga berdasarkan transaportir_id 
-✔ urutkan data setoran sesuai tgl muat 
-✔ filter berdasarkan status semua/lunas/belum di pembayaran dan pencairan 
+✔ fix get harga, tambah filter harga berdasarkan Transportir  
+✔ urutkan data setoran sesuai tgl muat terbaru
+✔ filter berdasarkan status (semua/lunas/belum) di menu pembayaran dan pencairan 
 
 
