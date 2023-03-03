@@ -47,8 +47,7 @@
                                                     <th>Transportir</th>
                                                     <th>Harga Pencairan</th>
                                                     <th>Harga Pembayaran</th>
-                                                    <th>created_at</th>
-                                                    <th>updated_at</th>
+                                                  
                                                     <th>#Aksi</th>
                                                 </tr>
                                             </thead>
@@ -128,12 +127,7 @@
                         }
 
                     },
-                    {
-                        data: 'created_at',
-                    },
-                    {
-                        data: 'updated_at',
-                    },
+                    
                     {
                         data: "action",
                         orderable: false,

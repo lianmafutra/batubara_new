@@ -49,8 +49,7 @@
                                                     <th>Tujuan</th>
                                                     <th>Transportir</th>
                                                     <th>Tanggal</th>
-                                                    <th>created_at</th>
-                                                    <th>updated_at</th>
+                                                  
                                                     <th>#Aksi</th>
                                                 </tr>
                                             </thead>
@@ -170,12 +169,7 @@
                     {
                         data: 'tanggal',
                     },
-                    {
-                        data: 'created_at',
-                    },
-                    {
-                        data: 'updated_at',
-                    },
+                    
                     {
                         data: "action",
                         orderable: false,

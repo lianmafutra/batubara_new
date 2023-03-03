@@ -53,7 +53,7 @@
                                         'Mobil',
                                         'Tanggal',
                                         'Uang Jalan',
-                                        'created_at',
+                                       
                                         '#aksi',
                                     ]"></x-datatable>
                                 </div>
@@ -138,9 +138,7 @@
                             return rupiah(data)
                         }
                     },
-                    {
-                        data: 'created_at',
-                    },
+                    
                     {
                         data: "action",
                         orderable: false,

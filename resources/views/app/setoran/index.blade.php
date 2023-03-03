@@ -69,7 +69,7 @@
                                                     <th>PG (Pijak Gas)</th>
                                                     <th>Total Kotor</th>
                                                     <th>Total Bersih</th>
-                                                    <th>Created_at</th>
+                                                 
                                                     <th>#Aksi</th>
                                                 </tr>
                                             </thead>
@@ -212,7 +212,7 @@
                         searchable: false,
                     },
                     {
-                        data: 'harga_bayar',
+                        data: 'harga',
                         searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)
@@ -262,10 +262,7 @@
                             return rupiah(data)
                         }
                     },
-                    {
-                        searchable: false,
-                        data: 'created_at',
-                    },
+                    
                     {
                         data: "action",
                         orderable: false,

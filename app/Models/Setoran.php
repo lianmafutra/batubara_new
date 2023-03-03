@@ -27,7 +27,7 @@ class Setoran extends Model
    // global setter format uang input kedatabase
    public function setAttribute($key, $value)
    {
-      if (in_array($key, ['uang_jalan', 'uang_lainnya','pg','berat'])) {
+      if (in_array($key, ['uang_jalan', 'uang_lainnya','pg','berat','harga','harga_pembayaran','harga_pencairan'])) {
          $this->attributes[$key] = Rupiah::clean($value);
          return $this;
       }

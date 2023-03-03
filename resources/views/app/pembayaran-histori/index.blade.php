@@ -36,7 +36,7 @@
                                                 <th>Mobil</th>
                                                 <th>Supir</th>
                                                 <th>Pemilik Mobil</th>
-                                                <th>created_at</th>
+                                               
                                                 <th>#Aksi</th>
                                             </tr>
                                         </thead>
@@ -107,9 +107,7 @@
                         data: 'pemilik_nama',
                         orderable: false,
                     },
-                    {
-                        data: 'created_at',
-                    },
+                    
 
                     {
                         data: "action",

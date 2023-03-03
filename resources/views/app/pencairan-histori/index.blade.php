@@ -34,7 +34,7 @@
                                                 <th>Kode</th>
                                                 <th>Transportir ID</th>
                                                 <th>Tgl Pencairan</th>
-                                                <th>created_at</th>
+                                              
                                                 <th>#Aksi</th>
                                             </tr>
                                         </thead>
@@ -96,9 +96,7 @@
                         data: 'tgl_pencairan',
                         orderable: false,
                     },
-                    {
-                        data: 'created_at',
-                    },
+                   
 
                     {
                         data: "action",

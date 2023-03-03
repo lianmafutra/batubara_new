@@ -4,14 +4,17 @@ namespace App\Http\Controllers\Harga;
 
 use App\Http\Controllers\Controller;
 use App\Models\Harga;
+use App\Models\Setoran;
 use App\Models\Transportir;
 use App\Models\Tujuan;
+use App\Services\SetoranService;
 use App\Utils\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HargaController extends Controller
 {
-   use ApiResponse;
+   use ApiResponse, SetoranService;
    public function index()
    {
       // abort_if(Gate::denies('kelola mobil'), 403);
@@ -19,7 +22,7 @@ class HargaController extends Controller
       $x['tujuan']    = Tujuan::all();
       $x['transportir']    = Transportir::all();
       $data = Harga::with('tujuan', 'transportir');
-     
+
 
       if (request()->ajax()) {
          return  datatables()->of($data)
@@ -37,23 +40,48 @@ class HargaController extends Controller
    {
 
       try {
-
+         DB::beginTransaction();
          Harga::updateOrCreate(
             ['id'               => $request->id],
             [
-               'harga'          => $request->harga,
-               'tujuan_id'      => $request->tujuan_id,
-               'transportir_id' => $request->transportir_id,
+               'harga'            => $request->harga,
+               'tujuan_id'        => $request->tujuan_id,
+               'transportir_id'   => $request->transportir_id,
                'harga_pembayaran' => $request->harga_pembayaran,
-               'harga_pencairan' => $request->harga_pencairan,
-               'transportir_id' => $request->transportir_id,
-               'tanggal'        => $request->tanggal,
+               'harga_pencairan'  => $request->harga_pencairan,
+               'transportir_id'   => $request->transportir_id,
+               'tanggal'          => $request->tanggal,
             ]
          );
 
+         if ($request->id) {
+            $setoran = Setoran::where('status_pembayaran', 'BELUM')->get();
+            if($setoran!=[]){
+               foreach ($setoran as $key => $value) {
+               
+                  $tujuan      = Tujuan::find($value->tujuan_id);
+                  $transportir = Transportir::find($value->transportir_id);
+   
+                  $data_setoran = $this->getHarga($value->tgl_muat, $value->tujuan_id, $value->transportir_id);
+   
+                  Setoran::where('id', $value->id)->update([
+                     'tujuan_nama'      => $tujuan->nama,
+                     'transportir_nama' => $transportir->nama,
+                     'harga'            => $data_setoran->harga,
+                     'harga_pembayaran' => $data_setoran->harga_pembayaran,
+                     'harga_pencairan'  => $data_setoran->harga_pencairan,
+                  ]);
+               }
+            }
+         
+          
+           
+         }
+         DB::commit();
          if ($request->id)  return $this->success('Berhasil Mengubah Data');
          else return $this->success('Berhasil Menginput Data');
       } catch (\Throwable $th) {
+         DB::rollBack();
          return $this->error('Gagal, Terjadi Kesalahan' . $th, 400);
       }
    }
@@ -82,6 +110,4 @@ class HargaController extends Controller
          return $this->error('Gagal, Terjadi Kesalahan' . $th, 400);
       }
    }
-
-   
 }

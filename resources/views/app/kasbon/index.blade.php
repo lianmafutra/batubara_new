@@ -57,7 +57,7 @@
                                                     <th>Status</th>
                                                     <th>Tanggal Kasbon</th>
 
-                                                    <th>created_at</th>
+                                                  
                                                     <th>#Aksi</th>
                                                 </tr>
                                             </thead>
@@ -160,11 +160,7 @@
                         name: 'tanggal_kasbon',
                         searchable: false,
                     },
-                    {
-                        data: 'created_at',
-                        name: 'created_at',
-                        searchable: false,
-                    },
+                   
                     {
                         data: "action",
                         orderable: false,
