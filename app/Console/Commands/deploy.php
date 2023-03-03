@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use phpseclib3\Net\SSH2;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 class deploy extends Command
 {
@@ -43,18 +45,39 @@ class deploy extends Command
          $this->output->progressStart(3);
 
          for ($i = 0; $i < 3; $i++) {
-             sleep(1);
-             $this->output->progressAdvance();
+            sleep(1);
+            $this->output->progressAdvance();
          }
-     
+
          $this->output->progressFinish();
 
          $this->info("git ftp push");
-         $data = exec('git ftp push', $output, $return);
+      
+
+         // Command to execute
+         $command = 'git ftp push';
+
+         // Initialize progress bar
+         $output = new ConsoleOutput();
+         $progressBar = new ProgressBar($output, 100);
+
+         // Execute command and capture output
+         $output = exec($command, $outputLines,$return);
+
+   
+
          if ($return != 0) {
-            $this->error("git ftp push failed");
+            $this->error("git ftp push failed \n");
             return 1;
          } else {
+            $progressBar->start(100);
+            for ($i = 0; $i < 100; $i++) {
+               usleep(10000);
+               $progressBar->advance();
+            }
+            $progressBar->finish();
+            $this->error("git ftp success");
+            sleep(1.5);
             $this->info("Running : php artisan optimize");
             $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
             $this->info("Running : php artisan view:clear");
