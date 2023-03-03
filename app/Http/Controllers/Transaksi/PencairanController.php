@@ -52,7 +52,15 @@ class PencairanController extends Controller
             ->addColumn('action', function ($data) {
                return view('app.pencairan.action', compact('data'));
             })
-            ->rawColumns(['action'])
+            ->addColumn('status_cair', function ($data) {
+               if($data->status_pencairan == "LUNAS"){
+                  return '<span class="badge badge-pill badge-success">'.$data->status_pencairan.'</span>';
+               }else{
+                  return '<span class="badge badge-pill badge-secondary">'.$data->status_pencairan.'</span>';
+               }
+             
+            })
+            ->rawColumns(['action','status_cair'])
             ->make(true);
       }
       return view('app.pencairan.index', $x, compact(['data']));

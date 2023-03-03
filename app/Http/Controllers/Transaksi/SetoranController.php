@@ -41,7 +41,23 @@ class SetoranController extends Controller
             ->addColumn('action', function ($data) {
                return view('app.setoran.action', compact('data'));
             })
-            ->rawColumns(['action'])
+            ->addColumn('status_bayar', function ($data) {
+               if($data->status_pembayaran == "LUNAS"){
+                  return '<span class="badge badge-pill badge-success">'.$data->status_pembayaran.'</span>';
+               }else{
+                  return '<span class="badge badge-pill badge-secondary">'.$data->status_pembayaran.'</span>';
+               }
+             
+            })
+            ->addColumn('status_cair', function ($data) {
+            
+               if($data->status_pencairan == "LUNAS"){
+                  return '<span class="badge badge-pill badge-success">'.$data->status_pencairan.'</span>';
+               }else{
+                  return '<span class="badge badge-pill badge-secondary">'.$data->status_pencairan.'</span>';
+               }
+             })
+            ->rawColumns(['action', 'status_bayar','status_cair'])
             ->make(true);
       }
       return view('app.setoran.index', $x, compact(['data']));

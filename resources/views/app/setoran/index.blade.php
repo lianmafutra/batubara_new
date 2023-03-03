@@ -60,6 +60,8 @@
                                                     <th>Tujuan</th>
                                                     <th>Transportir</th>
                                                     <th>Ambil Uang Jalan</th>
+                                                    <th>Status Bayar</th>
+                                                    <th>Status Cair</th>
                                                     <th>Tgl Muat</th>
                                                     <th>Tgl Bongkar</th>
                                                     <th>Harga</th>
@@ -201,6 +203,14 @@
                     },
                     {
                         data: 'tgl_ambil_uang_jalan',
+                        searchable: false,
+                    },
+                    {
+                        data: 'status_bayar',
+                        searchable: false,
+                    },
+                    {
+                        data: 'status_cair',
                         searchable: false,
                     },
                     {

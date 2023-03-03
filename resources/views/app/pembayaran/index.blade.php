@@ -70,6 +70,8 @@
                                         <th>Berat</th>
                                         <th>Tujuan</th>
                                         <th>Transportir</th>
+                                        <th>status bayar</th>
+                                        <th>Ambil Uang Jalan</th>
                                         <th>Tgl Muat</th>
                                         <th>Tgl Bongkar</th>
                                         <th>Harga</th>
@@ -158,7 +160,7 @@
                 //      rightColumns: 1
                 //  },
                 order: [
-                    [6, 'desc']
+                    [7, 'desc']
                 ],
                 columnDefs: [{
                     targets: 0,
@@ -211,6 +213,13 @@
                         data: 'transportir_nama',
                     },
                     {
+                        data: 'status_bayar',
+                    },
+                    {
+                        data: 'tgl_ambil_uang_jalan',
+                        searchable: false,
+                    },
+                    {
                         data: 'tgl_muat',
                         searchable: false,
                     },
@@ -219,7 +228,7 @@
                         searchable: false,
                     },
                     {
-                        data: 'harga_bayar',
+                        data: 'harga_pembayaran',
                         searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)

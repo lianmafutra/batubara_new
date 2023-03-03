@@ -69,6 +69,8 @@
                                                 <th>Berat</th>
                                                 <th>Tujuan</th>
                                                 <th>Transportir</th>
+                                                <th>Status Cair</th>
+                                                <th>Ambil Uang Jalan</th>
                                                 <th>Tgl Muat</th>
                                                 <th>Tgl Bongkar</th>
                                                 <th>Harga</th>
@@ -78,7 +80,7 @@
                                                 <th>PG (Pijak Gas)</th>
                                                 <th>Total Kotor</th>
                                                 <th>Total Bersih</th>
-                                                <th>Created_at</th>
+                                             
                                                 {{-- <th>#Aksi</th> --}}
                                             </tr>
                                         </thead>
@@ -158,7 +160,7 @@
                 //      rightColumns: 1
                 //  },
                 order: [
-                    [6, 'desc']
+                    [7, 'desc']
                 ],
                 columnDefs: [{
                     targets: 0,
@@ -211,6 +213,14 @@
                         data: 'transportir_nama',
                     },
                     {
+                        data: 'status_cair',
+                        searchable: false,
+                    },
+                    {
+                        data: 'tgl_ambil_uang_jalan',
+                        searchable: false,
+                    },
+                    {
                         data: 'tgl_muat',
                         searchable: false,
                     },
@@ -219,7 +229,7 @@
                         searchable: false,
                     },
                     {
-                        data: 'harga_cair',
+                        data: 'harga_pencairan',
                         searchable: false,
                         render: function(data, type, row, meta) {
                             return rupiah(data)
@@ -269,10 +279,7 @@
                             return rupiah(data)
                         }
                     },
-                    {
-                        searchable: false,
-                        data: 'created_at',
-                    },
+                   
 
                 ]
             }).on('select', function(e, dt, type, indexes) {

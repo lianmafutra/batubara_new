@@ -51,7 +51,16 @@ class PembayaranController extends Controller
             ->addColumn('action', function ($data) {
                return view('app.pembayaran.action', compact('data'));
             })
-            ->rawColumns(['action'])
+            ->addColumn('status_bayar', function ($data) {
+               if($data->status_pembayaran == "LUNAS"){
+                  return '<span class="badge badge-pill badge-success">'.$data->status_pembayaran.'</span>';
+               }else{
+                  return '<span class="badge badge-pill badge-secondary">'.$data->status_pembayaran.'</span>';
+               }
+             
+            })
+           
+            ->rawColumns(['action','status_bayar'])
             ->make(true);
       }
       return view('app.pembayaran.index', $x, compact(['data']));
