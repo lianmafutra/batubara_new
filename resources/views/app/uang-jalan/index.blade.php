@@ -215,6 +215,9 @@
                     flatpicker.setDate(response.data.tgl_ambil_uang_jalan)
                     AutoNumeric.getAutoNumericElement('#uang_jalan').set(response.data.uang_jalan)
                     $('#supir_id').val(response.data.supir_id).trigger('change');
+               
+                
+                  $('#mobil_id').val(response.data.mobil_id).trigger('change');
                 })
             });
 
