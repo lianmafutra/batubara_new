@@ -59,6 +59,7 @@
                                                     <th>Berat</th>
                                                     <th>Tujuan</th>
                                                     <th>Transportir</th>
+                                                    <th>Ambil Uang Jalan</th>
                                                     <th>Tgl Muat</th>
                                                     <th>Tgl Bongkar</th>
                                                     <th>Harga</th>
@@ -197,6 +198,10 @@
                     },
                     {
                         data: 'transportir_nama',
+                    },
+                    {
+                        data: 'tgl_ambil_uang_jalan',
+                        searchable: false,
                     },
                     {
                         data: 'tgl_muat',

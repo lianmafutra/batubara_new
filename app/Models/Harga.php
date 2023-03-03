@@ -21,6 +21,16 @@ class Harga extends Model
       'tanggal'     => 'date:d-m-Y'
    ];
 
+      // global setter format uang input kedatabase
+      public function setAttribute($key, $value)
+      {
+         if (in_array($key, ['harga_pembayaran', 'harga_pencairan'])) {
+            $this->attributes[$key] = Rupiah::clean($value);
+            return $this;
+         }
+         return parent::setAttribute($key, $value);
+      }
+
    public function tujuan()
    {
       return $this->hasOne(Tujuan::class, 'id', 'tujuan_id');
