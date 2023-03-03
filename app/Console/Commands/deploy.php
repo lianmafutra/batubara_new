@@ -84,7 +84,7 @@ class deploy extends Command
          } else {
           
             $progressBar->finish();
-            $this->line("\n<bg=green>git ftp success</>\n");
+            $this->line("<bg=green>git ftp success</>\n");
           
             sleep(1.5);
             $this->info("Running : php artisan optimize");
@@ -95,7 +95,7 @@ class deploy extends Command
             $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
 
          
-            $this->line('<bg=blue>Success deploy to production</>');
+            $this->line("<bg=blue;options=blink;>Success deploy to production</>\n");
            
 
             // $this->info("Success deploy to production");
