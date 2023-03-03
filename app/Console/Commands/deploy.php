@@ -37,6 +37,7 @@ class deploy extends Command
       }
 
       $pass = $this->secret('Masukan Password untuk deploy :');
+
       if ($pass == "lian112277") {
          $this->info("Auth sukses");
          sleep(2);
@@ -59,6 +60,10 @@ class deploy extends Command
 
          // Initialize progress bar
          $output = new ConsoleOutput();
+         ProgressBar::setFormatDefinition(
+            'minimal',
+            '<info>%percent%</info>\033[32m%\033[0m <fg=white;bg=blue>%remaining%</>'
+        );
          $progressBar = new ProgressBar($output, 100);
 
          // Execute command and capture output
