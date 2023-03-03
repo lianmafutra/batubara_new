@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title . ' - ' . Setting::getValue('app_name') }}</title>
-    <link rel="icon" href="{{ asset(Setting::getValue('app_favicon')) }}" type="image/png" />
+    {{-- <link rel="icon" href="{{ asset(Setting::getValue('app_favicon')) }}" type="image/png" /> --}}
    {{-- <link rel="stylesheet" href="{{ asset('template/admin/plugins/fontawesome-free/css/all.min.css') }}"> --}}
     {{-- <link rel="stylesheet" href="{{ asset('template/admin/dist/css/adminlte.min.css') }}"> --}}
     {{-- <link rel="stylesheet" href="{{ asset('template/admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">  --}}
