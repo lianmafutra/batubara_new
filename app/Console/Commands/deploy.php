@@ -72,7 +72,7 @@ class deploy extends Command
             usleep(10000);
             $progressBar->advance();
          }
-         $this->info(  $output);
+         $this->info(  $output."\n");
        
 
          if ($return != 0) {
