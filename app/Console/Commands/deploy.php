@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use phpseclib3\Net\SSH2;
+use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -90,7 +91,15 @@ class deploy extends Command
             $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
             $this->info("Running : php artisan view:cache");
             $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
-            $this->info("Success deploy to production");
+
+            $output2 = new ConsoleOutput();
+            $output2->setFormatter(new OutputFormatter(true));
+            $output2->writeln(
+               'The <comment>console</comment> component is'
+               .' <bg=magenta;fg=cyan;option=blink>sweet!</>'
+           );
+
+            // $this->info("Success deploy to production");
          }
       } else {
          $this->error("password salah");
