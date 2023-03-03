@@ -92,12 +92,9 @@ class deploy extends Command
             $this->info("Running : php artisan view:cache");
             $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
 
-            $output2 = new ConsoleOutput();
-            $output2->setFormatter(new OutputFormatter(true));
-            $output2->writeln(
-               'The <comment>console</comment> component is'
-               .' <bg=magenta;fg=cyan;option=blink>sweet!</>'
-           );
+         
+            $this->line('<bg=blue>Success deploy to production</>');
+           
 
             // $this->info("Success deploy to production");
          }
