@@ -11,6 +11,23 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
-    .sourceMaps();
+// mix.js('resources/js/app.js', 'public/js')
+//     .sass('resources/sass/app.scss', 'public/css')
+//     .sourceMaps();
+
+    mix.styles([ 
+      'public/template/admin/dist/css/adminlte.min.css',
+     'public/template/admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css',
+     'public/template/admin/plugins/fontawesome-free/css/all.min.css', 
+     'public/template/admin/dist/css/pace-theme-default.min.css', 
+     'public/css/custom.css', 
+   
+   ],'public/css/template.css').version();
+
+
+   mix
+    .js('resources/js/app.js', 'public/js')
+    .sass('resources/sass/app.scss', 'public/css').copy(
+      'node_modules/@fortawesome/fontawesome-free/webfonts',
+      'public/webfonts'
+  );;
