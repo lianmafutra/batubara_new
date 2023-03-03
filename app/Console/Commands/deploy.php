@@ -43,16 +43,17 @@ class deploy extends Command
          $this->info("Auth sukses");
          sleep(2);
          $this->info("Waiting to push ...");
-         sleep(2);
+         sleep(1.5);
          $this->output->progressStart(3);
 
          for ($i = 0; $i < 3; $i++) {
-            sleep(1);
+            sleep(0.5);
             $this->output->progressAdvance();
          }
 
          $this->output->progressFinish();
 
+     
          $this->info("git ftp push");
       
 
@@ -83,7 +84,8 @@ class deploy extends Command
          } else {
           
             $progressBar->finish();
-            $this->info("\ngit ftp success\n");
+            $this->line('\n<bg=green>git ftp success</>\n');
+          
             sleep(1.5);
             $this->info("Running : php artisan optimize");
             $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
