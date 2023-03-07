@@ -45,6 +45,8 @@ class deploy extends Command
          $this->info("Waiting to push ...");
          sleep(1.5);
          $this->output->progressStart(3);
+        
+
 
          for ($i = 0; $i < 3; $i++) {
             sleep(0.5);
@@ -52,11 +54,10 @@ class deploy extends Command
          }
 
          $this->output->progressFinish();
+         $this->info("git ftp start ...");
 
-     
-         $this->info("git ftp push");
+         $this->info("Runinng : git ftp push");
       
-
          // Command to execute
          $command = 'git ftp push';
 
@@ -71,7 +72,7 @@ class deploy extends Command
        
          $progressBar->start(100);
          for ($i = 0; $i < 100; $i++) {
-            usleep(10000);
+            // usleep(10000);
             $progressBar->advance();
             $this->info(  "\n".$output);
          }
