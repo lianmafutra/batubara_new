@@ -82,14 +82,12 @@ class deploy extends Command
    
    
                $progressBar->start(100);
-   
-               for ($i = 0; $i < 100; $i++) {
-                  foreach ($outputLines as $result) {
-                     $this->line("<fg=yellow;>" . $result . "</>");
-                  }
+               foreach ($outputLines as $result) {
                   usleep(420);
                   $progressBar->advance();
+                  $this->line("<fg=yellow;>" . $result . "</>");
                }
+              
    
                $this->info("\n");
               
