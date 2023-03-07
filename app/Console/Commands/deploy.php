@@ -22,6 +22,8 @@ class deploy extends Command
    public function handle()
    {
       $ssh = new SSH2('103.31.39.193', '22');
+      $path_project = "/www/wwwroot/duaputraraden.my.id/";
+
       if (!$ssh->login('lianmafutra', 'Sistemapp112277')) {
          throw new \Exception('Login failed');
       }
@@ -74,21 +76,21 @@ class deploy extends Command
                   $this->line(PHP_EOL . PHP_EOL . "<bg=green> git ftp success </>\n");
                   sleep(1.5);
                   $this->info("Running : php artisan optimize");
-                  $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
+                  $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan optimize'));
                   $this->info("Running : php artisan view:clear");
-                  $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
+                  $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan view:clear'));
                   $this->info("Running : php artisan view:cache");
-                  $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
+                  $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan view:cache'));
                   $this->line("<bg=blue;options=blink;>  Success deploy to production  </>\n");
                }
             }
             if ($choice == 'Only Optimize') {
                $this->info("Running : php artisan optimize");
-               $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
+               $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan optimize'));
                $this->info("Running : php artisan view:clear");
-               $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
+               $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan view:clear'));
                $this->info("Running : php artisan view:cache");
-               $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
+               $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan view:cache'));
                $this->line("<bg=blue;options=blink;>  Success optimize on production  </>\n");
             }
          } else {
