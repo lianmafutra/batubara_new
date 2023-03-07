@@ -155,7 +155,7 @@
                   <a href="{{ route('kasbon.index') }}"
                       class="nav-link  {{ request()->routeIs('kasbon*') ? 'active' : '' }}">
                       <i class="fas fa-file-invoice-dollar  nav-icon"></i>
-                      <p>Kasbon 2</p>
+                      <p>Kasbon</p>
                   </a>
               </li>
                 <li class="nav-item menu-is-opening {{ request()->is('admin/pembayaran*') ? 'menu-open' : '' }} ">
