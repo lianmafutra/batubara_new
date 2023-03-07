@@ -65,7 +65,7 @@ class deploy extends Command
          $output = new ConsoleOutput();
         
          $progressBar = new ProgressBar($output);
-
+// 
          // Execute command and capture output
          $output = exec($command, $outputLines,$return);
 
