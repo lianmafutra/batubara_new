@@ -85,16 +85,17 @@ class deploy extends Command
                foreach ($outputLines as $result) {
                   usleep(420);
                   $progressBar->advance();
-                  $this->line("<fg=yellow;>" . $result . "</>");
+                  $this->line( PHP_EOL."<fg=yellow;>" . $result . "</>");
                }
               
    
-               $this->info("\n");
+            
               
              
    
                if ($return != 0) {
                   $progressBar->finish();
+                  
                   $this->error("\n git ftp push failed \n");
                   return 1;
                } else {
