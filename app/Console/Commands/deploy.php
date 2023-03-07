@@ -82,7 +82,7 @@ class deploy extends Command
          foreach ($outputLines as $result) {
             $this->info(  $result);
         }
-         $this->info(  "\n".$output);
+         // $this->info(  "\n".$output);
       
          if ($return != 0) {
             $progressBar->finish();
@@ -91,7 +91,7 @@ class deploy extends Command
          } else {
           
             $progressBar->finish();
-            $this->line("\n\n  <bg=green>git ftp success</>\n");
+            $this->line("\n <bg=green>git ftp success</>\n");
           
             sleep(1.5);
             $this->info("Running : php artisan optimize");
