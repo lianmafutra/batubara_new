@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Console\Commands;
+
 use Illuminate\Console\Command;
 use phpseclib3\Net\SSH2;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -8,16 +10,19 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 class deploy extends Command
 {
    protected $signature = 'deploy';
-   public $ssh;
-    public function __construct()
-    {
-       parent::__construct();
-       $this->ssh = new SSH2('103.31.39.193', '22');
+   
+   public function __construct()
+   {
+      parent::__construct();
    }
+
    protected $description = 'Command description';
+
+
    public function handle()
    {
-      if (!$this->ssh->login('lianmafutra', 'Sistemapp112277')) {
+      $ssh = new SSH2('103.31.39.193', '22');
+      if (!$ssh->login('lianmafutra', 'Sistemapp112277')) {
          throw new \Exception('Login failed');
       }
       $pass = $this->secret('Masukan Password');
@@ -69,28 +74,26 @@ class deploy extends Command
                   $this->line(PHP_EOL . PHP_EOL . "<bg=green>git ftp success</>\n");
                   sleep(1.5);
                   $this->info("Running : php artisan optimize");
-                  $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
+                  $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
                   $this->info("Running : php artisan view:clear");
-                  $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
+                  $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
                   $this->info("Running : php artisan view:cache");
-                  $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
+                  $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
                   $this->line("<bg=blue;options=blink;>  Success deploy to production  </>\n");
                }
             }
             if ($choice == 'Only Optimize') {
                $this->info("Running : php artisan optimize");
-               $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
+               $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
                $this->info("Running : php artisan view:clear");
-               $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
+               $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
                $this->info("Running : php artisan view:cache");
-               $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
+               $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
                $this->line("<bg=blue;options=blink;>  Success optimize on production  </>\n");
+            }
+         } else {
+            $this->error("password salah");
          }
-      } else {
-         $this->error("password salah");
       }
    }
-   
-   }
-  
 }
