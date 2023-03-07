@@ -68,25 +68,29 @@ class deploy extends Command
                   $progressBar->finish();
                   $this->line(PHP_EOL . PHP_EOL . "<bg=green>git ftp success</>\n");
                   sleep(1.5);
-                  $this->optimize();
+                  $this->info("Running : php artisan optimize");
+                  $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
+                  $this->info("Running : php artisan view:clear");
+                  $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
+                  $this->info("Running : php artisan view:cache");
+                  $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
                   $this->line("<bg=blue;options=blink;>  Success deploy to production  </>\n");
                }
             }
             if ($choice == 'Only Optimize') {
-               $this->optimize();
+               $this->info("Running : php artisan optimize");
+               $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
+               $this->info("Running : php artisan view:clear");
+               $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
+               $this->info("Running : php artisan view:cache");
+               $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
                $this->line("<bg=blue;options=blink;>  Success optimize on production  </>\n");
          }
       } else {
          $this->error("password salah");
       }
    }
+   
    }
-   function optimize(){
-      $this->info("Running : php artisan optimize");
-      $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
-      $this->info("Running : php artisan view:clear");
-      $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
-      $this->info("Running : php artisan view:cache");
-      $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
-   }
+  
 }
