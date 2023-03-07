@@ -7,6 +7,8 @@ use phpseclib3\Net\SSH2;
 use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\Question;
 
 class deploy extends Command
 {
@@ -36,78 +38,100 @@ class deploy extends Command
       if (!$ssh->login('lianmafutra', 'Sistemapp112277')) {
          throw new \Exception('Login failed');
       }
+      $choice =
 
-      $pass = $this->secret('Masukan Password untuk deploy');
+         $choice = $this->choice(
+            "Select Action ",
+            [
+               1 =>    'Deploy Full',
+               2 =>    'Only Optimize',
+            ],
+         );
 
-      if ($pass == "lian112277") {
-         $this->info("Auth sukses");
-         sleep(2);
-         $this->info("Waiting to push ...");
-         sleep(1.5);
-         $this->output->progressStart(3);
-        
-
-
-         for ($i = 0; $i < 3; $i++) {
-            sleep(0.5);
-            $this->output->progressAdvance();
+      if ($this->confirm('Are you sure you want to choose ' . $choice . '?', true)) {
+         
+         if($choice=='Deploy Full'){
+            $pass = $this->secret('Masukan Password');
+            if ($pass == "lian112277") {
+               $this->info("Auth sukses");
+               sleep(2);
+               $this->info("Waiting to push ...");
+               sleep(1.5);
+               $this->output->progressStart(3);
+   
+               for ($i = 0; $i < 3; $i++) {
+                  sleep(0.5);
+                  $this->output->progressAdvance();
+               }
+   
+               $this->output->progressFinish();
+               $this->info("git ftp start ...");
+   
+               $this->info("Runinng : git ftp push");
+   
+               // Command to execute
+               $command = 'git ftp push';
+   
+               // Initialize progress bar
+               $output = new ConsoleOutput();
+   
+               $progressBar = new ProgressBar($output);
+               // 
+               // Execute command and capture output
+               $output = exec($command, $outputLines, $return);
+   
+   
+               $progressBar->start(100);
+   
+               for ($i = 0; $i < 100; $i++) {
+                  // usleep(10000);
+                  $progressBar->advance();
+                  usleep(420);
+               }
+   
+               $this->info("\n");
+               foreach ($outputLines as $result) {
+                  $this->line("<fg=yellow;>" . $result . "</>");
+               }
+               // $this->info(  "\n".$output);
+   
+               if ($return != 0) {
+                  $progressBar->finish();
+                  $this->error("\n git ftp push failed \n");
+                  return 1;
+               } else {
+   
+                  $progressBar->finish();
+                  $this->line("<bg=green>git ftp success</>\n");
+   
+                  sleep(1.5);
+                  $this->info("Running : php artisan optimize");
+                  $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
+                  $this->info("Running : php artisan view:clear");
+                  $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
+                  $this->info("Running : php artisan view:cache");
+                  $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
+                  $this->line("<bg=blue;options=blink;>  Success deploy to production  </>\n");
+   
+   
+                  // $this->info("Success deploy to production");
+               }
+            } else {
+               $this->error("password salah");
+            }
          }
 
-         $this->output->progressFinish();
-         $this->info("git ftp start ...");
-
-         $this->info("Runinng : git ftp push");
-      
-         // Command to execute
-         $command = 'git ftp push';
-
-         // Initialize progress bar
-         $output = new ConsoleOutput();
-        
-         $progressBar = new ProgressBar($output);
-// 
-         // Execute command and capture output
-         $output = exec($command, $outputLines,$return);
-
-        
-         $progressBar->start(100);
-        
-         for ($i = 0; $i < 100; $i++) {
-            // usleep(10000);
-          
-            $progressBar->advance();
-            usleep(420);
-         }
-      
-         $this->info("\n");
-         foreach ($outputLines as $result) {
-            $this->line( "<fg=yellow;>".$result."</>");
-        }
-         // $this->info(  "\n".$output);
-      
-         if ($return != 0) {
-            $progressBar->finish();
-            $this->error("\n git ftp push failed \n");
-            return 1;
-         } else {
-          
-            $progressBar->finish();
-            $this->line("<bg=green>git ftp success</>\n");
-          
-            sleep(1.5);
+         if($choice=='Only Optimize'){
             $this->info("Running : php artisan optimize");
             $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
             $this->info("Running : php artisan view:clear");
             $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
             $this->info("Running : php artisan view:cache");
             $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
-            $this->line("<bg=blue;options=blink;>  Success deploy to production  </>\n");
-           
-
-            // $this->info("Success deploy to production");
+            $this->line("<bg=blue;options=blink;>  Success optimize on production  </>\n");
          }
-      } else {
-         $this->error("password salah");
-      }
+       
+       
+      } 
    }
 }
