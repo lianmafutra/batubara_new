@@ -65,7 +65,10 @@ class deploy extends Command
                // Execute command and capture output
                $output = exec($command, $outputLines, $return);
                $progressBar->start(100);
-               foreach ($outputLines as $result) {
+               foreach ($outputLines as $index => $result) {
+                  if($index == 0){
+                     $this->line(PHP_EOL);
+                  }
                   usleep(420);
                   $progressBar->advance();
                   $this->line( "<fg=yellow;>" . $result . "</>");
