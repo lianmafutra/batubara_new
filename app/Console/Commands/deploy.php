@@ -68,15 +68,15 @@ class deploy extends Command
                foreach ($outputLines as $result) {
                   usleep(420);
                   $progressBar->advance();
-                  $this->line( PHP_EOL."<fg=yellow;>" . $result . "</>");
+                  $this->line( PHP_EOL.PHP_EOL."<fg=yellow;>" . $result . "</>");
                }
                if ($return != 0) {
                   $progressBar->finish();
-                  $this->error(PHP_EOL."git ftp push failed \n");
+                  $this->error(PHP_EOL.PHP_EOL."git ftp push failed \n");
                   return 1;
                } else {
                   $progressBar->finish();
-                  $this->line(PHP_EOL."<bg=green>git ftp success</>\n");
+                  $this->line(PHP_EOL.PHP_EOL."<bg=green>git ftp success</>\n");
                   sleep(1.5);
                   $this->info("Running : php artisan optimize");
                   $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
