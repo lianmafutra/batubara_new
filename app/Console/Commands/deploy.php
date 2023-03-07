@@ -69,7 +69,7 @@ class deploy extends Command
          // Execute command and capture output
          $output = exec($command, $outputLines,$return);
 
-       
+         $this->info(  "\n".$outputLines);
          $progressBar->start(100);
          $this->info(  "\n".$output);
          for ($i = 0; $i < 100; $i++) {
@@ -78,8 +78,7 @@ class deploy extends Command
           
          }
        
-       
-
+      
          if ($return != 0) {
             $progressBar->finish();
             $this->error("\n git ftp push failed \n");
