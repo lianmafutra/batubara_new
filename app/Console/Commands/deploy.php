@@ -59,7 +59,7 @@ class deploy extends Command
          $this->info("Runinng : git ftp push");
       
          // Command to execute
-         $command = ' git ftp push > /dev/null 2>&1 &';
+         $command = ' git ftp push > 2>&1 &';
 
          // Initialize progress bar
          $output = new ConsoleOutput();
