@@ -71,10 +71,11 @@ class deploy extends Command
 
        
          $progressBar->start(100);
+         $this->info(  "\n".$output);
          for ($i = 0; $i < 100; $i++) {
             // usleep(10000);
             $progressBar->advance();
-            $this->info(  "\n".$output);
+          
          }
        
        
