@@ -73,8 +73,9 @@ class deploy extends Command
          for ($i = 0; $i < 100; $i++) {
             usleep(10000);
             $progressBar->advance();
+            $this->info(  "\n".$output);
          }
-         $this->info(  "\n".$output);
+       
        
 
          if ($return != 0) {
@@ -93,8 +94,6 @@ class deploy extends Command
             $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
             $this->info("Running : php artisan view:cache");
             $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
-
-         
             $this->line("<bg=blue;options=blink;>  Success deploy to production  </>\n");
            
 

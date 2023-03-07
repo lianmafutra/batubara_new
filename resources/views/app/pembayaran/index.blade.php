@@ -282,6 +282,7 @@
 
                 ]
             }).on('select', function(e, dt, type, indexes) {
+              
 
                 if (dt[0].length > 1) {
                     datatable.rows().every(function(rowIdx, tableLoop, rowLoop) {
