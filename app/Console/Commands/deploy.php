@@ -80,7 +80,7 @@ class deploy extends Command
          }
 
          foreach ($outputLines as $result) {
-            $this->info(  $result);
+            $this->line( "<fg=red;bg=yellow>".$result."</>");
         }
          // $this->info(  "\n".$output);
       
