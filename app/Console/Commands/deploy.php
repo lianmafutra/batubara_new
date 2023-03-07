@@ -2,37 +2,28 @@
 namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use phpseclib3\Net\SSH2;
-use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Question\ChoiceQuestion;
-use Symfony\Component\Console\Question\Question;
+
 class deploy extends Command
 {
-   /**
-    * The name and signature of the console command.
-    *
-    * @var string
-    */
    protected $signature = 'deploy';
-   /**
-    * The console command description.
-    *
-    * @var string
-    */
+   public $ssh;
+    public function __construct()
+    {
+       parent::__construct();
+       $this->ssh = new SSH2('103.31.39.193', '22');
+   }
    protected $description = 'Command description';
-   /**
-    * Execute the console command.
-    *
-    * @return int
-    */
    public function handle()
    {
-      $ssh = new SSH2('103.31.39.193', '22');
-      if (!$ssh->login('lianmafutra', 'Sistemapp112277')) {
+      if (!$this->ssh->login('lianmafutra', 'Sistemapp112277')) {
          throw new \Exception('Login failed');
       }
-      $choice =
+      $pass = $this->secret('Masukan Password');
+      if ($pass == "lian112277") {
+         $this->line("<bg=green>  Auth Success  </>\n");
+         sleep(1);
          $choice = $this->choice(
             "Select Action ",
             [
@@ -40,12 +31,8 @@ class deploy extends Command
                2 =>    'Only Optimize',
             ],
          );
-      if ($this->confirm('Are you sure you want to choose ' . $choice . '?', true)) {
-         if($choice=='Deploy Full'){
-            $pass = $this->secret('Masukan Password');
-            if ($pass == "lian112277") {
-               $this->info("Auth sukses");
-               sleep(2);
+         if ($this->confirm('Are you sure you want to choose ' . $choice . '?', true)) {
+            if ($choice == 'Deploy Full') {
                $this->info("Waiting to push ...");
                sleep(1.5);
                $this->output->progressStart(3);
@@ -55,7 +42,7 @@ class deploy extends Command
                }
                $this->output->progressFinish();
                $this->info("git ftp start ...");
-               $this->info("Runinng : git ftp push".PHP_EOL);
+               $this->info("Runinng : git ftp push" . PHP_EOL);
                // Command to execute
                $command = 'git ftp push';
                // Initialize progress bar
@@ -66,43 +53,40 @@ class deploy extends Command
                $output = exec($command, $outputLines, $return);
                $progressBar->start(100);
                foreach ($outputLines as $index => $result) {
-                  if($index == 0){
+                  if ($index == 0) {
                      $this->line(PHP_EOL);
                   }
                   usleep(420);
                   $progressBar->advance();
-                  $this->line( "<fg=yellow;>" . $result . "</>");
+                  $this->line("<fg=yellow;>" . $result . "</>");
                }
                if ($return != 0) {
                   $progressBar->finish();
-                  $this->error(PHP_EOL.PHP_EOL."git ftp push failed \n");
+                  $this->error(PHP_EOL . PHP_EOL . "git ftp push failed \n");
                   return 1;
                } else {
                   $progressBar->finish();
-                  $this->line(PHP_EOL.PHP_EOL."<bg=green>git ftp success</>\n");
+                  $this->line(PHP_EOL . PHP_EOL . "<bg=green>git ftp success</>\n");
                   sleep(1.5);
-                  $this->info("Running : php artisan optimize");
-                  $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
-                  $this->info("Running : php artisan view:clear");
-                  $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
-                  $this->info("Running : php artisan view:cache");
-                  $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
+                  $this->optimize();
                   $this->line("<bg=blue;options=blink;>  Success deploy to production  </>\n");
-                  // $this->info("Success deploy to production");
                }
-            } else {
-               $this->error("password salah");
             }
+            if ($choice == 'Only Optimize') {
+               $this->optimize();
+               $this->line("<bg=blue;options=blink;>  Success optimize on production  </>\n");
          }
-         if($choice=='Only Optimize'){
-            $this->info("Running : php artisan optimize");
-            $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
-            $this->info("Running : php artisan view:clear");
-            $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
-            $this->info("Running : php artisan view:cache");
-            $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
-            $this->line("<bg=blue;options=blink;>  Success optimize on production  </>\n");
-         }
-      } 
+      } else {
+         $this->error("password salah");
+      }
+   }
+   }
+   function optimize(){
+      $this->info("Running : php artisan optimize");
+      $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
+      $this->info("Running : php artisan view:clear");
+      $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:clear'));
+      $this->info("Running : php artisan view:cache");
+      $this->info($this->ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan view:cache'));
    }
 }
