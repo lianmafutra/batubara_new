@@ -74,10 +74,14 @@ class deploy extends Command
         
          for ($i = 0; $i < 100; $i++) {
             // usleep(10000);
-            $this->info(  $outputLines[$i]);
+          
             $progressBar->advance();
           
          }
+
+         foreach ($outputLines as $result) {
+            $this->info(  $result);
+        }
          $this->info(  "\n".$output);
       
          if ($return != 0) {
