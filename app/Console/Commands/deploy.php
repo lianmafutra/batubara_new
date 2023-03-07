@@ -55,7 +55,7 @@ class deploy extends Command
                }
                $this->output->progressFinish();
                $this->info("git ftp start ...");
-               $this->info("Runinng : git ftp push");
+               $this->info("Runinng : git ftp push".PHP_EOL);
                // Command to execute
                $command = 'git ftp push';
                // Initialize progress bar
@@ -68,7 +68,7 @@ class deploy extends Command
                foreach ($outputLines as $result) {
                   usleep(420);
                   $progressBar->advance();
-                  $this->line( PHP_EOL.PHP_EOL."<fg=yellow;>" . $result . "</>");
+                  $this->line( "<fg=yellow;>" . $result . "</>");
                }
                if ($return != 0) {
                   $progressBar->finish();
