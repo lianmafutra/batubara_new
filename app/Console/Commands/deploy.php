@@ -78,7 +78,8 @@ class deploy extends Command
             $progressBar->advance();
             usleep(420);
          }
-
+      
+         $this->info("\n");
          foreach ($outputLines as $result) {
             $this->line( "<fg=yellow;>".$result."</>");
         }
