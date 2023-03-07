@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 class deploy extends Command
 {
    protected $signature = 'deploy';
-   
+
    public function __construct()
    {
       parent::__construct();
@@ -71,7 +71,7 @@ class deploy extends Command
                   return 1;
                } else {
                   $progressBar->finish();
-                  $this->line(PHP_EOL . PHP_EOL . "<bg=green>git ftp success</>\n");
+                  $this->line(PHP_EOL . PHP_EOL . "<bg=green> git ftp success </>\n");
                   sleep(1.5);
                   $this->info("Running : php artisan optimize");
                   $this->info($ssh->exec('cd /www/wwwroot/duaputraraden.my.id/ && sudo php artisan optimize'));
