@@ -85,6 +85,10 @@ class deploy extends Command
                   $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan view:clear'));
                   $this->info("Running : php artisan view:cache");
                   $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan view:cache'));
+
+                  // $this->info("Running : php artisan view:cache");
+                  // $this->info($ssh->exec('cd '.$path_project.' && sudo composer install --no-interaction --prefer-dist --optimize-autoloader'));
+           
                   sleep(3);
                   $this->info("Running : php artisan up");
                   $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan up'));
@@ -99,7 +103,7 @@ class deploy extends Command
                $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan view:clear'));
                $this->info("Running : php artisan view:cache");
                $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan view:cache'));
-               $this->line("<bg=blue;options=blink;> Site is Live, Success optimize on production  </>\n");
+               $this->line("<bg=blue;options=blink;> Success optimize on production  </>\n");
             }
          } else {
             $this->error("password salah");
