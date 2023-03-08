@@ -75,12 +75,20 @@ class deploy extends Command
                   $progressBar->finish();
                   $this->line(PHP_EOL . PHP_EOL . "<bg=green> git ftp success </>\n");
                   sleep(1.5);
+                  
+                  $this->info("Running : php artisan down");
+                  $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan down'));
+                  
                   $this->info("Running : php artisan optimize");
                   $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan optimize'));
                   $this->info("Running : php artisan view:clear");
                   $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan view:clear'));
                   $this->info("Running : php artisan view:cache");
                   $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan view:cache'));
+                  sleep(3);
+                  $this->info("Running : php artisan up");
+                  $this->info($ssh->exec('cd '.$path_project.' && sudo php artisan down'));
+
                   $this->line("<bg=blue;options=blink;>  Success deploy to production  </>\n");
                }
             }
