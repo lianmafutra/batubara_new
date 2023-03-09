@@ -361,13 +361,16 @@
                                  <td class="rupiah">${data.pg}</td>
                                  <td class="rupiah">${data.total_bersih_pencairan}</td>
                                  </tr>`;
+
+                                
                         });
 
                         footer = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
                               <td colspan="8">Jumlah Total</td>
                                
                                  <td class="rupiah">${response.data.total_pihak_gas}</td>
-                                 <td class="rupiah">${response.data.total_}</td> </tr>`;
+                                 <td class="rupiah">${response.data.total_uang_bersih}</td> </tr>`;
+                              
 
                         $("#datatable2 tbody").append(row);
                         $("#datatable2 tfoot").append(footer);
