@@ -281,6 +281,7 @@
 
                 ]
             }).on('select', function(e, dt, type, indexes) {
+              
 
                 // validasi, jika status_pembayaran = belum, maka tidak bisa dipilih/tidak akan push array id
 
