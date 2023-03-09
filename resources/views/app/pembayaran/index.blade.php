@@ -281,7 +281,7 @@
 
                 ]
             }).on('select', function(e, dt, type, indexes) {
-              
+
 
                 // validasi, jika status_pembayaran = belum, maka tidak bisa dipilih/tidak akan push array id
 
@@ -306,6 +306,16 @@
                     setoran_id_array.splice($.inArray(datatable.rows(indexes).data()[0].id,
                         setoran_id_array), 1);
                 }
+            })
+
+            $('.dt-checkboxes-select-all').on('change', function() {
+              
+                datatable.rows().every(function(rowIdx, tableLoop, rowLoop) {
+                  if (datatable.rows(rowIdx).data()[0].status_pembayaran == 'LUNAS') {
+                     datatable.row(rowIdx).deselect();
+                  }
+                   
+                });
             })
 
             $("#btn_bayar").click(function() {
@@ -357,48 +367,72 @@
                         $(".to_empty").empty();
                         let row, footer, row_kasbon, footer_kasbon;
                         response.data.data_setoran.forEach(function(data, i) {
-                            row += `<tr>
-                                 <td>${i+1}</td>
-                            
-                                 <td  class="berat">${data.berat}</td>
-                                 <td>${data.tujuan_nama}</td>
-                              
-                                 <td class="rupiah">${data.harga_bayar}</td>
-                                 <td class="rupiah">${data.uang_jalan}</td>
-                                 <td class="rupiah">${data.uang_lainnya}</td>
-                                 <td class="rupiah">${data.total_uang_lainnya}</td>
-                                 <td class="rupiah">${data.pg}</td>
-                                 <td class="rupiah">${data.total_kotor}</td>
-                                 <td class="rupiah">${data.total_bersih}</td>
-                                 </tr>`;
+                            row += ` < tr >
+                        <
+                        td > $ {
+                            i + 1
+                        } < /td>
+
+                        <
+                        td class = "berat" > $ {
+                            data.berat
+                        } < /td> <
+                        td > $ {
+                            data.tujuan_nama
+                        } < /td>
+
+                        <
+                        td class = "rupiah" > $ {
+                            data.harga_bayar
+                        } < /td> <
+                        td class = "rupiah" > $ {
+                            data.uang_jalan
+                        } < /td> <
+                        td class = "rupiah" > $ {
+                            data.uang_lainnya
+                        } < /td> <
+                        td class = "rupiah" > $ {
+                            data.total_uang_lainnya
+                        } < /td> <
+                        td class = "rupiah" > $ {
+                            data.pg
+                        } < /td> <
+                        td class = "rupiah" > $ {
+                            data.total_kotor
+                        } < /td> <
+                        td class = "rupiah" > $ {
+                            data.total_bersih
+                        } < /td> <
+                        /tr>`;
                         });
 
 
                         response.data.kasbon.forEach(function(data, i) {
                             row_kasbon += `<tr>
-                                 <td>${i+1}</td>
-                                 <td>${data.tanggal_kasbon}</td>
-                                 <td>${data.nama}</td>
-                                 <td class="rupiah">${data.jumlah_uang}</td>
-                                 </tr>`;
+                                     <td>${i+1}</td>
+                                     <td>${data.tanggal_kasbon}</td>
+                                     <td>${data.nama}</td>
+                                     <td class="rupiah">${data.jumlah_uang}</td>
+                                     </tr>`;
                         });
 
                         footer = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
-                              <td colspan="4">Jumlah Total</td>
-                                 <td class="rupiah">${response.data.total_uang_jalan}</td>
-                                 <td class="rupiah">${response.data.total_uang_lainnya}</td>
-                                 <td class="rupiah">${response.data.total}</td>
-                                 <td class="rupiah">${response.data.total_pihak_gas}</td>
-                                 <td class="rupiah">${response.data.total_uang_kotor}</td>
-                                 <td class="rupiah">${response.data.total_uang_bersih}</td> </tr>`;
+                                  <td colspan="4">Jumlah Total</td>
+                                     <td class="rupiah">${response.data.total_uang_jalan}</td>
+                                     <td class="rupiah">${response.data.total_uang_lainnya}</td>
+                                     <td class="rupiah">${response.data.total}</td>
+                                     <td class="rupiah">${response.data.total_pihak_gas}</td>
+                                     <td class="rupiah">${response.data.total_uang_kotor}</td>
+                                     <td class="rupiah">${response.data.total_uang_bersih}</td> </tr>`;
 
                         footer_kasbon = `<tr style="text-align: center; font-weight: bold;font-size: 13px;">
-                              <td colspan="3">Jumlah Total</td>
-                                 <td class="rupiah">${response.data.total_kasbon}</td></tr>`;
+                                  <td colspan="3">Jumlah Total</td>
+                                     <td class="rupiah">${response.data.total_kasbon}</td></tr>`;
 
                         $("#datatable2 tbody").append(row);
                         $("#datatable2 tfoot").append(footer);
-                        $("#datatable_kasbon tbody").append(row_kasbon);
+                        $("#datatable_kasbon tbody")
+                            .append(row_kasbon);
                         $("#datatable_kasbon tfoot").append(footer_kasbon);
 
                         new AutoNumeric.multiple('.rupiah', {

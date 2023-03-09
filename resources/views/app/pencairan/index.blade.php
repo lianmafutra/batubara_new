@@ -307,6 +307,17 @@
                 }
             })
 
+            $('.dt-checkboxes-select-all').on('change', function() {
+              
+              datatable.rows().every(function(rowIdx, tableLoop, rowLoop) {
+                if (datatable.rows(rowIdx).data()[0].status_pencairan == 'LUNAS') {
+                   datatable.row(rowIdx).deselect();
+                }
+                 
+              });
+          })
+
+
             $("#btn_bayar").click(function() {
                 if ($('#transportir_id').val() == 'all' || $('#transportir_id').val() == '') {
                     Swal.fire({
