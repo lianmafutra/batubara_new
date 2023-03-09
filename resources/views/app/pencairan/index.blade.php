@@ -40,15 +40,15 @@
 
                                         </div>
                                         <div class="col-md-3">
-                                          <x-select2 id="status_cair" label="Filter Status Pencairan" required="false"
-                                          placeholder="Pilih Status Pencairan">
-                                          <option value="all">Semua </option>
-                                          <option value="LUNAS">Sudah Dicairkan </option>
-                                          <option value="BELUM">Belum Dicairkan </option>
+                                            <x-select2 id="status_cair" label="Filter Status Pencairan" required="false"
+                                                placeholder="Pilih Status Pencairan">
+                                                <option value="all">Semua </option>
+                                                <option value="LUNAS">Sudah Dicairkan </option>
+                                                <option value="BELUM">Belum Dicairkan </option>
 
-                                      </x-select2>
+                                            </x-select2>
                                         </div>
-                                     
+
                                         <div class="col-md-3">
                                             <div style="margin-top:28px"><button id="btn_bayar" type="button"
                                                     class="btn btn-primary"><i
@@ -80,7 +80,7 @@
                                                 <th>PG (Pijak Gas)</th>
                                                 <th>Total Kotor</th>
                                                 <th>Total Bersih</th>
-                                             
+
                                                 {{-- <th>#Aksi</th> --}}
                                             </tr>
                                         </thead>
@@ -99,7 +99,7 @@
     @include('app.pencairan.modal-hasil')
 @endsection
 @push('js')
-     <script src="{{ asset('plugins/datatable/datatable2.min.js') }}"></script>>
+    <script src="{{ asset('plugins/datatable/datatable2.min.js') }}"></script>>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>>
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('plugins/sweetalert2/sweetalert2-min.js') }}"></script>
@@ -176,7 +176,7 @@
                     url: @json(route('pencairan.index')),
                     data: function(e) {
                         e.transportir_id = transportir_id,
-                        e.status_cair = status_cair
+                            e.status_cair = status_cair
                     }
                 },
 
@@ -279,20 +279,25 @@
                             return rupiah(data)
                         }
                     },
-                   
+
 
                 ]
             }).on('select', function(e, dt, type, indexes) {
-
-                if (dt[0].length > 1) {
-                    datatable.rows().every(function(rowIdx, tableLoop, rowLoop) {
-                        let data = datatable.row(rowIdx).data().id
-                        setoran_id_array.push(data)
-                    });
-                    setoran_id_array = [...new Set(setoran_id_array)];
+                // validasi, jika status_pencairan = belum, maka tidak bisa dipilih/tidak akan push array id
+                if (datatable.rows(indexes).data()[0].status_pencairan == 'BELUM') {
+                    if (dt[0].length > 1) {
+                        datatable.rows().every(function(rowIdx, tableLoop, rowLoop) {
+                            let data = datatable.row(rowIdx).data().id
+                            setoran_id_array.push(data)
+                        });
+                        setoran_id_array = [...new Set(setoran_id_array)];
+                    } else {
+                        setoran_id_array.push(datatable.rows(indexes).data()[0].id);
+                    }
                 } else {
-                    setoran_id_array.push(datatable.rows(indexes).data()[0].id);
+                    datatable.row(indexes).deselect();
                 }
+
             }).on('deselect', function(e, dt, type, indexes) {
                 if (dt[0].length > 1) {
                     setoran_id_array = []
@@ -325,7 +330,8 @@
                         $('#modal_hasil').modal('show')
                         $terima_bersih = response.data.total_uang_bersih
                         $('#transportir').text(response.data.transportir.nama)
-                        $('.judul_pencairan').text('Rekap Pencairan '+response.data.transportir.nama)
+                        $('.judul_pencairan').text('Rekap Pencairan ' + response.data
+                            .transportir.nama)
                         $('#hasil_terima_kotor').text(response.data.total_uang_bersih)
                         $('#hasil_terima_bersih').text($terima_bersih)
                         hideLoading()
@@ -442,7 +448,7 @@
 
 
             $('#status_cair').on('select2:select', function(e) {
-               status_cair = $(this).val()
+                status_cair = $(this).val()
                 datatable.column('.id').visible(false)
                 datatable.columns().checkboxes.deselect(true);
                 datatable.ajax.reload()
@@ -452,7 +458,7 @@
             });
 
             $('#status_cair').on('select2:clear', function(e) {
-               status_cair = ''
+                status_cair = ''
                 datatable.column('.id').visible(false)
                 datatable.columns().checkboxes.deselect(true);
                 datatable.ajax.reload()
