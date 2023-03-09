@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="{{ asset('plugins/datatable/dataTables.checkboxes.css') }}">
 @endpush
 @section('content')
-   
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
@@ -24,73 +23,73 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                     <div class="card">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <x-select2 id="mobil_id" label="Filter Mobil" required="false"
-                                        placeholder="Pilih Mobil">
-                                        <option value="all">Semua Mobil</option>
-                                        @foreach ($mobil as $item)
-                                            <option value="{{ $item->id }}">{{ $item->plat }}</option>
-                                        @endforeach
-                                    </x-select2>
-                                    
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <x-select2 id="mobil_id" label="Filter Mobil" required="false"
+                                            placeholder="Pilih Mobil">
+                                            <option value="all">Semua Mobil</option>
+                                            @foreach ($mobil as $item)
+                                                <option value="{{ $item->id }}">{{ $item->plat }}</option>
+                                            @endforeach
+                                        </x-select2>
 
-                                </div>
-                                <div class="col-md-3">
-                                 <x-select2 id="status_bayar" label="Filter Status Bayar" required="false"
-                                     placeholder="Pilih Status Bayar">
-                                     <option value="all">Semua </option>
-                                     <option value="LUNAS">Sudah Dibayar </option>
-                                     <option value="BELUM">Belum Dibayar </option>
-                                       
-                                   
-                                 </x-select2>
-                                 
 
-                             </div>
-                                <div class="col-md-3">
-                                    <div style="margin-top:28px"><button id="btn_bayar"
-                                            type="button" class="btn btn-primary"><i
-                                                class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i>
-                                            Bayar</button>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <x-select2 id="status_bayar" label="Filter Status Bayar" required="false"
+                                            placeholder="Pilih Status Bayar">
+                                            <option value="all">Semua </option>
+                                            <option value="LUNAS">Sudah Dibayar </option>
+                                            <option value="BELUM">Belum Dibayar </option>
+
+
+                                        </x-select2>
+
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div style="margin-top:28px"><button id="btn_bayar" type="button"
+                                                class="btn btn-primary"><i
+                                                    class="mr-1 fas fa-file-invoice-dollar  nav-icon"></i>
+                                                Bayar</button>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
+                            <div class="card-body table-responsive">
+                                <table id="datatable" class="table table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>No</th>
+                                            <th>Supir</th>
+                                            <th>Berat</th>
+                                            <th>Tujuan</th>
+                                            <th>Transportir</th>
+                                            <th>status bayar</th>
+                                            <th>Ambil Uang Jalan</th>
+                                            <th>Tgl Muat</th>
+                                            <th>Tgl Bongkar</th>
+                                            <th>Harga</th>
+                                            <th>Uang Jalan</th>
+                                            <th>Uang Lainnya</th>
+                                            <th>Total</th>
+                                            <th>PG (Pijak Gas)</th>
+                                            <th>Total Kotor</th>
+                                            <th>Total Bersih</th>
 
-                        </div>
-                        <div class="card-body table-responsive">
-                            <table id="datatable" class="table table-bordered ">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>No</th>
-                                        <th>Supir</th>
-                                        <th>Berat</th>
-                                        <th>Tujuan</th>
-                                        <th>Transportir</th>
-                                        <th>status bayar</th>
-                                        <th>Ambil Uang Jalan</th>
-                                        <th>Tgl Muat</th>
-                                        <th>Tgl Bongkar</th>
-                                        <th>Harga</th>
-                                        <th>Uang Jalan</th>
-                                        <th>Uang Lainnya</th>
-                                        <th>Total</th>
-                                        <th>PG (Pijak Gas)</th>
-                                        <th>Total Kotor</th>
-                                        <th>Total Bersih</th>
-                                      
-                                        {{-- <th>#Aksi</th> --}}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
+                                            {{-- <th>#Aksi</th> --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
 
-                            </table>
+                                </table>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -99,7 +98,7 @@
     @include('app.pembayaran.modal-hasil-bayar')
 @endsection
 @push('js')
-<script src="{{ asset('plugins/datatable/datatable2.min.js') }}"></script>>
+    <script src="{{ asset('plugins/datatable/datatable2.min.js') }}"></script>>
     <script src="{{ asset('template/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>>
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('plugins/sweetalert2/sweetalert2-min.js') }}"></script>
@@ -176,7 +175,7 @@
                     url: @json(route('pembayaran.index')),
                     data: function(e) {
                         e.mobil_id = mobil_id,
-                        e.status_bayar = status_bayar
+                            e.status_bayar = status_bayar
                     }
                 },
 
@@ -278,20 +277,27 @@
                             return rupiah(data)
                         }
                     },
-                    
+
 
                 ]
             }).on('select', function(e, dt, type, indexes) {
 
-                if (dt[0].length > 1) {
-                    datatable.rows().every(function(rowIdx, tableLoop, rowLoop) {
-                        let data = datatable.row(rowIdx).data().id
-                        setoran_id_array.push(data)
-                    });
-                    setoran_id_array = [...new Set(setoran_id_array)];
+                // validasi, jika status_pembayaran = belum, maka tidak bisa dipilih/tidak akan push array id
+
+                if (datatable.rows(indexes).data()[0].status_pembayaran == 'BELUM') {
+                    if (dt[0].length > 1) {
+                        datatable.rows().every(function(rowIdx, tableLoop, rowLoop) {
+                            let data = datatable.row(rowIdx).data().id
+                            setoran_id_array.push(data)
+                        });
+                        setoran_id_array = [...new Set(setoran_id_array)];
+                    } else {
+                        setoran_id_array.push(datatable.rows(indexes).data()[0].id);
+                    }
                 } else {
-                    setoran_id_array.push(datatable.rows(indexes).data()[0].id);
+                    datatable.row(indexes).deselect();
                 }
+
             }).on('deselect', function(e, dt, type, indexes) {
                 if (dt[0].length > 1) {
                     setoran_id_array = []
@@ -316,7 +322,7 @@
                     data: {
                         "setoran_id_array": setoran_id_array,
                         "mobil_id": $('#mobil_id').val(),
-                        
+
                     },
                     beforeSend: function() {
                         showLoading()
@@ -481,7 +487,7 @@
 
 
             $('#status_bayar').on('select2:select', function(e) {
-               status_bayar = $(this).val()
+                status_bayar = $(this).val()
                 datatable.column('.id').visible(false)
                 datatable.columns().checkboxes.deselect(true);
                 datatable.ajax.reload()
@@ -491,7 +497,7 @@
             });
 
             $('#status_bayar').on('select2:clear', function(e) {
-               status_bayar = ''
+                status_bayar = ''
                 datatable.column('.id').visible(false)
                 datatable.columns().checkboxes.deselect(true);
                 datatable.ajax.reload()
