@@ -170,7 +170,14 @@
                 }],
                 select: {
                     style: 'multi',
-                    selector: 'td:not(:last-child)'
+                    selector: 'tr:not(.enable-select)',
+                },
+                rowCallback: function(row, data) {
+                    if (data.status_pencairan ==
+                        "LUNAS") { 
+                        $(row).addClass('enable-select');
+                        $('input[type="checkbox"]', row).prop('disabled', true);
+                    }
                 },
                 ajax: {
                     url: @json(route('pencairan.index')),
@@ -288,7 +295,9 @@
                     if (dt[0].length > 1) {
                         datatable.rows().every(function(rowIdx, tableLoop, rowLoop) {
                             let data = datatable.row(rowIdx).data().id
-                            setoran_id_array.push(data)
+                            if (datatable.rows(rowIdx).data()[0].status_pembayaran == 'BELUM') {
+                               setoran_id_array.push(data)
+                            }
                         });
                         setoran_id_array = [...new Set(setoran_id_array)];
                     } else {
@@ -302,20 +311,21 @@
                 if (dt[0].length > 1) {
                     setoran_id_array = []
                 } else {
+                  if (datatable.rows(indexes).data()[0].status_pembayaran == 'BELUM') {
                     setoran_id_array.splice($.inArray(datatable.rows(indexes).data()[0].id,
                         setoran_id_array), 1);
+                  }
                 }
             })
 
+          
             $('.dt-checkboxes-select-all').on('change', function() {
-              
-              datatable.rows().every(function(rowIdx, tableLoop, rowLoop) {
-                if (datatable.rows(rowIdx).data()[0].status_pencairan == 'LUNAS') {
-                   datatable.row(rowIdx).deselect();
-                }
-                 
-              });
-          })
+                datatable.rows().every(function(rowIdx, tableLoop, rowLoop) {
+                    if (datatable.rows(rowIdx).data()[0].status_pembayaran == 'LUNAS') {
+                        datatable.row(rowIdx).deselect();
+                    }
+                })
+            })
 
 
             $("#btn_bayar").click(function() {

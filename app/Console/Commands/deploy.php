@@ -36,6 +36,9 @@ class deploy extends Command
             [
                1 =>    'Deploy Full',
                2 =>    'Only Optimize',
+               3 =>    'Rollback Previous',
+               4 =>    'See Last Deploy',
+               5 =>    'DB sync to Local',
             ],
          );
          if ($this->confirm('Are you sure you want to choose ' . $choice . '?', true)) {
