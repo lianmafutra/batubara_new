@@ -167,10 +167,7 @@
                         selectRow: true,
                     }
                 }],
-                select: {
-                    style: 'multi',
-                    selector: 'td:not(:last-child)'
-                },
+            
                 ajax: {
                     url: @json(route('pembayaran.index')),
                     data: function(e) {
@@ -178,8 +175,17 @@
                             e.status_bayar = status_bayar
                     }
                 },
-
-
+                select: {
+                    style: 'multi',
+                    selector: 'tr:not(.enable-select)',
+                },
+                rowCallback: function(row, data) {
+                    if (data.status_pembayaran ==
+                        "LUNAS") { 
+                        $(row).addClass('enable-select');
+                        $('input[type="checkbox"]', row).prop('disabled', true);
+                    }
+                },
                 initComplete: function(settings, json) {
 
                     $('body').find('.dataTables_scrollBody').addClass("scrollbar");
@@ -281,41 +287,39 @@
 
                 ]
             }).on('select', function(e, dt, type, indexes) {
-
-
                 // validasi, jika status_pembayaran = belum, maka tidak bisa dipilih/tidak akan push array id
-
                 if (datatable.rows(indexes).data()[0].status_pembayaran == 'BELUM') {
                     if (dt[0].length > 1) {
                         datatable.rows().every(function(rowIdx, tableLoop, rowLoop) {
                             let data = datatable.row(rowIdx).data().id
-                            setoran_id_array.push(data)
+                            if (datatable.rows(rowIdx).data()[0].status_pembayaran == 'BELUM') {
+                               setoran_id_array.push(data)
+                            }
+                        
                         });
                         setoran_id_array = [...new Set(setoran_id_array)];
                     } else {
                         setoran_id_array.push(datatable.rows(indexes).data()[0].id);
                     }
-                } else {
-                    datatable.row(indexes).deselect();
                 }
 
             }).on('deselect', function(e, dt, type, indexes) {
                 if (dt[0].length > 1) {
                     setoran_id_array = []
                 } else {
+                  if (datatable.rows(indexes).data()[0].status_pembayaran == 'BELUM') {
                     setoran_id_array.splice($.inArray(datatable.rows(indexes).data()[0].id,
                         setoran_id_array), 1);
+                  }
                 }
             })
 
             $('.dt-checkboxes-select-all').on('change', function() {
-              
                 datatable.rows().every(function(rowIdx, tableLoop, rowLoop) {
-                  if (datatable.rows(rowIdx).data()[0].status_pembayaran == 'LUNAS') {
-                     datatable.row(rowIdx).deselect();
-                  }
-                   
-                });
+                    if (datatable.rows(rowIdx).data()[0].status_pembayaran == 'LUNAS') {
+                        datatable.row(rowIdx).deselect();
+                    }
+                })
             })
 
             $("#btn_bayar").click(function() {
@@ -367,43 +371,20 @@
                         $(".to_empty").empty();
                         let row, footer, row_kasbon, footer_kasbon;
                         response.data.data_setoran.forEach(function(data, i) {
-                            row += ` < tr >
-                        <
-                        td > $ {
-                            i + 1
-                        } < /td>
-
-                        <
-                        td class = "berat" > $ {
-                            data.berat
-                        } < /td> <
-                        td > $ {
-                            data.tujuan_nama
-                        } < /td>
-
-                        <
-                        td class = "rupiah" > $ {
-                            data.harga_bayar
-                        } < /td> <
-                        td class = "rupiah" > $ {
-                            data.uang_jalan
-                        } < /td> <
-                        td class = "rupiah" > $ {
-                            data.uang_lainnya
-                        } < /td> <
-                        td class = "rupiah" > $ {
-                            data.total_uang_lainnya
-                        } < /td> <
-                        td class = "rupiah" > $ {
-                            data.pg
-                        } < /td> <
-                        td class = "rupiah" > $ {
-                            data.total_kotor
-                        } < /td> <
-                        td class = "rupiah" > $ {
-                            data.total_bersih
-                        } < /td> <
-                        /tr>`;
+                            row += `<tr>
+                                 <td>${i+1}</td>
+                            
+                                 <td  class="berat">${data.berat}</td>
+                                 <td>${data.tujuan_nama}</td>
+                              
+                                 <td class="rupiah">${data.harga_bayar}</td>
+                                 <td class="rupiah">${data.uang_jalan}</td>
+                                 <td class="rupiah">${data.uang_lainnya}</td>
+                                 <td class="rupiah">${data.total_uang_lainnya}</td>
+                                 <td class="rupiah">${data.pg}</td>
+                                 <td class="rupiah">${data.total_kotor}</td>
+                                 <td class="rupiah">${data.total_bersih}</td>
+                                 </tr>`;
                         });
 
 
