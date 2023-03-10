@@ -323,6 +323,7 @@
             })
 
             $("#btn_bayar").click(function() {
+               // 
                 if ($('#mobil_id').val() == 'all' || $('#mobil_id').val() == '') {
                     Swal.fire({
                         icon: 'error',
